@@ -1,17 +1,27 @@
 import './style/landing.scss';
 import React from 'react';
+import { GoogleMap, Marker } from "react-google-maps"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-function Game () {
+const Game = () => {
   return (
     <>
+      <MyMapComponent />
       <h1> Sup. </h1>
       <Link to="/"> Home </Link>
     </>
   );
 }
 
-function Landing() {
+const MyMapComponent = (props) =>
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+  >
+    {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+  </GoogleMap>
+
+const Landing = () => {
   return (
       <>
       <div className="App">
@@ -19,7 +29,9 @@ function Landing() {
             <h1>MS Geoguesser</h1>
           </header>
           <div className="viewport">
-            <h2 className="start-btn">Play Geoguesser</h2>
+            <Link className="start-btn" to="/game">
+              Play Geoguesser
+            </Link>
           </div>
       </div>
       <Link to="/game"> Play </Link>
@@ -27,7 +39,7 @@ function Landing() {
   );
 }
 
-function App() {
+const App = () => {
   return (
     <Router>
       <div className="App">

@@ -6,6 +6,10 @@ html, body, .App, * {
     width: 100%;
 }
 
+a, li {
+    text-decoration: none;
+}
+
 header {
     width: 100%;
     height: 50px;
@@ -26,13 +30,9 @@ header {
 .start-btn {
     width: 300px;
     height: 50px;
+    font-size: 1.7em;
     background-color: #047E99;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  #sphere {
-    margin: 0;
-    z-index: -2;
   }
