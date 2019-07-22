@@ -1,11 +1,22 @@
+import './style/landing.scss';
 import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>MS Geoguesser</h1>
-    </div>
-  );
-}
+export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
 
-export default App;
+  render () {
+    return (
+      <div className="App">
+        <header>
+            <h1>MS Geoguesser</h1>
+          </header>
+          <div className="viewport">
+            <h2 className="start-btn">Play Geoguesser</h2>
+          </div>
+      </div>
+    );
+  }
+  }
