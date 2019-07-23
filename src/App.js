@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import GoogleMapReact from "google-map-react";
 import Streetview from "./components/Streetview";
+import Score from "./components/Score";
 import marker from "./assets/placeholder.png";
 
 const Marker = () => {
@@ -65,6 +66,7 @@ const App = () => {
         <Route exact path="/map" component={Streetview} />
         <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
+        <Route exact path="/score" component={Score} />
       </div>
     </Router>
   );
