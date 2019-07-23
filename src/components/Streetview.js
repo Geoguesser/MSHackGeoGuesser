@@ -14,7 +14,6 @@ class StreetView extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log("updating");
     this.initialize(ReactDOM.findDOMNode(this));
   }
 
@@ -25,22 +24,28 @@ class StreetView extends React.Component {
   }
 
   initialize = canvas => {
+
     if (this.props.googleMaps && this.streetView == null) {
       this.streetView = new this.props.googleMaps.StreetViewPanorama(
         canvas,
-        this.props.streetViewPanoramaOptions
+        {
+          ...this.props.streetViewPanoramaOptions,
+          styles: [
+            {
+              
+            }
+
+          ]
+        }
       );
-      console.log(this.props.streetViewPanoramaOptions);
 
       this.streetView.addListener("position_changed", () => {
-        console.log("position chanegd");
         if (this.props.onPositionChanged) {
           this.props.onPositionChanged(this.streetView.getPosition());
         }
       });
 
       this.streetView.addListener("pov_changed", () => {
-        console.log("pov change");
         if (this.props.onPovChanged) {
           this.props.onPovChanged(this.streetView.getPov());
         }
@@ -52,8 +57,8 @@ class StreetView extends React.Component {
     return (
       <div
         style={{
-          width: "800px",
-          height: "450px",
+          width: "100%",
+          height: "100vh",
           backgroundColor: "#eeeeee"
         }}
       />
@@ -70,7 +75,6 @@ StreetView.defaultProps = {
 };
 
 function mapScriptsToProps() {
-  console.log(process.env);
   return {
     googleMaps: {
       globalPath: "google.maps",
