@@ -19,11 +19,11 @@ class HighScoreTable extends React.Component {
         return (<div style={{ color: 'black' }}>
             <h1>Leaderboard</h1>
             <h2>
-                <th>Rank</th>
-                <th>Display Name</th>
-                <th>Value</th>
+                <th style={{padding: '20px,20px,20px,0px'}} scope="col">Rank</th>
+                <th style={{padding: '20px'}} scope="col">Display Name</th>
+                <th style={{padding: '20px'}} scope="col">Value</th>
             </h2>
-            <table>
+            <table className="table">
                 <tbody>
                     {
                         this.state.scores.sort((a, b) => a.Position > b.Position)
@@ -31,7 +31,7 @@ class HighScoreTable extends React.Component {
                                 const { DisplayName, StatValue, Position } = score;
                                 return (
                                     <tr key={index}>
-                                        <td>{index}</td>
+                                        <th scope="row">{index}</th>
                                         <td>{DisplayName}</td>
                                         <td>{StatValue}</td>
                                     </tr>
