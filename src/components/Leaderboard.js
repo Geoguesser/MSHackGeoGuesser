@@ -95,7 +95,7 @@ class Leaderboard extends React.Component {
 
     render() {
         return (<div className="leaderboard-container">
-            <input style={{margin: '10px'}} type="text" id="customId" defaultValue="Input your initials here." /><br />
+            <input style={{margin: '10px'}} type="text" id="customId" defaultValue="AAA" /><br />
             <input style={{margin: '10px'}} type="number" id="highScore" defaultValue="42" /><br />
             <input style={{margin: '10px'}} type="button" value="Login/Update High Score/Get Leaderboard" onClick={this.DoLoginCurrentUser} /><br />
             <br />
