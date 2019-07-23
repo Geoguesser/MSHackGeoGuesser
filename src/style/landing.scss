@@ -25,6 +25,7 @@ li {
 }
 
 header {
+  z-index: 4;
   position: absolute;
   top: 0;
   left: 0;
@@ -64,8 +65,8 @@ header {
 }
 
 img {
-  position: relative;
-  top: -42px;
-  left: -18px;
-  height: 35px;
+    position: relative;
+    top: -36px;
+    left: -17px;
+    height: 35px;
 }
