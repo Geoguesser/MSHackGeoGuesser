@@ -1,4 +1,5 @@
 import React from "react";
+import '../style/leaderboard.scss';
 
 class Leaderboard extends React.Component {
     componentDidMount() {
@@ -89,7 +90,7 @@ class Leaderboard extends React.Component {
     }
 
     render() {
-        return (<div>
+        return (<div className="leaderboard-container">
             DisplayName: <input type="text" id="customId" defaultValue="Input your initials here." /><br />
             Your High Score: <input type="number" id="highScore" defaultValue="42" /><br />
             <input type="button" value="Login/Update High Score/Get Leaderboard" onClick={this.DoLoginCurrentUser} /><br />
