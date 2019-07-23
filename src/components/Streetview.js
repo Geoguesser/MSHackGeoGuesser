@@ -30,12 +30,9 @@ class StreetView extends React.Component {
         canvas,
         {
           ...this.props.streetViewPanoramaOptions,
-          styles: [
-            {
-              
-            }
-
-          ]
+          addressControl: false,
+          fullscreenControl: false,
+          closeControl: false
         }
       );
 
