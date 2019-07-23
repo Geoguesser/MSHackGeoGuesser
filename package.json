@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "google-maps-react": "^2.0.2",
+    "google-map-react": "^1.1.4",
     "jquery": "^3.4.1",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
