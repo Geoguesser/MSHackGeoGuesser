@@ -18,14 +18,14 @@ const Game = () => {
   return (
   <div style={{ height: "400px", width: "400px", position: "absolute", bottom: 0, right: 0 }}>
     <GoogleMapReact
-      bootstrapURLKeys={{ key: "AIzaSyCwD_7knzyafxUbMx7CYGek02bj9UJcdBE" }}
+      bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
       defaultCenter={{
         lat: 47.658427,
         lng: -122.141433
       }}
       onClick={e =>  {
-        setLat(e.lat)
-        setLng(e.lng)
+        setLat(e.lat);
+        setLng(e.lng);
       }}
       defaultZoom={0}
       yesIWantToUseGoogleMapApiInternals
