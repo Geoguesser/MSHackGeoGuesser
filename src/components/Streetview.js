@@ -73,9 +73,5 @@ Streetview.defaultProps = {
   }
 };
 
-function mapScriptsToProps() {
-  return {
-  };
-}
 
-export default asyncLoading(mapScriptsToProps)(Streetview);
+export default Streetview;
