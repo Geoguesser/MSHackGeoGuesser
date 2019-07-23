@@ -1,4 +1,4 @@
-html, body, .App, * {
+html, body, .App {
     padding: 0;
     margin: 0;
     color: white;
@@ -6,11 +6,24 @@ html, body, .App, * {
     width: 100%;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#root, .App {
+ width: 100%;
+ height: 100%;
+}
+
 a, li {
     text-decoration: none;
 }
 
 header {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 50px;
     background-color: #047E99;
@@ -19,7 +32,7 @@ header {
     }
 }
 
-.viewport {
+.landing {
     height: 100%;
     width: 100%;
     z-index: -1;
@@ -32,6 +45,7 @@ header {
     height: 50px;
     font-size: 1.7em;
     background-color: #047E99;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;

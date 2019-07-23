@@ -18,26 +18,21 @@ const Game = () => (
 
 const Landing = () => {
   return (
-    <>
-      <div className="App">
-        <header>
-          <h1>MS Geoguesser</h1>
-        </header>
-        <div className="viewport">
-          <Link className="start-btn" to="/game">
-            Play Geoguesser
-          </Link>
-        </div>
-      </div>
-      <Link to="/game"> Play </Link>
-    </>
+    <div className="landing">
+      <header>
+        <h1>MS Geoguesser</h1>
+      </header>
+        <Link className="start-btn" to="/game">
+          Play Geoguesser
+        </Link>
+    </div>
   );
 };
 
 const App = () => {
   return (
     <Router>
-      <div className="App" style={{ height: "100vh", width: "100%" }}>
+      <div className="App">
         <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
       </div>
