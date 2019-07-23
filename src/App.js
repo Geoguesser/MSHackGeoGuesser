@@ -1,11 +1,12 @@
-import "./style/landing.scss";
-import React from "react";
-import { compose, withProps } from "recompose";
+import './style/landing.scss';
+import React from 'react';
+import { compose, withProps } from "recompose"
 import { withGoogleMap, GoogleMap, withScriptjs } from "react-google-maps";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import StreetView from "./components/Streetview";
 
 const MapView = () => {
+
   return (
     <>
       <MyMapComponent />

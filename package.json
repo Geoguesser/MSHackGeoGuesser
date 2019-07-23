@@ -14,7 +14,6 @@
     "react-google-maps": "^9.4.5",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "react-streetview": "^1.1.1",
     "recompose": "^0.30.0"
   },
   "scripts": {
