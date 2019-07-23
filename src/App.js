@@ -89,7 +89,7 @@ const Landing = () => {
       <header>
         <h1>MS Geoguesser</h1>
       </header>
-      <Link className="start-btn" to="/game">
+      <Link className="start-btn" to="/map">
         Play Geoguesser
       </Link>
     </div>
