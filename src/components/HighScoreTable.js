@@ -26,7 +26,7 @@ class HighScoreTable extends React.Component {
             <table>
                 <tbody>
                     {
-                        this.state.scores.sort((a, b) => a.Position < b.Position)
+                        this.state.scores.sort((a, b) => a.Position > b.Position)
                             .map((score, index) => {
                                 const { DisplayName, StatValue, Position } = score;
                                 return (
