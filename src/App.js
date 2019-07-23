@@ -1,9 +1,21 @@
 import "./style/landing.scss";
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import GoogleMapReact from "google-map-react";
+import marker from './assets/placeholder.png';
 
-const Game = () => (
+const Marker = () => {
+  return (
+  <div>
+    <img src={marker} alt=""/>
+  </div>
+  )
+}
+
+const Game = () => {
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
+  return (
   <div style={{ height: "100vh", width: "100%" }}>
     <GoogleMapReact
       bootstrapURLKeys={{ key: "AIzaSyCwD_7knzyafxUbMx7CYGek02bj9UJcdBE" }}
@@ -11,10 +23,20 @@ const Game = () => (
         lat: 59.95,
         lng: 30.33
       }}
+      onClick={e =>  {
+        setLat(e.lat)
+        setLng(e.lng)
+      }}
       defaultZoom={0}
-    />
+      yesIWantToUseGoogleMapApiInternals
+    >
+      {lat ?
+       (<Marker lat={lat} lng={lng} />)
+      : null
+      }
+    </GoogleMapReact>
   </div>
-);
+)};
 
 const Landing = () => {
   return (
