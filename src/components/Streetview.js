@@ -3,15 +3,13 @@ import ReactDOM from "react-dom";
 // TODO: Maybe React-helmet can solve this?
 import asyncLoading from "react-async-loader";
 
-class StreetView extends React.Component {
-  streetview = null;
-
+class Streetview extends React.Component {
   componentDidMount() {
-    this.initialize(ReactDOM.findDOMNode(this));
+    this.initialize();
   }
 
   componentDidUpdate() {
-    this.initialize(ReactDOM.findDOMNode(this));
+    this.initialize();
   }
   componentWillUnmount() {
     if (this.streetView) {
@@ -19,35 +17,43 @@ class StreetView extends React.Component {
     }
   }
 
-  initialize = canvas => {
+  initialize = () => {
     if (this.props.googleMaps && this.streetView == null) {
-      this.streetView = new this.props.googleMaps.StreetViewPanorama(
-        canvas,
-        this.props.streetViewPanoramaOptions
-      );
-
-      this.streetView.addListener("position_changed", () => {
-        if (this.props.onPositionChanged) {
-          this.props.onPositionChanged(this.streetView.getPosition());
-        }
-      });
-
-      this.streetView.addListener("pov_changed", () => {
-        if (this.props.onPovChanged) {
-          this.props.onPovChanged(this.streetView.getPov());
+      const { position: location } = this.props.streetViewPanoramaOptions;
+      const service = new this.props.googleMaps.StreetViewService();
+      service.getPanorama({ location, radius: 500 }, (data, status) => {
+        if (status === "OK") {
+          const panorama = new this.props.googleMaps.StreetViewPanorama(
+            ReactDOM.findDOMNode(this),
+            {
+              ...this.props.streetViewPanoramaOptions,
+              addressControl: false,
+              fullscreenControl: false,
+              closeControl: false,
+              showRoadLabels: false
+            }
+          );
+          panorama.setPano(data.location.pano);
+          panorama.setPov({
+            heading: 270,
+            pitch: 0
+          });
+          panorama.setVisible(true);
+        } else {
+          console.log(status);
         }
       });
     }
   };
 
   render() {
-    return <div style={{ height: "100em" }} />;
+    return <div style={{ height: "100vh" }} />;
   }
 }
 
-StreetView.defaultProps = {
+Streetview.defaultProps = {
   streetViewPanoramaOptions: {
-    position: { lat: 46.9171876, lng: 17.8951832 },
+    position: { lat: 28.433127, lng: -81.47857 },
     pov: { heading: 0, pitch: 0 },
     zoom: 1
   }
@@ -65,4 +71,4 @@ function mapScriptsToProps() {
   };
 }
 
-export default asyncLoading(mapScriptsToProps)(StreetView);
+export default asyncLoading(mapScriptsToProps)(Streetview);

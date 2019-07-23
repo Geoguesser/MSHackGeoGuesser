@@ -1,26 +1,44 @@
+import "./style/landing.scss";
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import StreetView from "./components/Streetview";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import GoogleMapReact from "google-map-react";
+import Streetview from "./components/Streetview";
 
-class Landing extends React.Component {
-  render() {
-    return (
-      <div>
-        <h2>Landing...</h2>
-      </div>
-    );
-  }
-}
+const Game = () => (
+  <div style={{ height: "100vh", width: "100%" }}>
+    <GoogleMapReact
+      bootstrapURLKeys={{ key: "AIzaSyCwD_7knzyafxUbMx7CYGek02bj9UJcdBE" }}
+      defaultCenter={{
+        lat: 59.95,
+        lng: 30.33
+      }}
+      defaultZoom={0}
+    />
+  </div>
+);
 
-function App() {
+const Landing = () => {
+  return (
+    <div className="landing">
+      <header>
+        <h1>MS Geoguesser</h1>
+      </header>
+      <Link className="start-btn" to="/game">
+        Play Geoguesser
+      </Link>
+    </div>
+  );
+};
+
+const App = () => {
   return (
     <Router>
       <div className="App">
-        <Route exact path="/game" component={StreetView} />
+        <Route exact path="/game" component={Streetview} />
         <Route exact path="/" component={Landing} />
       </div>
     </Router>
   );
-}
+};
 
 export default App;
