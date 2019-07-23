@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Game from "./components/Game";
 import Landing from "./components/Landing";
+import Leaderboard from './components/Leaderboard';
 import "./style/landing.scss";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       </header>
         <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
+        <Route exact path="/leaderboard" component={Leaderboard} />
       </div>
     </Router>
   );
