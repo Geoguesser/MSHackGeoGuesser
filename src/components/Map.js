@@ -31,11 +31,11 @@ const Map = ({ setGoogleMaps }) => {
         options={{
           fullscreenControl: false
         }}
-        onGoogleApiLoaded={map => {
+        onGoogleApiLoaded={google => {
           setOrigin({ lat: 47.658427, lng: -122.141433 });
-          setGoogleMaps(map.maps);
-          setMap(map.map);
-          setPolyline(new map.maps.Polyline({ path: [origin] }));
+          setGoogleMaps(google.maps);
+          setMap(google.map);
+          setPolyline(new google.maps.Polyline({ path: [origin], geodesic: true }));
         }}
         onClick={e => {
           setLat(e.lat);
@@ -45,7 +45,6 @@ const Map = ({ setGoogleMaps }) => {
             polyline.setPath([{ lat: e.lat, lng: e.lng }, origin]);
             polyline.setMap(map);
           }
-          console.log(score);
         }}
         yesIWantToUseGoogleMapApiInternals
       >
