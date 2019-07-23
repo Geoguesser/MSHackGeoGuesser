@@ -4,10 +4,14 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "async-script-loader": "0.0.1",
+    "dotenv": "^8.0.0",
     "react": "^16.8.6",
+    "react-async-loader": "^0.1.2",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "react-streetview": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
