@@ -35,7 +35,7 @@ const Marker = () => {
   );
 };
 
-const Game = () => {
+export const Game = (props) => {
   const [lat, setLat] = useState(0);
   const [polyline, setPolyline] = useState(0);
   const [lng, setLng] = useState(0);
@@ -44,7 +44,7 @@ const Game = () => {
   // const [maps, setMaps] = useState(0);
   const [origin, setOrigin] = useState(0);
   return (
-  <div style={{ height: "400px", width: "400px", position: "absolute", bottom: 0, right: 0 }}>
+  <div style={{ height: "400px", width: "400px", position: "absolute", bottom: 0, right: 0, zIndex: 2 }}>
     <GoogleMapReact
       bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
       defaultCenter={{
@@ -57,9 +57,9 @@ const Game = () => {
       }}
       onGoogleApiLoaded={(map) => {
         setOrigin({ lat: 47.658427, lng: -122.141433 });
+        props.setMap(map.maps);
         setMap(map.map);
         // setMaps(map.maps)
-        console.log(map)
         setPolyline(new map.maps.Polyline({ path: [origin] }));
       }}
       onClick={ e =>  {
@@ -101,7 +101,6 @@ const App = () => {
     <Router>
       <div className="App">
         <Route exact path="/map" component={Streetview} />
-        <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
       </div>
     </Router>
