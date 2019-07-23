@@ -12,16 +12,15 @@ const Marker = () => {
 };
 
 const Score = props => {
-  // props.location
-  // props.guess
-  const [lat] = useState(0);
-  const [lng] = useState(0);
+  // props.polylines
+  // props.score
+  let polyLines;
+
   return (
     <div
       style={{
         height: "100vh",
-        width: "100%",
-        position: "absolute"
+        width: "100%"
       }}
     >
       <GoogleMapReact
@@ -30,13 +29,25 @@ const Score = props => {
           lat: 27.658427,
           lng: 0.141433
         }}
-        defaultZoom={3}
+        defaultZoom={5}
         yesIWantToUseGoogleMapApiInternals
         options={{
-          minZoom: 3,
+          minZoom: 5,
           minZoomOverride: true,
-          maxZoom: 3,
+          maxZoom: 5,
           zoomControl: false
+        }}
+        onGoogleApiLoaded={google => {
+          polyLines = [
+            new google.maps.Polyline({
+              path: [
+                { lat: 47.658427, lng: -122.141433 },
+                { lat: 51.529654, lng: -119.328933 }
+              ],
+              geodesic: true
+            })
+          ];
+          polyLines.map(polyline => polyline.setMap(google.map));
         }}
       />
       <Link to="/game">Next Game</Link>
