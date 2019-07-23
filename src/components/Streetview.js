@@ -1,40 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Game } from '../App'
-// TODO: Maybe React-helmet can solve this?
-import asyncLoading from "react-async-loader";
 
 class Streetview extends React.Component {
   componentDidMount() {
-    this.state = {
-      maps: {}
-    }
-  }
-
-  componentDidUpdate(newState) {
     this.initialize();
   }
 
-  componentWillUnmount() {
-    if (this.streetView) {
-      this.state.maps.event.clearInstanceListeners(this.streetView);
-    }
+  componentDidUpdate() {
+    this.initialize();
   }
 
-  setMap = (maps, map) => {
-    console.log("setMap", maps)
-    this.setState({ maps }, () => {
-      this.initialize();
-    });
-  }
-  
   initialize = () => {
-    if (this.state.maps && this.streetView == null) {
+    if (this.props.googleMaps) {
       const { position: location } = this.props.streetViewPanoramaOptions;
-      const service = new this.state.maps.StreetViewService();
+      const service = new this.props.googleMaps.StreetViewService();
       service.getPanorama({ location, radius: 500 }, (data, status) => {
         if (status === "OK") {
-          const panorama = new this.state.maps.StreetViewPanorama(
+          const panorama = new this.props.googleMaps.StreetViewPanorama(
             ReactDOM.findDOMNode(this),
             {
               ...this.props.streetViewPanoramaOptions,
@@ -58,10 +40,7 @@ class Streetview extends React.Component {
   };
 
   render() {
-    return (
-    <div style={{ height: "100vh" }}>
-      <Game setMap={this.setMap}/>
-    </div>);
+    return <div style={{ height: "100vh" }} />;
   }
 }
 
@@ -72,6 +51,5 @@ Streetview.defaultProps = {
     zoom: 1
   }
 };
-
 
 export default Streetview;
