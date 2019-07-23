@@ -4,15 +4,20 @@ import ReactDOM from "react-dom";
 import asyncLoading from "react-async-loader";
 
 class StreetView extends React.Component {
-  streetview = null;
+  constructor(props) {
+    super(props);
+    this.streetView = null;
+  }
 
   componentDidMount() {
     this.initialize(ReactDOM.findDOMNode(this));
   }
 
   componentDidUpdate() {
+    console.log("updating");
     this.initialize(ReactDOM.findDOMNode(this));
   }
+
   componentWillUnmount() {
     if (this.streetView) {
       this.props.googleMaps.event.clearInstanceListeners(this.streetView);
@@ -27,12 +32,14 @@ class StreetView extends React.Component {
       );
 
       this.streetView.addListener("position_changed", () => {
+        console.log("position chanegd");
         if (this.props.onPositionChanged) {
           this.props.onPositionChanged(this.streetView.getPosition());
         }
       });
 
       this.streetView.addListener("pov_changed", () => {
+        console.log("pov change");
         if (this.props.onPovChanged) {
           this.props.onPovChanged(this.streetView.getPov());
         }
@@ -41,7 +48,15 @@ class StreetView extends React.Component {
   };
 
   render() {
-    return <div style={{ height: "100em" }} />;
+    return (
+      <div
+        style={{
+          width: "800px",
+          height: "450px",
+          backgroundColor: "#eeeeee"
+        }}
+      />
+    );
   }
 }
 
@@ -57,9 +72,7 @@ function mapScriptsToProps() {
   return {
     googleMaps: {
       globalPath: "google.maps",
-      url: `https://maps.googleapis.com/maps/api/js?key=${
-        process.env.REACT_APP_MAPS_API_KEY
-      }`,
+      url: `https://maps.googleapis.com/maps/api/js?key=AIzaSyCR0yuy-dJyyPJ-q-43uniUuCu5nWBOjao`,
       jsonp: true
     }
   };
