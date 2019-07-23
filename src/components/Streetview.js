@@ -30,6 +30,7 @@ class StreetView extends React.Component {
         canvas,
         this.props.streetViewPanoramaOptions
       );
+      console.log(this.props.streetViewPanoramaOptions);
 
       this.streetView.addListener("position_changed", () => {
         console.log("position chanegd");
@@ -69,10 +70,11 @@ StreetView.defaultProps = {
 };
 
 function mapScriptsToProps() {
+  console.log(process.env);
   return {
     googleMaps: {
       globalPath: "google.maps",
-      url: `https://maps.googleapis.com/maps/api/js?key=AIzaSyCR0yuy-dJyyPJ-q-43uniUuCu5nWBOjao`,
+      url: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}`,
       jsonp: true
     }
   };

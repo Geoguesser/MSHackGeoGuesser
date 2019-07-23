@@ -18,7 +18,7 @@ const MapView = () => {
 const MyMapComponent = compose(
   withProps({
     googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyCwD_7knzyafxUbMx7CYGek02bj9UJcdBE&callback=initMap",
+      `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&callback=initMap`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `1000px`, display: "none" }} />,
     mapElement: <div style={{ height: `100%` }} />,
