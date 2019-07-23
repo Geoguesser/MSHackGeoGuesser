@@ -25,16 +25,18 @@ class HighScoreTable extends React.Component {
             </h2>
             <table>
                 <tbody>
-                    {this.state.scores.map((score, index) => {
-                        const { DisplayName, StatValue, Position } = score;
-                        return (
-                            <tr key={index}>
-                                <td>{Position}</td>
-                                <td>{DisplayName}</td>
-                                <td>{StatValue}</td>
-                            </tr>
-                        )
-                    })}
+                    {
+                        this.state.scores.sort((a, b) => a.Position < b.Position)
+                            .map((score, index) => {
+                                const { DisplayName, StatValue, Position } = score;
+                                return (
+                                    <tr key={index}>
+                                        <td>{index}</td>
+                                        <td>{DisplayName}</td>
+                                        <td>{StatValue}</td>
+                                    </tr>
+                                )
+                            })}
                 </tbody>
             </table>
         </div>)
@@ -44,7 +46,6 @@ class HighScoreTable extends React.Component {
         this.state.scores.sort((a, b) => a.Position > b.Position);
         this.state.scores.map((score, index) => {
             const { PlayFabId, DisplayName, StatValue, Position } = score;
-            console.log(`rendering row: ${JSON.stringify(score)}`);
             return (
                 <tr key={index}>
                     <td>{DisplayName}</td>
