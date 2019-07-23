@@ -2,7 +2,8 @@ import "./style/landing.scss";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import GoogleMapReact from "google-map-react";
-import marker from './assets/placeholder.png';
+import Streetview from "./components/Streetview";
+import marker from "./assets/placeholder.png";
 
 
 const rad = function(x) {
@@ -28,11 +29,11 @@ const getScore = (pt1, pt2) => {
 
 const Marker = () => {
   return (
-  <div>
-    <img src={marker} alt=""/>
-  </div>
-  )
-}
+    <div>
+      <img src={marker} alt="" />
+    </div>
+  );
+};
 
 const Game = () => {
   const [lat, setLat] = useState(0);
@@ -50,6 +51,7 @@ const Game = () => {
         lat: 47.658427,
         lng: -122.141433
       }}
+      defaultZoom={0}
       options={{
         fullscreenControl: false
       }}
@@ -57,6 +59,7 @@ const Game = () => {
         setOrigin({ lat: 47.658427, lng: -122.141433 });
         setMap(map.map);
         // setMaps(map.maps)
+        console.log(map)
         setPolyline(new map.maps.Polyline({ path: [origin] }));
       }}
       onClick={ e =>  {
@@ -69,16 +72,16 @@ const Game = () => {
         }
         console.log(score);
       }}
-      defaultZoom={0}
       yesIWantToUseGoogleMapApiInternals
     >
       {lat ?
-       (<Marker lat={lat} lng={lng} />)
-      : null
+        (<Marker lat={lat} lng={lng} />)
+        : null
       }
     </GoogleMapReact>
   </div>
-)};
+  );
+};
 
 const Landing = () => {
   return (
@@ -86,9 +89,9 @@ const Landing = () => {
       <header>
         <h1>MS Geoguesser</h1>
       </header>
-        <Link className="start-btn" to="/game">
-          Play Geoguesser
-        </Link>
+      <Link className="start-btn" to="/game">
+        Play Geoguesser
+      </Link>
     </div>
   );
 };
@@ -97,6 +100,7 @@ const App = () => {
   return (
     <Router>
       <div className="App">
+        <Route exact path="/map" component={Streetview} />
         <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
       </div>
