@@ -1,8 +1,16 @@
 import React from "react";
+import HighScoreTable from './HighScoreTable';
 import '../style/leaderboard.scss';
 
 class Leaderboard extends React.Component {
-    componentDidMount() {
+    constructor() {
+        super();
+        this.state = {
+            leaderboard: []
+        };
+    }
+
+    componentWillMount() {
     }
 
     componentDidUpdate() {
@@ -17,8 +25,6 @@ class Leaderboard extends React.Component {
     DoLoginCurrentUser = () => {
         /*eslint-disable no-undef*/
         PlayFab.settings.titleId = process.env.REACT_APP_PLAYFAB_GAME_ID;
-        console.log(`title id: ${process.env.REACT_APP_PLAYFAB_GAME_ID}`);
-        console.dir(process.env);
         var loginRequest = {
             // Currently, you need to look up the correct format for this object in the API-docs:
             // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
@@ -71,7 +77,10 @@ class Leaderboard extends React.Component {
 
     getLeaderboardCallback = (result, error) => {
         if (result) {
-            console.log(`successfully got stats: ${JSON.stringify(result)}`);
+            this.setState({
+                leaderboard: result.data.Leaderboard
+            });
+            console.log(`set state called. leaderboard: ${JSON.stringify(result.data.Leaderboard)}`);
         } else if (error) {
             console.log(`failed to get stats: ${JSON.stringify(error)}`);
         }
@@ -95,6 +104,7 @@ class Leaderboard extends React.Component {
             Your High Score: <input type="number" id="highScore" defaultValue="42" /><br />
             <input type="button" value="Login/Update High Score/Get Leaderboard" onClick={this.DoLoginCurrentUser} /><br />
             Result:<br />
+            <HighScoreTable scores={this.state.leaderboard} />
         </div>);
     }
 }
