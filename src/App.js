@@ -8,6 +8,9 @@ const App = () => {
   return (
     <Router>
       <div className="App">
+      <header>
+        <h1>MS Geoguesser</h1>
+      </header>
         <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
       </div>
