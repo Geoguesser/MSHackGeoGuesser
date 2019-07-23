@@ -9,7 +9,6 @@ class HighScoreTable extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(`inside componentWillReceiveProps: ${JSON.stringify(newProps)}`);
         this.setState({
             ...newProps
         });

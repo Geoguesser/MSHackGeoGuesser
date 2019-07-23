@@ -38,7 +38,6 @@ class Leaderboard extends React.Component {
 
     LoginCallback = (result, error) => {
         if (result !== null) {
-            console.log(`login callback succeeded: ${JSON.stringify(result)}`);
             PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: document.getElementById("customId").value }, this.updateUserDisplayNameCallback);
             PlayFabClientSDK.UpdatePlayerStatistics({
                 Statistics: [{
@@ -47,13 +46,12 @@ class Leaderboard extends React.Component {
                 }]
             }, this.updateStatisticsCallback);
         } else if (error !== null) {
-            console.log(`something went wrong with the login request...${JSON.stringify(error)}`);
+            console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
         }
     }
 
     updateUserDisplayNameCallback = (result, error) => {
         if (result !== null) {
-            console.log(`update display name callback succeeded: ${JSON.stringify(result)}`);
             PlayFabClientSDK.UpdatePlayerStatistics({
                 Statistics: [{
                     "StatisticName": "Headshots",
@@ -61,13 +59,12 @@ class Leaderboard extends React.Component {
                 }]
             }, this.updateStatisticsCallback);
         } else if (error !== null) {
-            console.log(`something went wrong with the login request...${JSON.stringify(error)}`);
+            console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
         }
     };
 
     updateStatisticsCallback = (result, error) => {
         if (result) {
-            console.log(`successfully updated stats: ${JSON.stringify(result)}`);
             PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
         } else if (error) {
             console.log(`failed to update stats: ${JSON.stringify(error)}`);
@@ -80,11 +77,9 @@ class Leaderboard extends React.Component {
             this.setState({
                 leaderboard: result.data.Leaderboard
             });
-            console.log(`set state called. leaderboard: ${JSON.stringify(result.data.Leaderboard)}`);
         } else if (error) {
-            console.log(`failed to get stats: ${JSON.stringify(error)}`);
+            console.error(`failed to get stats: ${JSON.stringify(error)}`);
         }
-        console.log('ended getLeaderboardCallback');
     };
 
     // This is a utility function we haven't put into the core SDK yet.  Feel free to use it.
