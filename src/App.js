@@ -16,12 +16,12 @@ const Game = () => {
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
   return (
-  <div style={{ height: "100vh", width: "100%" }}>
+  <div style={{ height: "500px", width: "500px", position: "absolute", bottom: 0, right: 0 }}>
     <GoogleMapReact
       bootstrapURLKeys={{ key: "AIzaSyCwD_7knzyafxUbMx7CYGek02bj9UJcdBE" }}
       defaultCenter={{
-        lat: 59.95,
-        lng: 30.33
+        lat: 47.658427,
+        lng: -122.141433
       }}
       onClick={e =>  {
         setLat(e.lat)
