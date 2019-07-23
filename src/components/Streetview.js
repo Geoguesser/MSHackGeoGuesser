@@ -1,7 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// TODO: Maybe React-helmet can solve this?
-import asyncLoading from "react-async-loader";
 
 class Streetview extends React.Component {
   componentDidMount() {
@@ -11,14 +9,9 @@ class Streetview extends React.Component {
   componentDidUpdate() {
     this.initialize();
   }
-  componentWillUnmount() {
-    if (this.streetView) {
-      this.props.googleMaps.event.clearInstanceListeners(this.streetView);
-    }
-  }
 
   initialize = () => {
-    if (this.props.googleMaps && this.streetView == null) {
+    if (this.props.googleMaps) {
       const { position: location } = this.props.streetViewPanoramaOptions;
       const service = new this.props.googleMaps.StreetViewService();
       service.getPanorama({ location, radius: 500 }, (data, status) => {
@@ -59,16 +52,4 @@ Streetview.defaultProps = {
   }
 };
 
-function mapScriptsToProps() {
-  return {
-    googleMaps: {
-      globalPath: "google.maps",
-      url: `https://maps.googleapis.com/maps/api/js?key=${
-        process.env.REACT_APP_MAPS_API_KEY
-      }`,
-      jsonp: true
-    }
-  };
-}
-
-export default asyncLoading(mapScriptsToProps)(Streetview);
+export default Streetview;

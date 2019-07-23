@@ -12,6 +12,8 @@ const Marker = () => {
 };
 
 const Score = props => {
+  // props.location
+  // props.guess
   const [lat] = useState(0);
   const [lng] = useState(0);
   return (
@@ -36,12 +38,7 @@ const Score = props => {
           maxZoom: 3,
           zoomControl: false
         }}
-      >
-        {lat ? <Marker lat={lat} lng={lng} /> : null}
-      </GoogleMapReact>
-      <header>
-        <h1>Total Score: {props.score ? props.score : 1000}</h1>
-      </header>
+      />
       <Link to="/game">Next Game</Link>
     </div>
   );
