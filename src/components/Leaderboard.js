@@ -11,14 +11,40 @@ class Leaderboard extends React.Component {
     }
 
     componentWillMount() {
+        /*eslint-disable no-undef*/ /*eslint-disable no-useless-escape */
+        const sessionTicket = document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_session_cookie\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        const initials = document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_initials\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        this.setState({
+            sessionTicket,
+            initials
+        });
+        try {
+            this.DoLoginCurrentUser(initials);
+        } catch (exception) {
+            console.error(`you probably weren't logged in: ${exception}`);
+            alert('you probably were not logged it. figure it out!');
+        }
+    }
+
+    DoLoginCurrentUser = (initials) => {
         /*eslint-disable no-undef*/
-        PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
+        PlayFab.settings.titleId = process.env.REACT_APP_PLAYFAB_GAME_ID;
+        const loginRequest = {
+            // Currently, you need to look up the correct format for this object in the API-docs:
+            // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
+            TitleId: PlayFab.settings.titleId,
+            CustomId: initials,
+            CreateAccount: false
+        };
+        PlayFabClientSDK.LoginWithCustomID(loginRequest, this.LoginCallback);
     }
 
-    componentDidUpdate() {
-    }
-
-    componentWillUnmount() {
+    LoginCallback = (result, error) => {
+        if (result !== null) {
+            PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
+        } else if (error !== null) {
+            console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
+        }
     }
 
     updatePlayerStatistics = () => {
@@ -32,18 +58,22 @@ class Leaderboard extends React.Component {
 
     updateStatisticsCallback = (result, error) => {
         if (result) {
-            PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
+            setTimeout(this.getLeaderboard, 500);
         } else if (error) {
             console.log(`failed to update stats: ${JSON.stringify(error)}`);
         }
-        console.log('ended updateStatisticsCallback');
     };
+
+    getLeaderboard = () => {
+        PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
+    }
 
     getLeaderboardCallback = (result, error) => {
         if (result) {
             this.setState({
                 leaderboard: result.data.Leaderboard
             });
+            console.log('end getLeaderboardCallback');
         } else if (error) {
             console.error(`failed to get stats: ${JSON.stringify(error)}`);
         }

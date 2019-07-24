@@ -17,11 +17,9 @@ class HighScoreTable extends React.Component {
     render = () => {
         return (<div style={{ color: 'black' }}>
             <h1>Leaderboard</h1>
-            <h2>
-                <th style={{padding: '20px,20px,20px,0px'}} scope="col">Rank</th>
-                <th style={{padding: '20px'}} scope="col">Display Name</th>
-                <th style={{padding: '20px'}} scope="col">Value</th>
-            </h2>
+            <th style={{ padding: '20px,20px,20px,0px' }} scope="col">Rank</th>
+            <th style={{ padding: '20px' }} scope="col">Display Name</th>
+            <th style={{ padding: '20px' }} scope="col">Value</th>
             <table className="table">
                 <tbody>
                     {

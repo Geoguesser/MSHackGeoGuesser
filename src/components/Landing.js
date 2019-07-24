@@ -29,7 +29,7 @@ class Landing extends React.Component {
       // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
       TitleId: PlayFab.settings.titleId,
       CustomId: document.getElementById("customId").value,
-      CreateAccount: true
+      CreateAccount: false
     };
 
     PlayFabClientSDK.LoginWithCustomID(loginRequest, this.LoginCallback);
@@ -38,6 +38,8 @@ class Landing extends React.Component {
   LoginCallback = (result, error) => {
     if (result !== null) {
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: document.getElementById("customId").value }, this.updateUserDisplayNameCallback);
+      document.cookie = `geoguessr_session_cookie=${result.data.SessionTicket}`;
+      document.cookie = `geoguessr_initials=${document.getElementById("customId").value}`;
       console.log(`login result: ${JSON.stringify(result)}`);
     } else if (error !== null) {
       console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
