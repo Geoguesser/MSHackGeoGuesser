@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import GoogleMapReact from "google-map-react";
 import marker from "../assets/placeholder.png";
 import { Link } from "react-router-dom";
@@ -12,9 +12,26 @@ const Marker = () => {
 };
 
 const Score = props => {
-  // props.polylines
-  // props.score
-  let polyLines;
+  // props.coordinates (array of coordinates)
+  // Example:
+  // coordinates={[
+  //   [
+  //     { lat: 47.658427, lng: -122.141433 },
+  //     { lat: 51.529654, lng: -119.328933 }
+  //   ],
+  //   [
+  //     { lat: 28.761321, lng: -103.323608 },
+  //     { lat: 35.294347, lng: -101.209622 }
+  //   ],
+  //   [
+  //     { lat: -14.890877, lng: -61.2950687 },
+  //     { lat: 42.384539, lng: -5.85465 }
+  //   ],
+  //   [
+  //     { lat: -36.043767, lng: 148.087501 },
+  //     { lat: -8.922396, lng: 37.288956 }
+  //   ]
+  // ]}
 
   return (
     <div
@@ -29,30 +46,36 @@ const Score = props => {
           lat: 27.658427,
           lng: 0.141433
         }}
-        defaultZoom={5}
+        defaultZoom={3}
         yesIWantToUseGoogleMapApiInternals
         options={{
-          minZoom: 5,
+          minZoom: 3,
           minZoomOverride: true,
-          maxZoom: 5,
+          maxZoom: 3,
           zoomControl: false
         }}
         onGoogleApiLoaded={google => {
-          polyLines = [
-            new google.maps.Polyline({
-              path: [
-                { lat: 47.658427, lng: -122.141433 },
-                { lat: 51.529654, lng: -119.328933 }
-              ],
-              geodesic: true
-            })
-          ];
-          polyLines.map(polyline => polyline.setMap(google.map));
+          props.coordinates.map(coordinate => {
+            const polyline = new google.maps.Polyline({
+              path: coordinate
+            });
+            polyline.setMap(google.map);
+          });
         }}
-      />
+      >
+        {props.coordinates ? displayMarkers(props.coordinates) : null}
+      </GoogleMapReact>
       <Link to="/game">Next Game</Link>
     </div>
   );
+};
+
+const displayMarkers = coordinates => {
+  return coordinates.map((coordinate, index) => {
+    return coordinate.map(latlng => {
+      return <Marker key={latlng.lat} lat={latlng.lat} lng={latlng.lng} />;
+    });
+  });
 };
 
 export default Score;
