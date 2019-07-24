@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "csv-parser": "^2.3.0",
     "dotenv": "^8.0.0",
+    "fs-extra": "^8.1.0",
     "google-map-react": "^1.1.4",
     "jquery": "^3.4.1",
     "node-sass": "^4.12.0",
