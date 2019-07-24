@@ -3,12 +3,11 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Map from "./Map";
 import StreetView from "./Streetview";
-import { getLat, getLng } from "../utils/helpers";
 
 const Game = ({ history }) => {
-  const [googleMaps, setGoogleMaps] = React.useState(null);
-  const [streetLat, setStreetLat] = React.useState(getLat());
-  const [streetLng, setStreetLng] = React.useState(getLng());
+  const [googleMaps, setGoogleMaps] = React.useState(0);
+  const [streetLat, setStreetLat] = React.useState(0);
+  const [streetLng, setStreetLng] = React.useState(0);
 
   const [insetMapLat, setInsetMapLat] = React.useState(0);
   const [insetMapLng, setInsetMapLng] = React.useState(0);
@@ -41,13 +40,15 @@ const Game = ({ history }) => {
         setInsetMapLng={setInsetMapLng}
         setGoogleMaps={setGoogleMaps}
       />
-      <StreetView
-        streetLat={streetLat}
-        setStreetLat={setStreetLat}
-        streetLng={streetLng}
-        setStreetLng={setStreetLng}
-        googleMaps={googleMaps}
-      />
+      {googleMaps ? (
+        <StreetView
+          streetLat={streetLat}
+          setStreetLat={setStreetLat}
+          streetLng={streetLng}
+          setStreetLng={setStreetLng}
+          googleMaps={googleMaps}
+        />
+      ) : null}
     </>
   );
 };

@@ -45,11 +45,6 @@ class Landing extends React.Component {
   LoginCallback = (result, error) => {
     if (result !== null) {
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: document.getElementById("customId").value }, this.updateUserDisplayNameCallback);
-      document.cookie = `geoguessr_session_cookie=${result.data.SessionTicket}`;
-      document.cookie = `geoguessr_initials=${document.getElementById("customId").value}`;
-      this.props.history.push({
-        pathname: "/game",
-      });
     } else if (error !== null) {
       console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
     }
@@ -60,6 +55,11 @@ class Landing extends React.Component {
       console.log(`display name updated: ${JSON.stringify(result)}`);
       this.setState({
         shouldShowPlayLink: true
+      });
+      document.cookie = `geoguessr_session_cookie=${result.data.SessionTicket}`;
+      document.cookie = `geoguessr_initials=${document.getElementById("customId").value}`;
+      this.props.history.push({
+        pathname: "/game",
       });
     } else if (error !== null) {
       console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
