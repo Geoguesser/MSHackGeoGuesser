@@ -1,3 +1,4 @@
+import '../style/streetview.scss';
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -84,7 +85,7 @@ class Streetview extends React.Component {
   };
 
   render() {
-    return <div style={{ height: "100vh" }} />;
+    return <div className="streetview" />;
   }
 }
 

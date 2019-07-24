@@ -1,0 +1,18 @@
+.submit-button {
+    color: white;
+    border: none;
+    background: none;
+    font-size: 1.2em;
+    margin: 3px; 
+    margin-top: 5px;
+    padding: 5px;
+    z-index: 9999999;
+    position: relative;
+    float: right;
+    right: 15px;
+    border-radius: 3px;
+}
+
+.submit-button:hover {
+    background: rgba(238, 238, 238, 0.5);
+}

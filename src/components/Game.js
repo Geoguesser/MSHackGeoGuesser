@@ -1,3 +1,4 @@
+import "../style/game.scss"
 import React from "react";
 import { withRouter } from 'react-router-dom';
 import Map from "./Map";
@@ -22,8 +23,7 @@ const Game = ({ history }) => {
 
   return (
     <>
-      <input style={{ margin: '10px', zIndex: '9999999', position: 'relative', float: 'right', right: '15px' }}
-        type="button" value="Submit Guess" onClick={submitGuess} />
+      <input className="submit-button" type="button" value="Submit Guess" onClick={submitGuess} />
       <Map insetMapLat={insetMapLat} setInsetMapLat={setInsetMapLat} insetMapLng={insetMapLng} setInsetMapLng={setInsetMapLng} setGoogleMaps={setGoogleMaps} />
       <StreetView googleMaps={googleMaps} />
     </>
