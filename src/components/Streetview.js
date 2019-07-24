@@ -1,35 +1,33 @@
 import '../style/streetview.scss';
 import React from "react";
 import ReactDOM from "react-dom";
-import { getLat, getLng } from "../utils/helpers";
 
 class Streetview extends React.Component {
   state = {
     isLand: false,
+    lat: null,
+    lng: null,
     radius: 50,
     count: 0
   };
   componentDidMount() {
-    const { streetLat, streetLng } = this.props;
-    this.httpGetAsync(streetLat, streetLng, response => {
+    const { lat, lng } = pickCity();
+    this.setState({ lat: lat, lng: lng });
+    this.httpGetAsync(lat, lng, response => {
       this.setState({ isLand: !response.water });
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!this.state.isLand) {
-      const newLat = getLat();
-      const newLng = getLng();
-      this.httpGetAsync(newLat, newLng, response => {
+      var lat = getLat(this.state.lat);
+      var lng = getLng(this.state.lng);
+      this.httpGetAsync(lat, lng, response => {
         this.setState({ isLand: !response.water });
         if (!response.water) {
           // TODO:make sure this functionality is still working
-          /*
-            old code:
-            this.setState({...}, () => initialize())
-          */
-          this.props.setStreetLat(newLat);
-          this.props.setStreetLng(newLng);
+          this.props.setStreetLat(lat);
+          this.props.setStreetLng(lng);
           this.initialize();
         }
       });
@@ -92,6 +90,29 @@ class Streetview extends React.Component {
   render() {
     return <div className="streetview" />;
   }
+}
+function pickCity() {
+  var json = require("../assets/cities.json");
+  var item = json[Math.floor(Math.random() * json.length)];
+  return item;
+}
+
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function getLat(lat) {
+  var min = lat - 0.5;
+  var max = lat + 0.5;
+  const l = random(min, max);
+  return l;
+}
+
+function getLng(lng) {
+  var min = lng - 0.5;
+  var max = lng + 0.5;
+  var l = random(min, max);
+  return l;
 }
 
 Streetview.defaultProps = {
