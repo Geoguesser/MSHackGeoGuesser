@@ -3,12 +3,13 @@ import HighScoreTable from './HighScoreTable';
 import '../style/leaderboard.scss';
 
 class Leaderboard extends React.Component {
+    refreshInterval;
+
     constructor(props) {
         super(props);
         this.state = {
             ...props
         };
-        console.log(`leaderboard props: ${props}`);
     }
 
     componentWillMount() {
@@ -27,6 +28,14 @@ class Leaderboard extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.getLeaderboard();
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.refreshInterval);
+    }
+
     DoLoginCurrentUser = (initials) => {
         /*eslint-disable no-undef*/
         PlayFab.settings.titleId = process.env.REACT_APP_PLAYFAB_GAME_ID;
@@ -42,7 +51,7 @@ class Leaderboard extends React.Component {
 
     LoginCallback = (result, error) => {
         if (result !== null) {
-            PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
+            PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.updatePlayerStatistics);
         } else if (error !== null) {
             console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
         }
@@ -52,20 +61,21 @@ class Leaderboard extends React.Component {
         PlayFabClientSDK.UpdatePlayerStatistics({
             Statistics: [{
                 "StatisticName": "Headshots",
-                "Value": document.getElementById("highScore").value
+                "Value": this.props.location.score > 0 ? this.props.location.score : 0
             }]
         }, this.updateStatisticsCallback);
     };
 
     updateStatisticsCallback = (result, error) => {
         if (result) {
-            setTimeout(this.getLeaderboard, 500);
+            console.log('stats updated');
         } else if (error) {
             console.log(`failed to update stats: ${JSON.stringify(error)}`);
         }
     };
 
     getLeaderboard = () => {
+        console.log('fetching leaderboard');
         PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
     }
 
@@ -74,7 +84,7 @@ class Leaderboard extends React.Component {
             this.setState({
                 leaderboard: result.data.Leaderboard
             });
-            console.log('end getLeaderboardCallback');
+            this.refreshInterval = setTimeout(this.getLeaderboard.bind(this), 3000);
         } else if (error) {
             console.error(`failed to get stats: ${JSON.stringify(error)}`);
         }
@@ -93,9 +103,6 @@ class Leaderboard extends React.Component {
 
     render() {
         return (<div className="leaderboard-container">
-            <input style={{ margin: '10px' }} type="number" id="highScore" defaultValue="42" /><br />
-            <input style={{ margin: '10px' }} type="button" value="Update High Score/Get Leaderboard" onClick={this.updatePlayerStatistics} /><br />
-            <br />
             <HighScoreTable scores={this.state.leaderboard} />
         </div>);
     }

@@ -4,6 +4,7 @@ import GoogleMapReact from "google-map-react";
 import flagMarker from "../assets/red-flag.png";
 import circleMarker from "../assets/red-circle.png";
 import { Link } from "react-router-dom";
+import "../style/game.scss";
 
 const Marker = (props) => {
   const classname = props.icon.split(".")[0].split("/static/media/")[1]
@@ -13,10 +14,17 @@ const Marker = (props) => {
     </div>
   );
 };
+  const Score = (props) => {
+    const [guessedLatLng, setGuessedLatLng] = React.useState(0);
+    const [actualLatLng, setActualLatLng] = React.useState(0);
 
-const Score = props => {
-  const [guessedLatLng, setGuessedLatLng] = React.useState(0);
-  const [actualLatLng, setActualLatLng] = React.useState(0);
+  const viewLeaderboard = () => {
+    props.history.push({
+      pathname: '/leaderboard',
+      score: props.location.state.score
+    });
+  }
+
   return (
     <>
     <div className="user-score" >Score: {props.location.state.score}</div>
@@ -26,6 +34,12 @@ const Score = props => {
         width: "100%"
       }}
     >
+      <input
+        className={"submit-button"}
+        type="button"
+        value="View Leaderboard"
+        onClick={viewLeaderboard}
+      />
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
         // todo: calculate actual midpoint between lat/lngs and use this as center
