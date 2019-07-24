@@ -11,7 +11,7 @@ const Marker = () => {
   );
 };
 
-const Score = (props) => {
+const Score = props => {
   console.dir(props.location.state);
 
   return (
@@ -31,8 +31,6 @@ const Score = (props) => {
         defaultZoom={3}
         yesIWantToUseGoogleMapApiInternals
         options={{
-          minZoom: 3,
-          minZoomOverride: true,
           maxZoom: 3,
           zoomControl: false,
           restriction: {
@@ -45,8 +43,23 @@ const Score = (props) => {
           }
         }}
         onGoogleApiLoaded={google => {
-          if (props.location.state.coordinates) {
-            props.location.state.coordinates.map((coords) => {
+          let coordinates = props.location.state.coordinates;
+          if (coordinates) {
+            console.log(coordinates[0][0].lat);
+            const guessedLatLng = new google.maps.LatLng(
+              coordinates[0][0].lat,
+              coordinates[0][0].lng
+            );
+            const actualLatLng = new google.maps.LatLng(
+              coordinates[0][1].lat,
+              coordinates[0][1].lng
+            );
+            const bounds = new google.maps.LatLngBounds(
+              guessedLatLng,
+              actualLatLng
+            );
+            google.map.fitBounds(bounds);
+            coordinates.map(coords => {
               const polyline = new google.maps.Polyline({
                 path: coords
               });
@@ -55,14 +68,16 @@ const Score = (props) => {
           }
         }}
       >
-        {props.location.state.coordinates ? displayMarkers(props.location.state.coordinates) : null}
+        {props.location.state.coordinates
+          ? displayMarkers(props.location.state.coordinates)
+          : null}
       </GoogleMapReact>
       <Link to="/game">Next Game</Link>
     </div>
   );
 };
 
-const displayMarkers = (coordinates) => {
+const displayMarkers = coordinates => {
   return coordinates.map((coordinate, index) => {
     return coordinate.map(latlng => {
       return <Marker key={latlng.lat} lat={latlng.lat} lng={latlng.lng} />;
