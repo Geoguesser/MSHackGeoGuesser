@@ -52,7 +52,13 @@ const Score = props => {
           minZoom: 3,
           minZoomOverride: true,
           maxZoom: 3,
-          zoomControl: false
+          zoomControl: false,
+          restriction: {
+            latLngBounds: {
+              north: 85,
+              south: -85
+            }
+          }
         }}
         onGoogleApiLoaded={google => {
           props.coordinates &&
