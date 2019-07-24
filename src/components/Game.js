@@ -10,26 +10,37 @@ const Game = ({ history }) => {
   const [streetLat, setStreetLat] = React.useState(0);
   const [streetLng, setStreetLng] = React.useState(0);
 
-  const [insetMapLat, setInsetMapLat] = React.useState(0);
-  const [insetMapLng, setInsetMapLng] = React.useState(0);
+  const [insetMapLat, setInsetMapLat] = React.useState(null);
+  const [insetMapLng, setInsetMapLng] = React.useState(null);
 
   const submitGuess = () => {
-    const coordinates = [{ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng }];
-    const score = getScore({ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng });
+    if (insetMapLat === null || insetMapLng === null) {
+    } else {
+      console.log(insetMapLat, insetMapLng);
+      const coordinates = [
+        { lat: insetMapLat, lng: insetMapLng },
+        { lat: streetLat, lng: streetLng }
+      ];
+      const score = getScore(
+        { lat: insetMapLat, lng: insetMapLng },
+        { lat: streetLat, lng: streetLng }
+      );
+      console.log(coordinates, score);
 
-    history.push({
-      pathname: "/score",
-      state: {
-        coordinates: [coordinates],
-        score
-      }
-    });
+      history.push({
+        pathname: "/score",
+        state: {
+          coordinates: [coordinates],
+          score
+        }
+      });
+    }
   };
 
   return (
     <>
       <input
-        className="submit-button"
+        className={insetMapLat ? "submit-button" : "submit-btn-inactive"}
         type="button"
         value="Submit Guess"
         onClick={submitGuess}
