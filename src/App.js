@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import Game from "./components/Game";
 import Landing from "./components/Landing";
 import Score from "./components/Score";
@@ -10,11 +11,11 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-      <header>
-        <Link to="/">
-        <h1>MS Geoguesser</h1>
-        </Link>
-      </header>
+        <header>
+          <Link to="/">
+            <h1>MS Geoguesser</h1>
+          </Link>
+        </header>
         <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
         <Route exact path="/score" component={Score} />
