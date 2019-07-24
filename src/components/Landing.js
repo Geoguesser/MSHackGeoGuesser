@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
+
 class Landing extends React.Component {
   constructor(props) {
     super(props);
@@ -59,7 +60,6 @@ class Landing extends React.Component {
 
   updateUserDisplayNameCallback = (result, error) => {
     if (result !== null) {
-      console.log(`display name updated: ${JSON.stringify(result)}`);
       this.setState({
         shouldShowPlayLink: true
       });

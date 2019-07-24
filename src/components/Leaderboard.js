@@ -8,7 +8,6 @@ class Leaderboard extends React.Component {
         this.state = {
             ...props
         };
-        console.log(`leaderboard props: ${props}`);
     }
 
     componentWillMount() {
@@ -42,7 +41,7 @@ class Leaderboard extends React.Component {
 
     LoginCallback = (result, error) => {
         if (result !== null) {
-            PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
+            PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.updatePlayerStatistics);
         } else if (error !== null) {
             console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
         }
@@ -52,14 +51,14 @@ class Leaderboard extends React.Component {
         PlayFabClientSDK.UpdatePlayerStatistics({
             Statistics: [{
                 "StatisticName": "Headshots",
-                "Value": document.getElementById("highScore").value
+                "Value": this.props.location.score > 0 ? this.props.location.score : 0
             }]
         }, this.updateStatisticsCallback);
     };
 
     updateStatisticsCallback = (result, error) => {
         if (result) {
-            setTimeout(this.getLeaderboard, 500);
+            setTimeout(this.getLeaderboard, 750);
         } else if (error) {
             console.log(`failed to update stats: ${JSON.stringify(error)}`);
         }
@@ -74,7 +73,6 @@ class Leaderboard extends React.Component {
             this.setState({
                 leaderboard: result.data.Leaderboard
             });
-            console.log('end getLeaderboardCallback');
         } else if (error) {
             console.error(`failed to get stats: ${JSON.stringify(error)}`);
         }
@@ -93,9 +91,6 @@ class Leaderboard extends React.Component {
 
     render() {
         return (<div className="leaderboard-container">
-            <input style={{ margin: '10px' }} type="number" id="highScore" defaultValue="42" /><br />
-            <input style={{ margin: '10px' }} type="button" value="Update High Score/Get Leaderboard" onClick={this.updatePlayerStatistics} /><br />
-            <br />
             <HighScoreTable scores={this.state.leaderboard} />
         </div>);
     }
