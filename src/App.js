@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import Game from "./components/Game";
 import Landing from "./components/Landing";
 import Score from "./components/Score";
