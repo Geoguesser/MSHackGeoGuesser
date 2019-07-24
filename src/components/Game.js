@@ -3,33 +3,44 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Map from "./Map";
 import StreetView from "./Streetview";
-import { getLat, getLng } from "../utils/helpers";
+import { getScore } from "../utils/helpers";
 
 const Game = ({ history }) => {
-  const [googleMaps, setGoogleMaps] = React.useState(null);
-  const [streetLat, setStreetLat] = React.useState(getLat());
-  const [streetLng, setStreetLng] = React.useState(getLng());
+  const [googleMaps, setGoogleMaps] = React.useState(0);
+  const [streetLat, setStreetLat] = React.useState(0);
+  const [streetLng, setStreetLng] = React.useState(0);
 
-  const [insetMapLat, setInsetMapLat] = React.useState(0);
-  const [insetMapLng, setInsetMapLng] = React.useState(0);
+  const [insetMapLat, setInsetMapLat] = React.useState(null);
+  const [insetMapLng, setInsetMapLng] = React.useState(null);
 
   const submitGuess = () => {
-    console.log(`set latitude: ${insetMapLat}`);
-    console.log(`set longitude: ${insetMapLng}`);
+    if (insetMapLat === null || insetMapLng === null) {
+    } else {
+      console.log(insetMapLat, insetMapLng);
+      const coordinates = [
+        { lat: insetMapLat, lng: insetMapLng },
+        { lat: streetLat, lng: streetLng }
+      ];
+      const score = getScore(
+        { lat: insetMapLat, lng: insetMapLng },
+        { lat: streetLat, lng: streetLng }
+      );
+      console.log(coordinates, score);
 
-    // todo: calculate score, redirect to scoreboard with payload of score
-    history.push({
-      pathname: "/leaderboard",
-      state: {
-        example: 42
-      }
-    });
+      history.push({
+        pathname: "/score",
+        state: {
+          coordinates: [coordinates],
+          score
+        }
+      });
+    }
   };
 
   return (
     <>
       <input
-        className="submit-button"
+        className={insetMapLat ? "submit-button" : "submit-btn-inactive"}
         type="button"
         value="Submit Guess"
         onClick={submitGuess}
@@ -41,13 +52,15 @@ const Game = ({ history }) => {
         setInsetMapLng={setInsetMapLng}
         setGoogleMaps={setGoogleMaps}
       />
-      <StreetView
-        streetLat={streetLat}
-        setStreetLat={setStreetLat}
-        streetLng={streetLng}
-        setStreetLng={setStreetLng}
-        googleMaps={googleMaps}
-      />
+      {googleMaps ? (
+        <StreetView
+          streetLat={streetLat}
+          setStreetLat={setStreetLat}
+          streetLng={streetLng}
+          setStreetLng={setStreetLng}
+          googleMaps={googleMaps}
+        />
+      ) : null}
     </>
   );
 };
