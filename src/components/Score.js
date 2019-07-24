@@ -11,27 +11,8 @@ const Marker = () => {
   );
 };
 
-const Score = props => {
-  // props.coordinates (array of coordinates)
-  // Example:
-  // coordinates={[
-  //   [
-  //     { lat: 47.658427, lng: -122.141433 },
-  //     { lat: 51.529654, lng: -119.328933 }
-  //   ],
-  //   [
-  //     { lat: 28.761321, lng: -103.323608 },
-  //     { lat: 35.294347, lng: -101.209622 }
-  //   ],
-  //   [
-  //     { lat: -14.890877, lng: -61.2950687 },
-  //     { lat: 42.384539, lng: -5.85465 }
-  //   ],
-  //   [
-  //     { lat: -36.043767, lng: 148.087501 },
-  //     { lat: -8.922396, lng: 37.288956 }
-  //   ]
-  // ]}
+const Score = (props) => {
+  console.dir(props.location.state);
 
   return (
     <div
