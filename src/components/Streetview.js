@@ -1,17 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+// import Papa from "papaparse";
 
 class Streetview extends React.Component {
   state = {
     isLand: false,
-    lat: getLat(),
-    lng: getLng(),
+    lat: null,
+    lng: null,
     radius: 50,
     count: 0
   };
   componentDidMount() {
-    pickCity();
-    const { lat, lng } = this.state;
+    const { lat, lng } = pickCity();
+    this.setState({ lat: lat, lng: lng });
     this.httpGetAsync(lat, lng, response => {
       this.setState({ isLand: !response.water });
     });
@@ -19,8 +20,8 @@ class Streetview extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (!this.state.isLand) {
-      var lat = getLat();
-      var lng = getLng();
+      var lat = getLat(this.state.lat);
+      var lng = getLng(this.state.lng);
       this.httpGetAsync(lat, lng, response => {
         this.setState({ isLand: !response.water });
         if (!response.water) {
@@ -89,36 +90,27 @@ class Streetview extends React.Component {
   }
 }
 function pickCity() {
-  // var record_num = 3;
-  //var allText = "../assets/goodCities.csv"; // or however many elements there are in each row
-  // var entries = allTextLines[0].split(",");
-  // var lines = [];
-  // const results = [];
-  //fs.createReadStream("../assets/goodCities.csv")
-    // .pipe(csv())
-    // .on("headers", headers => {
-    //   console.log(results);
-    // });
-
-  // alert(lines);
+  var json = require("../assets/cities.json");
+  var item = json[Math.floor(Math.random() * json.length)];
+  return item;
 }
 
 function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function getLat() {
-  var min = 47.440755;
-  var max = 47.809214;
-  const lat = random(min, max);
-  return lat;
+function getLat(lat) {
+  var min = lat - 0.5;
+  var max = lat + 0.5;
+  const l = random(min, max);
+  return l;
 }
 
-function getLng() {
-  var min = -122.405804;
-  var max = -121.9935;
-  var lng = random(min, max);
-  return lng;
+function getLng(lng) {
+  var min = lng - 0.5;
+  var max = lng + 0.5;
+  var l = random(min, max);
+  return l;
 }
 
 Streetview.defaultProps = {
