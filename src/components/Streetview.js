@@ -1,31 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { getLat, getLng } from "../utils/helpers";
 
 class Streetview extends React.Component {
   state = {
     isLand: false,
-    lat: getLat(),
-    lng: getLng(),
     radius: 50,
     count: 0
   };
   componentDidMount() {
-    const { lat, lng } = this.state;
-    this.httpGetAsync(lat, lng, response => {
+    const { streetLat, streetLng } = this.props;
+    this.httpGetAsync(streetLat, streetLng, response => {
       this.setState({ isLand: !response.water });
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!this.state.isLand) {
-      var lat = getLat();
-      var lng = getLng();
-      this.httpGetAsync(lat, lng, response => {
+      const newLat = getLat();
+      const newLng = getLng();
+      this.httpGetAsync(newLat, newLng, response => {
         this.setState({ isLand: !response.water });
         if (!response.water) {
-          this.setState({ lat: lat, lng: lng }, () => {
-            this.initialize();
-          });
+          // TODO:make sure this functionality is still working
+          /*
+            old code:
+            this.setState({...}, () => initialize())
+          */
+          this.props.setStreetLat(newLat);
+          this.props.setStreetLng(newLng);
+          this.initialize();
         }
       });
     }
@@ -48,11 +52,12 @@ class Streetview extends React.Component {
   };
 
   initialize = () => {
-    if (this.props.googleMaps && this.streetView == null) {
+    if (this.props.googleMaps) {
       const service = new this.props.googleMaps.StreetViewService();
+      const { streetLat, streetLng } = this.props;
       service.getPanorama(
         {
-          location: { lat: this.state.lat, lng: this.state.lng },
+          location: { lat: streetLat, lng: streetLng },
           radius: this.state.radius
         },
         (data, status) => {
@@ -86,24 +91,6 @@ class Streetview extends React.Component {
   render() {
     return <div style={{ height: "100vh" }} />;
   }
-}
-
-function random(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-function getLat() {
-  var min = 47.440755;
-  var max = 47.809214;
-  const lat = random(min, max);
-  return lat;
-}
-
-function getLng() {
-  var min = -122.405804;
-  var max = -121.9935;
-  var lng = random(min, max);
-  return lng;
 }
 
 Streetview.defaultProps = {
