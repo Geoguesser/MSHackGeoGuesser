@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Map from "./Map";
 import StreetView from "./Streetview";
 
-const Game = () => {
+const Game = ({ history }) => {
   const [googleMaps, setGoogleMaps] = React.useState(null);
   const [insetMapLat, setInsetMapLat] = React.useState(0);
   const [insetMapLng, setInsetMapLng] = React.useState(0);
@@ -13,6 +13,11 @@ const Game = () => {
     console.log(`set longitude: ${insetMapLng}`);
 
     // todo: calculate score, redirect to scoreboard with payload of score
+    history.push({
+      pathname: '/leaderboard',
+      state: {
+        example: 42
+      }});
   };
 
   return (
