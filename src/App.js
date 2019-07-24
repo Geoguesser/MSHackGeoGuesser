@@ -10,11 +10,11 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-      <header>
-        <Link to="/">
-        <h1>MS Geoguesser</h1>
-        </Link>
-      </header>
+        <header>
+          <Link to="/">
+            <h1>MS Geoguesser</h1>
+          </Link>
+        </header>
         <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
         <Route exact path="/score" component={Score} />
