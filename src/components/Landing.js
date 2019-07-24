@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Landing extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       shouldShowPlayLink: false
     };
@@ -20,7 +20,6 @@ class Landing extends React.Component {
         <input style={{ margin: '10px' }} type="text" id="customId" defaultValue="AAA" />
         </div>
           <div onClick={this.DoLoginCurrentUser} className="start-btn">Play Geoguesser</div>
-        {/* <Link ref={this.gameLink} style={{ display: "none"}} to="/game" /> */}
       </div>
     );
   }
@@ -48,7 +47,9 @@ class Landing extends React.Component {
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: document.getElementById("customId").value }, this.updateUserDisplayNameCallback);
       document.cookie = `geoguessr_session_cookie=${result.data.SessionTicket}`;
       document.cookie = `geoguessr_initials=${document.getElementById("customId").value}`;
-      window.location = "http://localhost:3000/game";
+      this.props.history.push({
+        pathname: "/game",
+      });
     } else if (error !== null) {
       console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
     }
@@ -68,4 +69,4 @@ class Landing extends React.Component {
 
 
 
-export default Landing;
+export default withRouter(Landing);
