@@ -32,6 +32,7 @@ const Score = props => {
   //     { lat: -8.922396, lng: 37.288956 }
   //   ]
   // ]}
+  const [map, setMap] = React.useState(null);
 
   return (
     <div
@@ -63,6 +64,14 @@ const Score = props => {
           }
         }}
         onGoogleApiLoaded={google => {
+          setMap(google);
+          const guessedLatLng = new google.maps.LatLng({ lat: -34, lng: 151 });
+          const actualLatLng = new google.maps.LatLng({ lat: -22, lng: 149 });
+          const center = new google.maps.LatLngBounds([
+            guessedLatLng,
+            actualLatLng
+          ]).getCenter();
+          google.map.fitBounds(center);
           props.coordinates &&
             props.coordinates.map(coordinate => {
               const polyline = new google.maps.Polyline({
