@@ -55,12 +55,13 @@ const Score = props => {
           zoomControl: false
         }}
         onGoogleApiLoaded={google => {
-          props.coordinates.map(coordinate => {
-            const polyline = new google.maps.Polyline({
-              path: coordinate
+          props.coordinates &&
+            props.coordinates.map(coordinate => {
+              const polyline = new google.maps.Polyline({
+                path: coordinate
+              });
+              polyline.setMap(google.map);
             });
-            polyline.setMap(google.map);
-          });
         }}
       >
         {props.coordinates ? displayMarkers(props.coordinates) : null}
