@@ -19,7 +19,7 @@ const App = () => {
       </header>
         <Route exact path="/game" component={() => <Game setScore={setScore} setDistance={setDistance}/>} />
         <Route exact path="/" component={Landing} />
-        <Route exact path="/score" component={() => <Score score={score} distance={distance}/>} />
+        <Route exact path="/score" component={Score} />
         <Route exact path="/leaderboard" component={Leaderboard} />
       </div>
     </Router>

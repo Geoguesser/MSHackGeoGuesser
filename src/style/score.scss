@@ -1,0 +1,9 @@
+.user-score {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    font-size: 2em;
+    transform:translateX(-50%);
+    color: white;
+    z-index: 99999;
+}
