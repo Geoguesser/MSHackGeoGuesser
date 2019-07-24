@@ -3,10 +3,8 @@ import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 import { getScore } from "../utils/helpers";
 
-const Map = ({ setGoogleMaps }) => {
-  const [lat, setLat] = React.useState(0);
+const Map = ({ setGoogleMaps, insetMapLat, insetMapLng, setInsetMapLat, setInsetMapLng }) => {
   const [polyline, setPolyline] = React.useState(0);
-  const [lng, setLng] = React.useState(0);
   const [score, setScore] = React.useState(0);
   const [map, setMap] = React.useState(0);
   const [origin, setOrigin] = React.useState(0);
@@ -31,25 +29,24 @@ const Map = ({ setGoogleMaps }) => {
         options={{
           fullscreenControl: false
         }}
-        onGoogleApiLoaded={map => {
+        onGoogleApiLoaded={google => {
           setOrigin({ lat: 47.658427, lng: -122.141433 });
-          setGoogleMaps(map.maps);
-          setMap(map.map);
-          setPolyline(new map.maps.Polyline({ path: [origin] }));
+          setGoogleMaps(google.maps);
+          setMap(google.map);
+          setPolyline(new google.maps.Polyline({ path: [origin], geodesic: true }));
         }}
         onClick={e => {
-          setLat(e.lat);
-          setLng(e.lng);
+          setInsetMapLat(e.lat);
+          setInsetMapLng(e.lng);
           setScore(getScore({ lat: e.lat, lng: e.lng }, origin));
           if (polyline) {
             polyline.setPath([{ lat: e.lat, lng: e.lng }, origin]);
             polyline.setMap(map);
           }
-          console.log(score);
         }}
         yesIWantToUseGoogleMapApiInternals
       >
-        {lat ? <Marker lat={lat} lng={lng} /> : null}
+        {insetMapLat && insetMapLng ? <Marker lat={insetMapLat} lng={insetMapLng} /> : null}
       </GoogleMapReact>
     </div>
   );

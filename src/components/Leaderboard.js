@@ -3,11 +3,12 @@ import HighScoreTable from './HighScoreTable';
 import '../style/leaderboard.scss';
 
 class Leaderboard extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            leaderboard: []
+            ...props
         };
+        console.log(`leaderboard props: ${props}`);
     }
 
     componentWillMount() {

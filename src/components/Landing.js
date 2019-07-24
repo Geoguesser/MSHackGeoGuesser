@@ -7,18 +7,26 @@ class Landing extends React.Component {
     this.state = {
       shouldShowPlayLink: false
     };
+    this.gameLink = React.createRef();
   }
 
   render = () => {
     return (
       <div className="landing">
-        <input style={{ margin: '10px' }} type="text" id="customId" defaultValue="AAA" /><br />
-        <input style={{ margin: '10px' }} type="button" value="Set Initials" onClick={this.DoLoginCurrentUser} /><br />
-        <Link style={this.state.shouldShowPlayLink ? null : { display: 'none' }} className="start-btn" to="/game">
-          <div>Play Geoguesser</div>
-        </Link>
+        <div>
+        <text>
+          User Name
+        </text>
+        <input style={{ margin: '10px' }} type="text" id="customId" defaultValue="AAA" />
+        </div>
+          <div onClick={this.DoLoginCurrentUser} className="start-btn">Play Geoguesser</div>
+        {/* <Link ref={this.gameLink} style={{ display: "none"}} to="/game" /> */}
       </div>
     );
+  }
+
+  gameLink (e) {
+    e.target.click();
   }
 
   DoLoginCurrentUser = () => {
@@ -40,7 +48,7 @@ class Landing extends React.Component {
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: document.getElementById("customId").value }, this.updateUserDisplayNameCallback);
       document.cookie = `geoguessr_session_cookie=${result.data.SessionTicket}`;
       document.cookie = `geoguessr_initials=${document.getElementById("customId").value}`;
-      console.log(`login result: ${JSON.stringify(result)}`);
+      window.location = "http://localhost:3000/game";
     } else if (error !== null) {
       console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
     }
