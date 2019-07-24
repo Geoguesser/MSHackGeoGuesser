@@ -88,18 +88,22 @@ class Streetview extends React.Component {
   }
 }
 
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 function getLat() {
-  var min = -90;
-  var max = 90;
-  var lat = Math.floor(Math.random() * 100000 * (+max - +min)) + +min;
-  return lat / 1000000;
+  var min = 47.440755;
+  var max = 47.809214;
+  const lat = random(min, max);
+  return lat;
 }
 
 function getLng() {
-  var min = -180;
-  var max = 180;
-  var lng = Math.floor(Math.random() * 100000 * (+max - +min)) + +min;
-  return lng / 1000000;
+  var min = -122.405804;
+  var max = -121.9935;
+  var lng = random(min, max);
+  return lng;
 }
 
 Streetview.defaultProps = {
