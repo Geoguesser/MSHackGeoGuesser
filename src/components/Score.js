@@ -1,3 +1,4 @@
+import '../style/score.scss'
 import React from "react";
 import GoogleMapReact from "google-map-react";
 import marker from "../assets/placeholder.png";
@@ -22,6 +23,8 @@ const Score = (props) => {
   }
 
   return (
+    <>
+    <div className="user-score" >Score: {props.location.state.score}</div>
     <div
       style={{
         height: "100vh",
@@ -86,11 +89,12 @@ const Score = (props) => {
       </GoogleMapReact>
       <Link to="/game">Next Game</Link>
     </div>
+    </>
   );
 };
 
 const displayMarkers = coordinates => {
-  return coordinates.map((coordinate, index) => {
+  return coordinates.map((coordinate) => {
     return coordinate.map(latlng => {
       return <Marker key={latlng.lat} lat={latlng.lat} lng={latlng.lng} />;
     });

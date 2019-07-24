@@ -1,9 +1,9 @@
-import "../style/game.scss";
 import React from "react";
 import { withRouter } from "react-router-dom";
 import Map from "./Map";
 import StreetView from "./Streetview";
 import { getScore } from "../utils/helpers";
+import "../style/game.scss";
 
 const Game = ({ history }) => {
   const [googleMaps, setGoogleMaps] = React.useState(0);

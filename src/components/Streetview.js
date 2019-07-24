@@ -1,7 +1,7 @@
-import "../style/streetview.scss";
 import React from "react";
 import ReactDOM from "react-dom";
 import { getLat, getLng, pickCity } from "../utils/helpers";
+import "../style/streetview.scss";
 
 class Streetview extends React.Component {
   state = {
