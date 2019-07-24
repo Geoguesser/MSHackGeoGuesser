@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 
 class Landing extends React.Component {
   constructor(props) {
-    console.log(process.env);
     super(props);
     this.state = {
       shouldShowPlayLink: false
