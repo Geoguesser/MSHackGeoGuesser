@@ -7,6 +7,8 @@ import Leaderboard from "./components/Leaderboard";
 import "./style/landing.scss";
 
 const App = () => {
+  const [score, setScore] = React.useState(0);
+  const [distance, setDistance] = React.useState(0);
   return (
     <Router>
       <div className="App">
@@ -15,9 +17,9 @@ const App = () => {
         <h1>MS Geoguesser</h1>
         </Link>
       </header>
-        <Route exact path="/game" component={Game} />
+        <Route exact path="/game" component={() => <Game setScore={setScore} setDistance={setDistance}/>} />
         <Route exact path="/" component={Landing} />
-        <Route exact path="/score" component={Score} />
+        <Route exact path="/score" component={() => <Score score={score} distance={distance}/>} />
         <Route exact path="/leaderboard" component={Leaderboard} />
       </div>
     </Router>

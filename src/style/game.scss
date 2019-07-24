@@ -17,6 +17,11 @@
     background: rgba(238, 238, 238, 0.5);
 }
 
+.submit-button:focus, .submit-btn-inactive:focus {
+    outline: 0;
+    box-shadow: none!important;
+}
+
 .submit-btn-inactive {
     color: rgba(255, 255, 255, 0.5);
     border: none;
