@@ -12,27 +12,7 @@ const Marker = () => {
 };
 
 const Score = props => {
-  // props.coordinates (array of coordinates)
-  // Example:
-  // coordinates={[
-  //   [
-  //     { lat: 47.658427, lng: -122.141433 },
-  //     { lat: 51.529654, lng: -119.328933 }
-  //   ],
-  //   [
-  //     { lat: 28.761321, lng: -103.323608 },
-  //     { lat: 35.294347, lng: -101.209622 }
-  //   ],
-  //   [
-  //     { lat: -14.890877, lng: -61.2950687 },
-  //     { lat: 42.384539, lng: -5.85465 }
-  //   ],
-  //   [
-  //     { lat: -36.043767, lng: 148.087501 },
-  //     { lat: -8.922396, lng: 37.288956 }
-  //   ]
-  // ]}
-  const [map, setMap] = React.useState(null);
+  console.dir(props.location.state);
 
   return (
     <div
@@ -43,6 +23,7 @@ const Score = props => {
     >
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
+        // todo: calculate actual midpoint between lat/lngs and use this as center
         defaultCenter={{
           lat: 27.658427,
           lng: 0.141433
@@ -64,7 +45,6 @@ const Score = props => {
           }
         }}
         onGoogleApiLoaded={google => {
-          setMap(google);
           const guessedLatLng = new google.maps.LatLng({ lat: -34, lng: 151 });
           const actualLatLng = new google.maps.LatLng({ lat: -22, lng: 149 });
           const center = new google.maps.LatLngBounds([
@@ -72,16 +52,19 @@ const Score = props => {
             actualLatLng
           ]).getCenter();
           google.map.fitBounds(center);
-          props.coordinates &&
-            props.coordinates.map(coordinate => {
+          if (props.location.state.coordinates) {
+            props.location.state.coordinates.map(coords => {
               const polyline = new google.maps.Polyline({
-                path: coordinate
+                path: coords
               });
               polyline.setMap(google.map);
             });
+          }
         }}
       >
-        {props.coordinates ? displayMarkers(props.coordinates) : null}
+        {props.location.state.coordinates
+          ? displayMarkers(props.location.state.coordinates)
+          : null}
       </GoogleMapReact>
       <Link to="/game">Next Game</Link>
     </div>

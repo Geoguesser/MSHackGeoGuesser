@@ -1,69 +1,47 @@
-import '../style/streetview.scss';
+import "../style/streetview.scss";
 import React from "react";
 import ReactDOM from "react-dom";
-import { getLat, getLng } from "../utils/helpers";
+import { getLat, getLng, pickCity } from "../utils/helpers";
 
 class Streetview extends React.Component {
   state = {
-    isLand: false,
+    lat: null,
+    lng: null,
     radius: 50,
-    count: 0
+    count: 0,
+    googleMaps: this.props.googleMaps
   };
   componentDidMount() {
-    const { streetLat, streetLng } = this.props;
-    this.httpGetAsync(streetLat, streetLng, response => {
-      this.setState({ isLand: !response.water });
+    const { lat, lng } = pickCity();
+    this.setState({ lat: lat, lng: lng }, () => {
+      this.initialize();
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.state.isLand) {
-      const newLat = getLat();
-      const newLng = getLng();
-      this.httpGetAsync(newLat, newLng, response => {
-        this.setState({ isLand: !response.water });
-        if (!response.water) {
-          // TODO:make sure this functionality is still working
-          /*
-            old code:
-            this.setState({...}, () => initialize())
-          */
-          this.props.setStreetLat(newLat);
-          this.props.setStreetLng(newLng);
-          this.initialize();
-        }
-      });
-    }
     if (prevState.radius < this.state.radius) {
+      const lat = getLat(this.state.lat);
+      const lng = getLng(this.state.lng);
+      this.props.setStreetLat(lat);
+      this.props.setStreetLng(lng);
+      this.initialize();
+    }
+    if (prevState.googleMaps !== this.state.googleMaps) {
       this.initialize();
     }
   }
 
-  httpGetAsync = (lat, lng, callback) => {
-    var theUrl = `https://api.onwater.io/api/v1/results/${lat},${lng}?access_token=${
-      process.env.REACT_APP_WATER_IO
-    }`;
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-      if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
-        callback(xmlHttp.responseText);
-    };
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous
-    xmlHttp.send(null);
-  };
-
   initialize = () => {
-    if (this.props.googleMaps) {
-      const service = new this.props.googleMaps.StreetViewService();
-      const { streetLat, streetLng } = this.props;
+    if (this.state.googleMaps) {
+      const service = new this.state.googleMaps.StreetViewService();
       service.getPanorama(
         {
-          location: { lat: streetLat, lng: streetLng },
+          location: { lat: this.state.lat, lng: this.state.lng },
           radius: this.state.radius
         },
         (data, status) => {
           if (status === "OK") {
-            const panorama = new this.props.googleMaps.StreetViewPanorama(
+            const panorama = new this.state.googleMaps.StreetViewPanorama(
               ReactDOM.findDOMNode(this),
               {
                 ...this.props.streetViewPanoramaOptions,
@@ -79,6 +57,8 @@ class Streetview extends React.Component {
               pitch: 0
             });
             panorama.setVisible(true);
+            this.props.setStreetLat(this.state.lat);
+            this.props.setStreetLng(this.state.lng);
           } else {
             if (this.state.radius < 5000000) {
               this.setState({ radius: this.state.radius * 10 });
@@ -96,7 +76,6 @@ class Streetview extends React.Component {
 
 Streetview.defaultProps = {
   streetViewPanoramaOptions: {
-    // position: { lat: 28.433127, lng: -81.47857 },
     pov: { heading: 0, pitch: 0 },
     zoom: 1
   }

@@ -26,18 +26,24 @@ function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function getLat() {
-  var min = 47.440755;
-  var max = 47.809214;
-  const lat = random(min, max);
-  return lat;
+function pickCity() {
+  const json = require("../assets/cities.json");
+  const item = json[Math.floor(Math.random() * json.length)];
+  return item;
 }
 
-function getLng() {
-  var min = -122.405804;
-  var max = -121.9935;
-  var lng = random(min, max);
-  return lng;
+function getLat(lat) {
+  const min = lat - 0.5;
+  const max = lat + 0.5;
+  const l = random(min, max);
+  return l;
 }
 
-export { getDistance, getScore, getLat, getLng };
+function getLng(lng) {
+  const min = lng - 0.5;
+  const max = lng + 0.5;
+  const l = random(min, max);
+  return l;
+}
+
+export { getDistance, getScore, getLat, getLng, pickCity };
