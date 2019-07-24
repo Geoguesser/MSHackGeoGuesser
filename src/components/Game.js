@@ -19,15 +19,13 @@ const Game = ({ history }) => {
     console.log(`actual latitude: ${streetLat}`);
     console.log(`actual longitude: ${streetLng}`);
 
-    const score = getScore({ lat: insetMapLat, lng: insetMapLng}, { lat: streetLat, lng: streetLng});
+    const coordinates = [{ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng }];
+    const score = getScore({ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng });
 
     history.push({
       pathname: "/score",
       state: {
-        insetMapLat,
-        insetMapLng,
-        streetLat,
-        streetLng,
+        coordinates: [coordinates],
         score
       }
     });

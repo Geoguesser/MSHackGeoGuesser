@@ -23,6 +23,7 @@ const Score = (props) => {
     >
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
+        // todo: calculate actual midpoint between lat/lngs and use this as center
         defaultCenter={{
           lat: 27.658427,
           lng: 0.141433
@@ -44,23 +45,24 @@ const Score = (props) => {
           }
         }}
         onGoogleApiLoaded={google => {
-          props.coordinates &&
-            props.coordinates.map(coordinate => {
+          if (props.location.state.coordinates) {
+            props.location.state.coordinates.map((coords) => {
               const polyline = new google.maps.Polyline({
-                path: coordinate
+                path: coords
               });
               polyline.setMap(google.map);
             });
+          }
         }}
       >
-        {props.coordinates ? displayMarkers(props.coordinates) : null}
+        {props.location.state.coordinates ? displayMarkers(props.location.state.coordinates) : null}
       </GoogleMapReact>
       <Link to="/game">Next Game</Link>
-    </div>
+    </div >
   );
 };
 
-const displayMarkers = coordinates => {
+const displayMarkers = (coordinates) => {
   return coordinates.map((coordinate, index) => {
     return coordinate.map(latlng => {
       return <Marker key={latlng.lat} lat={latlng.lat} lng={latlng.lng} />;
