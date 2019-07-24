@@ -11,6 +11,8 @@ class Leaderboard extends React.Component {
     }
 
     componentWillMount() {
+        /*eslint-disable no-undef*/
+        PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
     }
 
     componentDidUpdate() {
@@ -19,48 +21,13 @@ class Leaderboard extends React.Component {
     componentWillUnmount() {
     }
 
-    initialize = () => {
-    };
-
-    DoLoginCurrentUser = () => {
-        /*eslint-disable no-undef*/
-        PlayFab.settings.titleId = process.env.REACT_APP_PLAYFAB_GAME_ID;
-        var loginRequest = {
-            // Currently, you need to look up the correct format for this object in the API-docs:
-            // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
-            TitleId: PlayFab.settings.titleId,
-            CustomId: document.getElementById("customId").value,
-            CreateAccount: true
-        };
-
-        PlayFabClientSDK.LoginWithCustomID(loginRequest, this.LoginCallback);
-    }
-
-    LoginCallback = (result, error) => {
-        if (result !== null) {
-            PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: document.getElementById("customId").value }, this.updateUserDisplayNameCallback);
-            PlayFabClientSDK.UpdatePlayerStatistics({
-                Statistics: [{
-                    "StatisticName": "Headshots",
-                    "Value": document.getElementById("highScore").value
-                }]
-            }, this.updateStatisticsCallback);
-        } else if (error !== null) {
-            console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
-        }
-    }
-
-    updateUserDisplayNameCallback = (result, error) => {
-        if (result !== null) {
-            PlayFabClientSDK.UpdatePlayerStatistics({
-                Statistics: [{
-                    "StatisticName": "Headshots",
-                    "Value": 47
-                }]
-            }, this.updateStatisticsCallback);
-        } else if (error !== null) {
-            console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
-        }
+    updatePlayerStatistics = () => {
+        PlayFabClientSDK.UpdatePlayerStatistics({
+            Statistics: [{
+                "StatisticName": "Headshots",
+                "Value": document.getElementById("highScore").value
+            }]
+        }, this.updateStatisticsCallback);
     };
 
     updateStatisticsCallback = (result, error) => {
@@ -95,9 +62,8 @@ class Leaderboard extends React.Component {
 
     render() {
         return (<div className="leaderboard-container">
-            <input style={{margin: '10px'}} type="text" id="customId" defaultValue="AAA" /><br />
-            <input style={{margin: '10px'}} type="number" id="highScore" defaultValue="42" /><br />
-            <input style={{margin: '10px'}} type="button" value="Login/Update High Score/Get Leaderboard" onClick={this.DoLoginCurrentUser} /><br />
+            <input style={{ margin: '10px' }} type="number" id="highScore" defaultValue="42" /><br />
+            <input style={{ margin: '10px' }} type="button" value="Update High Score/Get Leaderboard" onClick={this.updatePlayerStatistics} /><br />
             <br />
             <HighScoreTable scores={this.state.leaderboard} />
         </div>);
