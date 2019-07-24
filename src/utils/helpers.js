@@ -22,4 +22,22 @@ const getScore = (pt1, pt2) => {
   return Math.round(5000 * Math.exp(-distance / 1200)) + 1;
 };
 
-export { getDistance, getScore };
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function getLat() {
+  var min = 47.440755;
+  var max = 47.809214;
+  const lat = random(min, max);
+  return lat;
+}
+
+function getLng() {
+  var min = -122.405804;
+  var max = -121.9935;
+  var lng = random(min, max);
+  return lng;
+}
+
+export { getDistance, getScore, getLat, getLng };
