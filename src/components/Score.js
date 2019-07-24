@@ -31,8 +31,6 @@ const Score = props => {
         defaultZoom={3}
         yesIWantToUseGoogleMapApiInternals
         options={{
-          minZoom: 3,
-          minZoomOverride: true,
           maxZoom: 3,
           zoomControl: false,
           restriction: {
@@ -45,15 +43,23 @@ const Score = props => {
           }
         }}
         onGoogleApiLoaded={google => {
-          const guessedLatLng = new google.maps.LatLng({ lat: -34, lng: 151 });
-          const actualLatLng = new google.maps.LatLng({ lat: -22, lng: 149 });
-          const center = new google.maps.LatLngBounds([
-            guessedLatLng,
-            actualLatLng
-          ]).getCenter();
-          google.map.fitBounds(center);
-          if (props.location.state.coordinates) {
-            props.location.state.coordinates.map(coords => {
+          let coordinates = props.location.state.coordinates;
+          if (coordinates) {
+            console.log(coordinates[0][0].lat);
+            const guessedLatLng = new google.maps.LatLng(
+              coordinates[0][0].lat,
+              coordinates[0][0].lng
+            );
+            const actualLatLng = new google.maps.LatLng(
+              coordinates[0][1].lat,
+              coordinates[0][1].lng
+            );
+            const bounds = new google.maps.LatLngBounds(
+              guessedLatLng,
+              actualLatLng
+            );
+            google.map.fitBounds(bounds);
+            coordinates.map(coords => {
               const polyline = new google.maps.Polyline({
                 path: coords
               });
