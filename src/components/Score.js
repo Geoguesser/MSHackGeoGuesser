@@ -58,7 +58,7 @@ const Score = (props) => {
         {props.location.state.coordinates ? displayMarkers(props.location.state.coordinates) : null}
       </GoogleMapReact>
       <Link to="/game">Next Game</Link>
-    </div >
+    </div>
   );
 };
 

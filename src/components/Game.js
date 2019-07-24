@@ -14,11 +14,6 @@ const Game = ({ history }) => {
   const [insetMapLng, setInsetMapLng] = React.useState(0);
 
   const submitGuess = () => {
-    console.log(`guessed latitude: ${insetMapLat}`);
-    console.log(`guessed longitude: ${insetMapLng}`);
-    console.log(`actual latitude: ${streetLat}`);
-    console.log(`actual longitude: ${streetLng}`);
-
     const coordinates = [{ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng }];
     const score = getScore({ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng });
 
