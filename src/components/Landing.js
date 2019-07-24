@@ -1,79 +1,61 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-class Landing extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shouldShowPlayLink: false
-    };
-    this.gameLink = React.createRef();
-  }
+const { REACT_APP_PLAYFAB_GAME_ID } = process.env;
 
-  render = () => {
+class Landing extends React.Component {
+  state = {
+    initials: "AAA"
+  };
+
+  onChangeInitials = e => {
+    this.setState({ initials: e.currentTarget.value });
+  };
+
+  loginUser = async () => {
+    const { PlayFab, PlayFabClientSDK } = window;
+    const { initials } = this.state;
+    const loginSettings = {
+      TitleId: REACT_APP_PLAYFAB_GAME_ID,
+      CustomId: this.state.initials,
+      CreateAccount: true
+    };
+    // Currently, you need to look up the correct format for this object in the API-docs:
+    // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
+    PlayFabClientSDK.LoginWithCustomID(loginSettings, (loginRes, loginErr) => {
+      if (loginRes !== null) {
+        PlayFab.settings.titleId = REACT_APP_PLAYFAB_GAME_ID;
+        PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: initials }, res => {
+          if (res) {
+            document.cookie = `geoguessr_session_cookie=${res.data.SessionTicket}`;
+            document.cookie = `geoguessr_initials=${initials}`;
+            this.props.history.push("/game");
+          }
+        });
+      }
+    });
+  };
+
+  render() {
+    const { initials } = this.state;
     return (
       <div className="landing">
-        <div>
-          <text>User Name</text>
+        <label>
+          Enter initials
           <input
             style={{ margin: "10px" }}
             type="text"
             id="customId"
-            defaultValue="AAA"
+            onChange={this.onChangeInitials}
+            value={initials}
           />
-        </div>
-        <div onClick={this.DoLoginCurrentUser} className="start-btn">
+        </label>
+        <div onClick={this.loginUser} className="start-btn">
           Play Geoguesser
         </div>
       </div>
     );
-  };
-
-  gameLink(e) {
-    e.target.click();
   }
-
-  DoLoginCurrentUser = () => {
-    /*eslint-disable no-undef*/
-    PlayFab.settings.titleId = process.env.REACT_APP_PLAYFAB_GAME_ID;
-    var loginRequest = {
-      // Currently, you need to look up the correct format for this object in the API-docs:
-      // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
-      TitleId: PlayFab.settings.titleId,
-      CustomId: document.getElementById("customId").value,
-      CreateAccount: true
-    };
-
-    PlayFabClientSDK.LoginWithCustomID(loginRequest, this.LoginCallback);
-  };
-
-  LoginCallback = (result, error) => {
-    if (result !== null) {
-      PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: document.getElementById("customId").value }, this.updateUserDisplayNameCallback);
-    } else if (error !== null) {
-      console.error(
-        `something went wrong with the login request...${JSON.stringify(error)}`
-      );
-    }
-  };
-
-  updateUserDisplayNameCallback = (result, error) => {
-    if (result !== null) {
-      console.log(`display name updated: ${JSON.stringify(result)}`);
-      this.setState({
-        shouldShowPlayLink: true
-      });
-      document.cookie = `geoguessr_session_cookie=${result.data.SessionTicket}`;
-      document.cookie = `geoguessr_initials=${document.getElementById("customId").value}`;
-      this.props.history.push({
-        pathname: "/game",
-      });
-    } else if (error !== null) {
-      console.error(
-        `something went wrong with the login request...${JSON.stringify(error)}`
-      );
-    }
-  };
 }
 
 export default withRouter(Landing);
