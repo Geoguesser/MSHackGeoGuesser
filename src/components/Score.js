@@ -1,18 +1,22 @@
 import '../style/score.scss'
 import React from "react";
 import GoogleMapReact from "google-map-react";
-import marker from "../assets/placeholder.png";
+import flagMarker from "../assets/red-flag.png";
+import circleMarker from "../assets/red-circle.png";
 import { Link } from "react-router-dom";
 
-const Marker = () => {
+const Marker = (props) => {
+  const classname = props.icon.split(".")[0].split("/static/media/")[1]
   return (
     <div>
-      <img src={marker} alt="" />
+      <img className={classname} src={props.icon} alt="" />
     </div>
   );
 };
 
 const Score = props => {
+  const [guessedLatLng, setGuessedLatLng] = React.useState(0);
+  const [actualLatLng, setActualLatLng] = React.useState(0);
   return (
     <>
     <div className="user-score" >Score: {props.location.state.score}</div>
@@ -50,10 +54,18 @@ const Score = props => {
               coordinates[0][0].lat,
               coordinates[0][0].lng
             );
+            setGuessedLatLng({
+              lat: coordinates[0][0].lat,
+              lng: coordinates[0][0].lng
+            });
             const actualLatLng = new google.maps.LatLng(
               coordinates[0][1].lat,
               coordinates[0][1].lng
             );
+            setActualLatLng({
+              lat: coordinates[0][1].lat,
+              lng: coordinates[0][1].lng
+            });
             const bounds = new google.maps.LatLngBounds(
               guessedLatLng,
               actualLatLng
@@ -68,9 +80,8 @@ const Score = props => {
           }
         }}
       >
-        {props.location.state.coordinates
-          ? displayMarkers(props.location.state.coordinates)
-          : null}
+        {displayMarker(guessedLatLng, circleMarker)}
+        {displayMarker(actualLatLng, flagMarker)}
       </GoogleMapReact>
       <Link to="/game">Next Game</Link>
     </div>
@@ -78,12 +89,7 @@ const Score = props => {
   );
 };
 
-const displayMarkers = coordinates => {
-  return coordinates.map((coordinate) => {
-    return coordinate.map(latlng => {
-      return <Marker key={latlng.lat} lat={latlng.lat} lng={latlng.lng} />;
-    });
-  });
-};
+const displayMarker = (coords, icon) => <Marker key={coords.lat} lat={coords.lat} lng={coords.lng} icon={icon} />
+      
 
 export default Score;

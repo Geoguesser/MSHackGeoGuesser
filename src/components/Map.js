@@ -9,7 +9,6 @@ const Map = ({
   setInsetMapLat,
   setInsetMapLng
 }) => {
-  const [origin, setOrigin] = React.useState();
   return (
     <div
       style={{
@@ -32,7 +31,6 @@ const Map = ({
           fullscreenControl: false
         }}
         onGoogleApiLoaded={google => {
-          setOrigin({ lat: 47.658427, lng: -122.141433 });
           setGoogleMaps(google.maps);
         }}
         onClick={e => {
