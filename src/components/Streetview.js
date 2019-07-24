@@ -1,6 +1,6 @@
+import '../style/streetview.scss';
 import React from "react";
 import ReactDOM from "react-dom";
-// import Papa from "papaparse";
 
 class Streetview extends React.Component {
   state = {
@@ -25,9 +25,10 @@ class Streetview extends React.Component {
       this.httpGetAsync(lat, lng, response => {
         this.setState({ isLand: !response.water });
         if (!response.water) {
-          this.setState({ lat: lat, lng: lng }, () => {
-            this.initialize();
-          });
+          // TODO:make sure this functionality is still working
+          this.props.setStreetLat(lat);
+          this.props.setStreetLng(lng);
+          this.initialize();
         }
       });
     }
@@ -50,11 +51,12 @@ class Streetview extends React.Component {
   };
 
   initialize = () => {
-    if (this.props.googleMaps && this.streetView == null) {
+    if (this.props.googleMaps) {
       const service = new this.props.googleMaps.StreetViewService();
+      const { streetLat, streetLng } = this.props;
       service.getPanorama(
         {
-          location: { lat: this.state.lat, lng: this.state.lng },
+          location: { lat: streetLat, lng: streetLng },
           radius: this.state.radius
         },
         (data, status) => {
@@ -86,7 +88,7 @@ class Streetview extends React.Component {
   };
 
   render() {
-    return <div style={{ height: "100vh" }} />;
+    return <div className="streetview" />;
   }
 }
 function pickCity() {
