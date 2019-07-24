@@ -14,17 +14,22 @@ class Landing extends React.Component {
     return (
       <div className="landing">
         <div>
-        <text>
-          User Name
-        </text>
-        <input style={{ margin: '10px' }} type="text" id="customId" defaultValue="AAA" />
+          <text>User Name</text>
+          <input
+            style={{ margin: "10px" }}
+            type="text"
+            id="customId"
+            defaultValue="AAA"
+          />
         </div>
-          <div onClick={this.DoLoginCurrentUser} className="start-btn">Play Geoguesser</div>
+        <div onClick={this.DoLoginCurrentUser} className="start-btn">
+          Play Geoguesser
+        </div>
       </div>
     );
-  }
+  };
 
-  gameLink (e) {
+  gameLink(e) {
     e.target.click();
   }
 
@@ -40,15 +45,17 @@ class Landing extends React.Component {
     };
 
     PlayFabClientSDK.LoginWithCustomID(loginRequest, this.LoginCallback);
-  }
+  };
 
   LoginCallback = (result, error) => {
     if (result !== null) {
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: document.getElementById("customId").value }, this.updateUserDisplayNameCallback);
     } else if (error !== null) {
-      console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
+      console.error(
+        `something went wrong with the login request...${JSON.stringify(error)}`
+      );
     }
-  }
+  };
 
   updateUserDisplayNameCallback = (result, error) => {
     if (result !== null) {
@@ -62,11 +69,11 @@ class Landing extends React.Component {
         pathname: "/game",
       });
     } else if (error !== null) {
-      console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
+      console.error(
+        `something went wrong with the login request...${JSON.stringify(error)}`
+      );
     }
   };
-};
-
-
+}
 
 export default withRouter(Landing);

@@ -3,6 +3,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Map from "./Map";
 import StreetView from "./Streetview";
+import { getScore } from "../utils/helpers";
 
 const Game = ({ history }) => {
   const [googleMaps, setGoogleMaps] = React.useState(0);
@@ -13,14 +14,14 @@ const Game = ({ history }) => {
   const [insetMapLng, setInsetMapLng] = React.useState(0);
 
   const submitGuess = () => {
-    console.log(`set latitude: ${insetMapLat}`);
-    console.log(`set longitude: ${insetMapLng}`);
+    const coordinates = [{ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng }];
+    const score = getScore({ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng });
 
-    // todo: calculate score, redirect to scoreboard with payload of score
     history.push({
-      pathname: "/leaderboard",
+      pathname: "/score",
       state: {
-        example: 42
+        coordinates: [coordinates],
+        score
       }
     });
   };
