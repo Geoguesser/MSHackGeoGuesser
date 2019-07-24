@@ -1,6 +1,6 @@
-import "../style/game.scss"
+import "../style/game.scss";
 import React from "react";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import Map from "./Map";
 import StreetView from "./Streetview";
 
@@ -15,19 +15,28 @@ const Game = ({ history }) => {
 
     // todo: calculate score, redirect to scoreboard with payload of score
     history.push({
-      pathname: '/leaderboard',
-      state: {
-        example: 42
-      }});
+      pathname: "/score"
+    });
   };
 
   return (
     <>
-      <input className="submit-button" type="button" value="Submit Guess" onClick={submitGuess} />
-      <Map insetMapLat={insetMapLat} setInsetMapLat={setInsetMapLat} insetMapLng={insetMapLng} setInsetMapLng={setInsetMapLng} setGoogleMaps={setGoogleMaps} />
+      <input
+        className="submit-button"
+        type="button"
+        value="Submit Guess"
+        onClick={submitGuess}
+      />
+      <Map
+        insetMapLat={insetMapLat}
+        setInsetMapLat={setInsetMapLat}
+        insetMapLng={insetMapLng}
+        setInsetMapLng={setInsetMapLng}
+        setGoogleMaps={setGoogleMaps}
+      />
       <StreetView googleMaps={googleMaps} />
     </>
   );
-}
+};
 
 export default withRouter(Game);
