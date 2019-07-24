@@ -10,6 +10,7 @@ class Streetview extends React.Component {
     count: 0
   };
   componentDidMount() {
+    pickCity();
     const { lat, lng } = this.state;
     this.httpGetAsync(lat, lng, response => {
       this.setState({ isLand: !response.water });
@@ -87,19 +88,33 @@ class Streetview extends React.Component {
     return <div style={{ height: "100vh" }} />;
   }
 }
+function pickCity() {
+  // var record_num = 3;
+  //var allText = "../assets/goodCities.csv"; // or however many elements there are in each row
+  // var entries = allTextLines[0].split(",");
+  // var lines = [];
+  // const results = [];
+  //fs.createReadStream("../assets/goodCities.csv")
+    // .pipe(csv())
+    // .on("headers", headers => {
+    //   console.log(results);
+    // });
+
+  // alert(lines);
+}
 
 function getLat() {
   var min = -90;
   var max = 90;
   var lat = Math.floor(Math.random() * 100000 * (+max - +min)) + +min;
-  return lat / 1000000;
+  return lat / 100000;
 }
 
 function getLng() {
   var min = -180;
   var max = 180;
   var lng = Math.floor(Math.random() * 100000 * (+max - +min)) + +min;
-  return lng / 1000000;
+  return lng / 100000;
 }
 
 Streetview.defaultProps = {
