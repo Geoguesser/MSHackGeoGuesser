@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Game from "./components/Game";
 import Landing from "./components/Landing";
 import Leaderboard from './components/Leaderboard';
@@ -10,7 +10,9 @@ const App = () => {
     <Router>
       <div className="App">
       <header>
+        <Link to="/">
         <h1>MS Geoguesser</h1>
+        </Link>
       </header>
         <Route exact path="/game" component={Game} />
         <Route exact path="/" component={Landing} />
