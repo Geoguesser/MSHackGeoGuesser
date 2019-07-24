@@ -3,6 +3,8 @@ import HighScoreTable from './HighScoreTable';
 import '../style/leaderboard.scss';
 
 class Leaderboard extends React.Component {
+    refreshInterval;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -24,6 +26,14 @@ class Leaderboard extends React.Component {
             console.error(`you probably weren't logged in: ${exception}`);
             alert('you probably were not logged it. figure it out!');
         }
+    }
+
+    componentDidMount() {
+        this.getLeaderboard();
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.refreshInterval);
     }
 
     DoLoginCurrentUser = (initials) => {
@@ -58,13 +68,14 @@ class Leaderboard extends React.Component {
 
     updateStatisticsCallback = (result, error) => {
         if (result) {
-            setTimeout(this.getLeaderboard, 750);
+            console.log('stats updated');
         } else if (error) {
             console.log(`failed to update stats: ${JSON.stringify(error)}`);
         }
     };
 
     getLeaderboard = () => {
+        console.log('fetching leaderboard');
         PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
     }
 
@@ -73,6 +84,7 @@ class Leaderboard extends React.Component {
             this.setState({
                 leaderboard: result.data.Leaderboard
             });
+            this.refreshInterval = setTimeout(this.getLeaderboard.bind(this), 3000);
         } else if (error) {
             console.error(`failed to get stats: ${JSON.stringify(error)}`);
         }
