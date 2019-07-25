@@ -58,7 +58,6 @@ function playFabLogin(username, cb = () => {}) {
   PlayFabClientSDK.LoginWithCustomID(loginSettings, (res, err) => {
     if (res !== null) {
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: username }, (res, err) => {
-        console.log(res.data);
         if (res) {
           // TODO: data doesn't return SessionTicket for me
           document.cookie = `geoguessr_session_cookie=${res.data.SessionTicket}`;
@@ -66,6 +65,9 @@ function playFabLogin(username, cb = () => {}) {
           cb();
         } else {
           // log error here
+
+          // handle duplicate user
+          cb({ error: err.error });
         }
       });
     } else {
