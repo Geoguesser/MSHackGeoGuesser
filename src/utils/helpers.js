@@ -43,7 +43,7 @@ function getLng(lng) {
   return l;
 }
 
-function playFabLogin(username, cb) {
+function playFabLogin(username, cb = () => {}) {
   const { REACT_APP_PLAYFAB_GAME_ID } = process.env;
   const { PlayFab, PlayFabClientSDK } = window;
   const loginSettings = {
@@ -52,13 +52,15 @@ function playFabLogin(username, cb) {
     CreateAccount: true
   };
 
+  PlayFab.settings.titleId = REACT_APP_PLAYFAB_GAME_ID;
   // Currently, you need to look up the correct format for this object in the API-docs:
   // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
   PlayFabClientSDK.LoginWithCustomID(loginSettings, (res, err) => {
     if (res !== null) {
-      PlayFab.settings.titleId = REACT_APP_PLAYFAB_GAME_ID;
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: username }, (res, err) => {
+        console.log(res.data);
         if (res) {
+          // TODO: data doesn't return SessionTicket for me
           document.cookie = `geoguessr_session_cookie=${res.data.SessionTicket}`;
           document.cookie = `geoguessr_initials=${username}`;
           cb();

@@ -43,12 +43,14 @@ const Score = ({ history, location }) => {
             View Leaderboard
           </button>
         </div>
+        <div className="navbar-item">
+          <Link to="/game">Next Game</Link>
+        </div>
       </Navbar>
 
       <div className="score-container">
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
-          // todo: calculate actual midpoint between lat/lngs and use this as center
           center={center}
           defaultZoom={3}
           yesIWantToUseGoogleMapApiInternals
@@ -78,7 +80,6 @@ const Score = ({ history, location }) => {
           {displayMarker(guessedLatLng, circleMarker)}
           {displayMarker(actualLatLng, flagMarker)}
         </GoogleMapReact>
-        <Link to="/game">Next Game</Link>
       </div>
     </>
   );
