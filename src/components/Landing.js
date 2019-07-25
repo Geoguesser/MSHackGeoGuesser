@@ -1,58 +1,70 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-
-const { REACT_APP_PLAYFAB_GAME_ID } = process.env;
+import { playFabLogin } from "../utils/helpers";
+import "../style/landing.scss";
 
 class Landing extends React.Component {
   state = {
-    initials: "AAA"
+    name: "",
+    isDisabled: false
   };
 
-  onChangeInitials = e => {
-    this.setState({ initials: e.currentTarget.value });
+  onChangeName = e => {
+    this.setState({ name: e.currentTarget.value });
   };
 
   loginUser = async () => {
-    const { PlayFab, PlayFabClientSDK } = window;
-    const { initials } = this.state;
-    const loginSettings = {
-      TitleId: REACT_APP_PLAYFAB_GAME_ID,
-      CustomId: this.state.initials,
-      CreateAccount: true
-    };
-    // Currently, you need to look up the correct format for this object in the API-docs:
-    // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
-    PlayFabClientSDK.LoginWithCustomID(loginSettings, (loginRes, loginErr) => {
-      if (loginRes !== null) {
-        PlayFab.settings.titleId = REACT_APP_PLAYFAB_GAME_ID;
-        PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: initials }, res => {
-          if (res) {
-            document.cookie = `geoguessr_session_cookie=${res.data.SessionTicket}`;
-            document.cookie = `geoguessr_initials=${initials}`;
-            this.props.history.push("/game");
-          }
-        });
-      }
+    // disable button
+    this.toggleButtonDisabled();
+    // login to playfab
+    playFabLogin(this.state.name, () => {
+      this.props.history.push("/game");
     });
+    // enable button if the above failed
+    this.toggleButtonDisabled();
+  };
+
+  toggleButtonDisabled = () => {
+    this.setState(({ isDisabled }) => ({
+      isDisabled: !isDisabled
+    }));
   };
 
   render() {
-    const { initials } = this.state;
+    const { name, isDisabled } = this.state;
     return (
-      <div className="landing">
-        <label>
-          Enter initials
-          <input
-            style={{ margin: "10px" }}
-            type="text"
-            id="customId"
-            onChange={this.onChangeInitials}
-            value={initials}
-          />
-        </label>
+      <div className="landing-page">
+        <div className="center-container">
+          <h1 className="page-title">Geoguesser</h1>
+          <div className="container-content">
+            <div className="name-input-container">
+              <label htmlFor="name-input" className="visuallyhidden">
+                Enter name
+              </label>
+              <input
+                type="text"
+                id="name-input"
+                value={name}
+                onChange={this.onChangeName}
+                placeholder="Enter your name"
+              />
+            </div>
+
+            <button onClick={this.loginUser} disabled={isDisabled} className="name-button">
+              Let's go{" "}
+              <span role="img" aria-label="airplane-departure-emoji">
+                🛫
+              </span>
+            </button>
+          </div>
+        </div>
+        {/* <div className="initialContainer">
+          <label htmlFor="initials">Enter initials</label>
+          <input id="initials" type="text" onChange={this.onChangeInitials} value={initials} />
+        </div>
         <div onClick={this.loginUser} className="start-btn">
           Play Geoguesser
-        </div>
+        </div> */}
       </div>
     );
   }

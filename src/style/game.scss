@@ -1,38 +1,16 @@
-.submit-button {
-    color: white;
-    border: none;
-    background: none;
-    font-size: 1.2em;
-    margin: 3px; 
-    margin-top: 5px;
-    padding: 5px;
-    z-index: 9999999;
-    position: relative;
-    float: right;
-    right: 15px;
-    border-radius: 3px;
-}
+.nav-button {
+  color: rgba(0, 0, 0, 1);
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
 
-.submit-button:hover {
-    background: rgba(238, 238, 238, 0.5);
-}
+  &:disabled {
+    color: rgba(0, 0, 0, 0.33);
+  }
 
-.submit-button:focus, .submit-btn-inactive:focus {
-    outline: 0;
-    box-shadow: none!important;
-}
-
-.submit-btn-inactive {
-    color: rgba(255, 255, 255, 0.5);
-    border: none;
-    background: none;
-    font-size: 1.2em;
-    margin: 3px; 
-    margin-top: 5px;
-    padding: 5px;
-    z-index: 9999999;
-    position: relative;
-    float: right;
-    right: 15px;
-    border-radius: 3px;
+  &:hover {
+    color: rgba(0, 0, 0, 0.33);
+  }
 }
