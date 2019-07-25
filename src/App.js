@@ -11,17 +11,14 @@ const App = () => {
   const [distance, setDistance] = React.useState(0);
   return (
     <Router>
-      <div className="App">
-      <header>
-        <Link to="/">
-        <h1>MS Geoguesser</h1>
-        </Link>
-      </header>
-        <Route exact path="/game" component={() => <Game setScore={setScore} setDistance={setDistance}/>} />
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/score" component={Score} />
-        <Route exact path="/leaderboard" component={Leaderboard} />
-      </div>
+      <Route
+        exact
+        path="/game"
+        component={() => <Game setScore={setScore} setDistance={setDistance} />}
+      />
+      <Route exact path="/" component={Landing} />
+      <Route exact path="/score" component={Score} />
+      <Route exact path="/leaderboard" component={Leaderboard} />
     </Router>
   );
 };

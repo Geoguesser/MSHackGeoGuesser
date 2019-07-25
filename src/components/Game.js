@@ -16,10 +16,10 @@ const Game = ({ history }) => {
   const submitGuess = () => {
     if (insetMapLat === null || insetMapLng === null) {
     } else {
-      const coordinates = [
-        { lat: insetMapLat, lng: insetMapLng },
-        { lat: streetLat, lng: streetLng }
-      ];
+      const coordinates = {
+        guessed: [insetMapLat, insetMapLng],
+        actual: [streetLat, streetLng]
+      };
       const score = getScore(
         { lat: insetMapLat, lng: insetMapLng },
         { lat: streetLat, lng: streetLng }
@@ -28,7 +28,7 @@ const Game = ({ history }) => {
       history.push({
         pathname: "/score",
         state: {
-          coordinates: [coordinates],
+          coordinates,
           score
         }
       });

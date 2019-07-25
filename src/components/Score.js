@@ -1,109 +1,89 @@
-import '../style/score.scss'
 import React from "react";
 import GoogleMapReact from "google-map-react";
 import flagMarker from "../assets/red-flag.png";
 import circleMarker from "../assets/red-circle.png";
 import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
+import { getMidPoint } from "../utils/helpers";
 import "../style/game.scss";
+import "../style/score.scss";
 
-const Marker = (props) => {
-  const classname = props.icon.split(".")[0].split("/static/media/")[1]
+const Marker = props => {
+  const classname = props.icon.split(".")[0].split("/static/media/")[1];
   return (
     <div>
       <img className={classname} src={props.icon} alt="" />
     </div>
   );
 };
-  const Score = (props) => {
-    const [guessedLatLng, setGuessedLatLng] = React.useState(0);
-    const [actualLatLng, setActualLatLng] = React.useState(0);
+
+const Score = ({ history, location }) => {
+  const [guessedLatLng, setGuessedLatLng] = React.useState(0);
+  const [actualLatLng, setActualLatLng] = React.useState(0);
 
   const viewLeaderboard = () => {
-    props.history.push({
-      pathname: '/leaderboard',
-      score: props.location.state.score
+    history.push({
+      pathname: "/leaderboard",
+      score: location.state.score
     });
-  }
+  };
 
+  const { coordinates, score } = location.state;
   return (
     <>
-    <div className="user-score" >Score: {props.location.state.score}</div>
-    <div
-      style={{
-        height: "100vh",
-        width: "100%"
-      }}
-    >
-      <input
-        className={"submit-button"}
-        type="button"
-        value="View Leaderboard"
-        onClick={viewLeaderboard}
-      />
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
-        // todo: calculate actual midpoint between lat/lngs and use this as center
-        defaultCenter={{
-          lat: 27.658427,
-          lng: 0.141433
-        }}
-        defaultZoom={3}
-        yesIWantToUseGoogleMapApiInternals
-        options={{
-          maxZoom: 3,
-          zoomControl: false,
-          restriction: {
-            latLngBounds: {
-              north: 85,
-              south: -85,
-              west: -180,
-              east: 180
-            }
-          }
-        }}
-        onGoogleApiLoaded={google => {
-          let coordinates = props.location.state.coordinates;
-          if (coordinates) {
-            const guessedLatLng = new google.maps.LatLng(
-              coordinates[0][0].lat,
-              coordinates[0][0].lng
-            );
-            setGuessedLatLng({
-              lat: coordinates[0][0].lat,
-              lng: coordinates[0][0].lng
-            });
-            const actualLatLng = new google.maps.LatLng(
-              coordinates[0][1].lat,
-              coordinates[0][1].lng
-            );
-            setActualLatLng({
-              lat: coordinates[0][1].lat,
-              lng: coordinates[0][1].lng
-            });
-            const bounds = new google.maps.LatLngBounds(
-              guessedLatLng,
-              actualLatLng
-            );
-            google.map.fitBounds(bounds);
-            coordinates.map(coords => {
+      <Navbar>
+        <div className="navbar-item">
+          <button className="submit-button" onClick={viewLeaderboard}>
+            View Leaderboard
+          </button>
+        </div>
+        <div className="navbar-item">
+          <span>Score: {score}</span>
+        </div>
+      </Navbar>
+      <div className="score-container">
+        <GoogleMapReact
+          center={getMidPoint(coordinates)}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
+          // todo: calculate actual midpoint between lat/lngs and use this as center
+          defaultZoom={3}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={google => {
+            if (coordinates) {
+              // potentially a major bug, we are in a weird data position
+              // creating lat long same name as state. redundant work.
+              // solved by abstracting the state higher
+              const guessedLatLng = new google.maps.LatLng(
+                coordinates.guessed[0],
+                coordinates.guessed[1]
+              );
+              const actualLatLng = new google.maps.LatLng(
+                coordinates.actual[0],
+                coordinates.actual[1]
+              );
+              setGuessedLatLng({ lat: coordinates.guessed[0], lng: coordinates.guessed[1] });
+              setActualLatLng({ lat: coordinates.actual[0], lng: coordinates.actual[1] });
+              // bounds === getMidPoint()
+              const bounds = new google.maps.LatLngBounds(guessedLatLng, actualLatLng);
+              google.map.fitBounds(bounds);
               const polyline = new google.maps.Polyline({
-                path: coords
+                path: [guessedLatLng, actualLatLng]
               });
               polyline.setMap(google.map);
-            });
-          }
-        }}
-      >
-        {displayMarker(guessedLatLng, circleMarker)}
-        {displayMarker(actualLatLng, flagMarker)}
-      </GoogleMapReact>
-      <Link to="/game">Next Game</Link>
-    </div>
+            }
+          }}
+        >
+          {displayMarker(guessedLatLng, circleMarker)}
+          {displayMarker(actualLatLng, flagMarker)}
+        </GoogleMapReact>
+        <Link to="/game">Next Game</Link>
+      </div>
     </>
   );
 };
 
-const displayMarker = (coords, icon) => <Marker key={coords.lat} lat={coords.lat} lng={coords.lng} icon={icon} />
-      
+const displayMarker = (coords, icon) => (
+  <Marker key={coords.lat} lat={coords.lat} lng={coords.lng} icon={icon} />
+);
 
 export default Score;
