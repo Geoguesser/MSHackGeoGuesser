@@ -8,10 +8,7 @@ const getDistance = function(p1, p2) {
   const dLong = rad(p2.lng - p1.lng);
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(rad(p1.lat)) *
-      Math.cos(rad(p2.lat)) *
-      Math.sin(dLong / 2) *
-      Math.sin(dLong / 2);
+    Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const d = R * c;
   return d; // returns the distance in meter
@@ -46,4 +43,35 @@ function getLng(lng) {
   return l;
 }
 
-export { getDistance, getScore, getLat, getLng, pickCity };
+function playFabLogin(username, cb = () => {}) {
+  const { REACT_APP_PLAYFAB_GAME_ID } = process.env;
+  const { PlayFab, PlayFabClientSDK } = window;
+  const loginSettings = {
+    TitleId: REACT_APP_PLAYFAB_GAME_ID,
+    CustomId: username,
+    CreateAccount: true
+  };
+
+  PlayFab.settings.titleId = REACT_APP_PLAYFAB_GAME_ID;
+  // Currently, you need to look up the correct format for this object in the API-docs:
+  // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
+  PlayFabClientSDK.LoginWithCustomID(loginSettings, (res, err) => {
+    if (res !== null) {
+      PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: username }, (res, err) => {
+        console.log(res.data);
+        if (res) {
+          // TODO: data doesn't return SessionTicket for me
+          document.cookie = `geoguessr_session_cookie=${res.data.SessionTicket}`;
+          document.cookie = `geoguessr_initials=${username}`;
+          cb();
+        } else {
+          // log error here
+        }
+      });
+    } else {
+      // log error here
+    }
+  });
+}
+
+export { getDistance, getScore, getLat, getLng, pickCity, playFabLogin };

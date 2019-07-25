@@ -3,6 +3,7 @@ import React from "react"; // eslint-disable-line import/first
 import ReactDOM from "react-dom"; // eslint-disable-line import/first
 import App from "./App"; // eslint-disable-line import/first
 import * as serviceWorker from "./serviceWorker"; // eslint-disable-line import/first
+import "./style/index.scss"; // eslint-disable-line import/first
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
