@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Map from "./Map";
 import StreetView from "./Streetview";
+import Navbar from "./Navbar";
 import { getScore } from "../utils/helpers";
 import "../style/game.scss";
 
@@ -39,12 +40,11 @@ const Game = ({ history }) => {
 
   return (
     <>
-      <input
-        className={insetMapLat ? "submit-button" : "submit-btn-inactive"}
-        type="button"
-        value="Submit Guess"
-        onClick={submitGuess}
-      />
+      <Navbar>
+        <button className="nav-button" disabled={false} onClick={submitGuess}>
+          Submit Guess
+        </button>
+      </Navbar>
       <Map
         insetMapLat={insetMapLat}
         setInsetMapLat={setInsetMapLat}

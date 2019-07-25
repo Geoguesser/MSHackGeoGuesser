@@ -1,15 +1,7 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-import marker from "../assets/placeholder.png";
 import { Link } from "react-router-dom";
-
-const Marker = () => {
-  return (
-    <div>
-      <img src={marker} alt="" />
-    </div>
-  );
-};
+import Marker from "./Marker";
 
 const Score = props => {
   console.dir(props.location.state);
@@ -54,10 +46,7 @@ const Score = props => {
               coordinates[0][1].lat,
               coordinates[0][1].lng
             );
-            const bounds = new google.maps.LatLngBounds(
-              guessedLatLng,
-              actualLatLng
-            );
+            const bounds = new google.maps.LatLngBounds(guessedLatLng, actualLatLng);
             google.map.fitBounds(bounds);
             coordinates.map(coords => {
               const polyline = new google.maps.Polyline({
@@ -68,9 +57,7 @@ const Score = props => {
           }
         }}
       >
-        {props.location.state.coordinates
-          ? displayMarkers(props.location.state.coordinates)
-          : null}
+        {props.location.state.coordinates ? displayMarkers(props.location.state.coordinates) : null}
       </GoogleMapReact>
       <Link to="/game">Next Game</Link>
     </div>
