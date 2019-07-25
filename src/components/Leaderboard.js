@@ -1,111 +1,85 @@
 import React from "react";
-import HighScoreTable from './HighScoreTable';
-import '../style/leaderboard.scss';
+import { withRouter, Link } from "react-router-dom";
+import HighScoreTable from "./HighScoreTable";
+import Navbar from "./Navbar";
+import { playFabLogin } from "../utils/helpers";
+import "../style/leaderboard.scss";
 
-class Leaderboard extends React.Component {
-    refreshInterval;
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            ...props
-        };
-    }
-
-    componentWillMount() {
-        /*eslint-disable no-undef*/ /*eslint-disable no-useless-escape */
-        const sessionTicket = document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_session_cookie\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        const initials = document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_initials\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        this.setState({
-            sessionTicket,
-            initials
-        });
-        try {
-            this.DoLoginCurrentUser(initials);
-        } catch (exception) {
-            console.error(`you probably weren't logged in: ${exception}`);
-            alert('you probably were not logged it. figure it out!');
-        }
-    }
-
-    componentDidMount() {
-        this.getLeaderboard();
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.refreshInterval);
-    }
-
-    DoLoginCurrentUser = (initials) => {
-        /*eslint-disable no-undef*/
-        PlayFab.settings.titleId = process.env.REACT_APP_PLAYFAB_GAME_ID;
-        const loginRequest = {
-            // Currently, you need to look up the correct format for this object in the API-docs:
-            // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
-            TitleId: PlayFab.settings.titleId,
-            CustomId: initials,
-            CreateAccount: false
-        };
-        PlayFabClientSDK.LoginWithCustomID(loginRequest, this.LoginCallback);
-    }
-
-    LoginCallback = (result, error) => {
-        if (result !== null) {
-            PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.updatePlayerStatistics);
-        } else if (error !== null) {
-            console.error(`something went wrong with the login request...${JSON.stringify(error)}`);
-        }
-    }
-
-    updatePlayerStatistics = () => {
-        PlayFabClientSDK.UpdatePlayerStatistics({
-            Statistics: [{
-                "StatisticName": "Headshots",
-                "Value": this.props.location.score > 0 ? this.props.location.score : 0
-            }]
-        }, this.updateStatisticsCallback);
-    };
-
-    updateStatisticsCallback = (result, error) => {
-        if (result) {
-            console.log('stats updated');
-        } else if (error) {
-            console.log(`failed to update stats: ${JSON.stringify(error)}`);
-        }
-    };
-
-    getLeaderboard = () => {
-        console.log('fetching leaderboard');
-        PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: 'Headshots' }, this.getLeaderboardCallback);
-    }
-
-    getLeaderboardCallback = (result, error) => {
-        if (result) {
-            this.setState({
-                leaderboard: result.data.Leaderboard
-            });
-            this.refreshInterval = setTimeout(this.getLeaderboard.bind(this), 3000);
-        } else if (error) {
-            console.error(`failed to get stats: ${JSON.stringify(error)}`);
-        }
-    };
-
-    // This is a utility function we haven't put into the core SDK yet.  Feel free to use it.
-    CompileErrorReport = (error) => {
-        if (error === null)
-            return "";
-        var fullErrors = error.errorMessage;
-        for (var paramName in error.errorDetails)
-            for (var msgIdx in error.errorDetails[paramName])
-                fullErrors += "\n" + paramName + ": " + error.errorDetails[paramName][msgIdx];
-        return fullErrors;
-    }
-
-    render() {
-        return (<div className="leaderboard-container">
-            <HighScoreTable scores={this.state.leaderboard} />
-        </div>);
-    }
+function getUsernameCookie() {
+  return document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_initials\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 }
 
-export default Leaderboard;
+class Leaderboard extends React.Component {
+  fetchInterval = null;
+
+  state = {
+    leaderboard: null,
+    loading: true
+  };
+
+  componentDidMount() {
+    // session cookie is always undefined see the TODO
+    // const session = getSessionCookie();
+    const username = getUsernameCookie();
+
+    try {
+      playFabLogin(username, this.getLeaderboard);
+      this.startContinousFetching();
+      this.addUserScore();
+    } catch (e) {
+      // if we cannot login the user, send them to main page and delete
+      // history stack
+      this.props.history.replace("/");
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.fetchInterval);
+  }
+
+  startContinousFetching = () => {
+    this.fetchInterval = setInterval(this.getLeaderboard, 3000);
+  };
+
+  getLeaderboard = () => {
+    const { PlayFabClientSDK } = window;
+    PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: "Headshots" }, res => {
+      if (res) {
+        this.setState({ leaderboard: res.data.Leaderboard, loading: false });
+      } else {
+        this.setState({ loading: false });
+        console.log("error fetching leaderboard");
+      }
+    });
+  };
+
+  addUserScore = () => {
+    const { PlayFabClientSDK } = window;
+    const score = this.props.location.score > 0 ? this.props.location.score : 0;
+    PlayFabClientSDK.UpdatePlayerStatistics({
+      Statistics: [{ StatisticName: "Headshots", Value: score }]
+    });
+  };
+
+  render() {
+    const { loading, leaderboard } = this.state;
+    if (loading) {
+      return <p>loading...</p>;
+    } else if (leaderboard) {
+      return (
+        <>
+          <Navbar />
+          <div className="leaderboard-container">
+            <h1 className="title">Leaderboard</h1>
+            <HighScoreTable scores={this.state.leaderboard} />
+            <Link to="/game">Play again?</Link>
+          </div>
+        </>
+      );
+    } else {
+      return <p>error...</p>;
+    }
+  }
+}
+
+export default withRouter(Leaderboard);

@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300i,400&display=swap");
+
+input {
+  font-family: "Open Sans", sans-serif;
+  font-style: italic;
+}
+
+button {
+  font-family: "Open Sans", sans-serif;
+  cursor: pointer;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  font-family: "Open Sans", sans-serif;
+}
