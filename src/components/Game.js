@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 import { getScore } from "../utils/helpers";
 import "../style/game.scss";
 
-const Game = ({ history }) => {
+const Game = ({ history, setTotalScore, totalScore }) => {
   const [googleMaps, setGoogleMaps] = React.useState(0);
   const [streetLat, setStreetLat] = React.useState(0);
   const [streetLng, setStreetLng] = React.useState(0);
@@ -15,25 +15,22 @@ const Game = ({ history }) => {
   const [insetMapLng, setInsetMapLng] = React.useState(null);
 
   const submitGuess = () => {
-    if (insetMapLat === null || insetMapLng === null) {
-    } else {
-      const coordinates = {
-        guessed: [insetMapLat, insetMapLng],
-        actual: [streetLat, streetLng]
-      };
-      const score = getScore(
-        { lat: insetMapLat, lng: insetMapLng },
-        { lat: streetLat, lng: streetLng }
-      );
-
-      history.push({
-        pathname: "/score",
-        state: {
-          coordinates,
-          score
-        }
-      });
-    }
+    const coordinates = {
+      guessed: [insetMapLat, insetMapLng],
+      actual: [streetLat, streetLng]
+    };
+    const score = getScore(
+      { lat: insetMapLat, lng: insetMapLng },
+      { lat: streetLat, lng: streetLng }
+    );
+    setTotalScore([...totalScore, score]);
+    history.push({
+      pathname: "/score",
+      state: {
+        coordinates,
+        score
+      }
+    });
   };
 
   return (

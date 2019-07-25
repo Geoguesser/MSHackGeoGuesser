@@ -6,26 +6,26 @@ import flagMarker from "../assets/red-flag.png";
 import circleMarker from "../assets/red-circle.png";
 import "../style/score.scss";
 
-const Marker = props => {
-  const classname = props.icon.split(".")[0].split("/static/media/")[1];
+const Marker = ({ icon }) => {
+  const classname = icon.split(".")[0].split("/static/media/")[1];
   return (
     <div>
-      <img className={classname} src={props.icon} alt="" />
+      <img className={classname} src={icon} alt="" />
     </div>
   );
 };
-const Score = ({ history, location }) => {
+const Score = ({ history, location, totalScore, setTotalScore }) => {
   const [guessedLatLng, setGuessedLatLng] = React.useState(0);
   const [actualLatLng, setActualLatLng] = React.useState(0);
 
   const { coordinates, score } = location.state;
 
-  const viewLeaderboard = () => {
-    history.push({
-      pathname: "/leaderboard",
-      score
-    });
-  };
+  // const viewLeaderboard = () => {
+  //   history.push({
+  //     pathname: "/leaderboard",
+  //     score
+  //   });
+  // };
 
   const center = [
     (coordinates.guessed[0] + coordinates.actual[0]) / 2,
@@ -38,13 +38,17 @@ const Score = ({ history, location }) => {
         <div className="navbar-item">
           <div className="user-score">Score: {score}</div>
         </div>
-        <div className="navbar-item">
+        {/* <div className="navbar-item">
           <button className="submit-button" onClick={viewLeaderboard}>
             View Leaderboard
           </button>
-        </div>
+        </div> */}
         <div className="navbar-item">
-          <Link to="/game">Next Game</Link>
+          {totalScore.length === 5 ? (
+            <Link to="/leaderboard">View Leaderboard</Link>
+          ) : (
+            <Link to="/game">Next Game</Link>
+          )}
         </div>
       </Navbar>
 

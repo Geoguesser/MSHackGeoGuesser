@@ -6,18 +6,24 @@ import Score from "./components/Score";
 import Leaderboard from "./components/Leaderboard";
 
 const App = () => {
-  const [score, setScore] = React.useState(0);
+  const [totalScore, setTotalScore] = React.useState([]);
   const [distance, setDistance] = React.useState(0);
   return (
     <Router>
       <Route
         exact
         path="/game"
-        component={() => <Game setScore={setScore} setDistance={setDistance} />}
+        component={() => (
+          <Game setTotalScore={setTotalScore} setDistance={setDistance} totalScore={totalScore} />
+        )}
       />
       <Route exact path="/" component={Landing} />
-      <Route exact path="/score" component={Score} />
-      <Route exact path="/leaderboard" component={Leaderboard} />
+      <Route
+        exact
+        path="/score"
+        component={props => <Score {...props} totalScore={totalScore} />}
+      />
+      <Route exact path="/leaderboard" component={() => <Leaderboard totalScore={totalScore} />} />
     </Router>
   );
 };
