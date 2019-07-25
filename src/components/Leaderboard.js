@@ -24,6 +24,8 @@ class Leaderboard extends React.Component {
 
     try {
       playFabLogin(username, this.getLeaderboard);
+      this.startContinousFetching();
+      this.addUserScore();
     } catch (e) {
       // if we cannot login the user, send them to main page and delete
       // history stack
@@ -36,19 +38,26 @@ class Leaderboard extends React.Component {
   }
 
   startContinousFetching = () => {
-    this.fetchInterval = this.setInterval(this.getLeaderboard, 3000);
+    this.fetchInterval = setInterval(this.getLeaderboard, 3000);
   };
 
   getLeaderboard = () => {
     const { PlayFabClientSDK } = window;
     PlayFabClientSDK.GetLeaderboard({ StartPosition: 0, StatisticName: "Headshots" }, res => {
       if (res) {
-        console.log(res);
         this.setState({ leaderboard: res.data.Leaderboard, loading: false });
       } else {
         this.setState({ loading: false });
         console.log("error fetching leaderboard");
       }
+    });
+  };
+
+  addUserScore = () => {
+    const { PlayFabClientSDK } = window;
+    const score = this.props.location.score > 0 ? this.props.location.score : 0;
+    PlayFabClientSDK.UpdatePlayerStatistics({
+      Statistics: [{ StatisticName: "Headshots", Value: score }]
     });
   };
 
