@@ -55,9 +55,12 @@ class Leaderboard extends React.Component {
 
   addUserScore = () => {
     const { PlayFabClientSDK } = window;
-    const score = this.props.location.score > 0 ? this.props.location.score : 0;
+    const { totalScore } = this.props;
+    // const score = this.props.location.score > 0 ? this.props.location.score : 0;
     PlayFabClientSDK.UpdatePlayerStatistics({
-      Statistics: [{ StatisticName: "Headshots", Value: score }]
+      Statistics: [
+        { StatisticName: "Headshots", Value: totalScore.reduce((sum, num) => sum + num) }
+      ]
     });
   };
 
