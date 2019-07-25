@@ -17,9 +17,15 @@ class Landing extends React.Component {
     // disable button
     this.toggleButtonDisabled();
     // login to playfab
-    playFabLogin(this.state.name, () => {
-      this.props.history.push("/game");
+    playFabLogin(this.state.name, res => {
+      if (res && res.error === "NameNotAvailable") {
+        alert("Name is not available, please enter again.");
+        this.setState({ name: "" });
+      } else {
+        this.props.history.push("/game");
+      }
     });
+
     // enable button if the above failed
     this.toggleButtonDisabled();
   };
