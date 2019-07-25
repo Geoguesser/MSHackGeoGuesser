@@ -62,25 +62,25 @@ const Score = ({ history, location }) => {
               setActualLatLng({ lat: coordinates.actual[0], lng: coordinates.actual[1] });
               let neBounds = {
                 lat:
-                  coordinates[0][0].lat > coordinates[0][1].lat
-                    ? coordinates[0][0].lat
-                    : coordinates[0][1].lat,
+                  coordinates.guessed[0] > coordinates.actual[0]
+                    ? coordinates.guessed[0]
+                    : coordinates.actual[0],
                 lng:
-                  coordinates[0][0].lng > coordinates[0][1].lng
-                    ? coordinates[0][0].lng
-                    : coordinates[0][1].lng
+                  coordinates.guessed[1] > coordinates.actual[1]
+                    ? coordinates.guessed[1]
+                    : coordinates.actual[1]
               };
-
               let swBounds = {
                 lat:
-                  coordinates[0][0].lat < coordinates[0][1].lat
-                    ? coordinates[0][0].lat
-                    : coordinates[0][1].lat,
+                  coordinates.guessed[0] < coordinates.actual[0]
+                    ? coordinates.guessed[0]
+                    : coordinates.actual[0],
                 lng:
-                  coordinates[0][0].lng < coordinates[0][1].lng
-                    ? coordinates[0][0].lng
-                    : coordinates[0][1].lng
+                  coordinates.guessed[1] < coordinates.actual[1]
+                    ? coordinates.guessed[1]
+                    : coordinates.actual[1]
               };
+
               const bounds = new google.maps.LatLngBounds(swBounds, neBounds);
               google.map.fitBounds(bounds);
               const polyline = new google.maps.Polyline({
