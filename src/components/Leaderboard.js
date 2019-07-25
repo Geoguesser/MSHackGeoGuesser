@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import HighScoreTable from "./HighScoreTable";
 import Navbar from "./Navbar";
 import { playFabLogin } from "../utils/helpers";
@@ -72,6 +72,7 @@ class Leaderboard extends React.Component {
           <div className="leaderboard-container">
             <h1 className="title">Leaderboard</h1>
             <HighScoreTable scores={this.state.leaderboard} />
+            <Link to="/game">Play again?</Link>
           </div>
         </>
       );
