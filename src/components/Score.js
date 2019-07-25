@@ -52,7 +52,7 @@ const Score = ({ history, location }) => {
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
           center={center}
-          defaultZoom={3}
+          defaultZoom={2}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={google => {
             if (coordinates) {
@@ -80,7 +80,14 @@ const Score = ({ history, location }) => {
                     ? coordinates.guessed[1]
                     : coordinates.actual[1]
               };
-
+              const guessedLatLng = new google.maps.LatLng(
+                coordinates.guessed[0],
+                coordinates.guessed[1]
+              );
+              const actualLatLng = new google.maps.LatLng(
+                coordinates.actual[0],
+                coordinates.actual[1]
+              );
               const bounds = new google.maps.LatLngBounds(swBounds, neBounds);
               google.map.fitBounds(bounds);
               const polyline = new google.maps.Polyline({
