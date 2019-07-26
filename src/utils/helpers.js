@@ -58,8 +58,6 @@ function playFabLogin(username, cb = () => {}) {
   }
 
   PlayFab.settings.titleId = REACT_APP_PLAYFAB_GAME_ID;
-  // Currently, you need to look up the correct format for this object in the API-docs:
-  // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
   PlayFabClientSDK.LoginWithCustomID(loginSettings, (res, err) => {
     if (res !== null) {
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: username }, (res, err) => {

@@ -7,7 +7,7 @@ import Leaderboard from "./components/Leaderboard";
 
 const App = () => {
   const [totalScore, setTotalScore] = React.useState([]);
-  const [distance, setDistance] = React.useState(0);
+  const [setDistance] = React.useState(0);
   return (
     <Router>
       <Route
