@@ -2,17 +2,13 @@ import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import HighScoreTable from "./HighScoreTable";
 import Navbar from "./Navbar";
-import { playFabLogin } from "../utils/helpers";
+import { playFabLogin, getUsernameCookie } from "../utils/helpers";
 import { Constants } from "../utils/constants";
 import "../style/leaderboard.scss";
 
-function getUsernameCookie() {
-    // eslint-disable-next-line
-    return document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_initials\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-}
-
 class Leaderboard extends React.Component {
     fetchInterval = null;
+    username = null;
 
     state = {
         leaderboard: null,
@@ -22,10 +18,9 @@ class Leaderboard extends React.Component {
     componentDidMount() {
         // session cookie is always undefined see the TODO
         // const session = getSessionCookie();
-        const username = getUsernameCookie();
 
         try {
-            playFabLogin(username, this.getLeaderboard.bind(0, 10));
+            playFabLogin(this.getUsername(), this.getLeaderboard.bind(0, 10));
             this.startContinousFetching();
             this.addUserScore();
         } catch (e) {
@@ -52,6 +47,7 @@ class Leaderboard extends React.Component {
         }, res => {
             if (res) {
                 this.setState({ leaderboard: res.data.Leaderboard, loading: false });
+                this.getLeaderboardAroundPlayer();
             } else {
                 this.setState({ loading: false });
                 console.error("error fetching leaderboard");
@@ -61,14 +57,19 @@ class Leaderboard extends React.Component {
 
     getLeaderboardAroundPlayer = () => {
         const { PlayFabClientSDK } = window;
+        // geoguessr_playfabid_cookie
+        // retrieve from cookie and use to find the current user
         PlayFabClientSDK.GetLeaderboardAroundPlayer({
-            PlayFabId: null,
+            PlayFabId: '', // todo(kfcampbell): get from cookie
             StatisticName: Constants.PLAYFAB_STATISTIC_NAME
-        }, res => {
+        }, (res, err) => {
             if(res) {
                 console.log(`it worked: ${JSON.stringify(res)}`);
+
+            } else if (err) {
+                console.error(`error fetching player's position: ${err}`);
             } else {
-                console.error(`error fetching player's position`);
+                console.error(`unknown error happened fetching leaderboard around player`);
             }
         })
     }
@@ -82,6 +83,13 @@ class Leaderboard extends React.Component {
             ]
         });
     };
+
+    getUsername() {
+        if(!this.username) {
+            this.username = getUsernameCookie();
+        }
+        return this.username;
+    }
 
     render() {
         const { loading, leaderboard } = this.state;
