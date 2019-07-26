@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import HighScoreTable from "./HighScoreTable";
 import Navbar from "./Navbar";
-import { playFabLogin, getUsernameCookie } from "../utils/helpers";
+import { playFabLogin, getUsernameCookie, getPlayFabIdCookie } from "../utils/helpers";
 import { Constants } from "../utils/constants";
 import "../style/leaderboard.scss";
 
@@ -12,6 +12,9 @@ class Leaderboard extends React.Component {
 
     state = {
         leaderboard: null,
+        currentUserScore: null,
+        leaderboardLoading: true,
+        currentUserScoreLoading: true,
         loading: true
     };
 
@@ -20,7 +23,7 @@ class Leaderboard extends React.Component {
         // const session = getSessionCookie();
 
         try {
-            playFabLogin(this.getUsername(), this.getLeaderboard.bind(0, 10));
+            playFabLogin(this.getUsername(), this.fetchLeaderboards);
             this.startContinousFetching();
             this.addUserScore();
         } catch (e) {
@@ -35,8 +38,13 @@ class Leaderboard extends React.Component {
     }
 
     startContinousFetching = () => {
-        this.fetchInterval = setInterval(this.getLeaderboard.bind(0, 10), 3000);
+        this.fetchInterval = setInterval(this.fetchLeaderboards, 3000);
     };
+
+    fetchLeaderboards = () => {
+        this.getLeaderboard(0, 10);
+        this.getLeaderboardAroundPlayer();
+    }
 
     getLeaderboard = (startPosition, numberOfResults) => {
         const { PlayFabClientSDK } = window;
@@ -46,31 +54,44 @@ class Leaderboard extends React.Component {
             StatisticName: Constants.PLAYFAB_STATISTIC_NAME
         }, res => {
             if (res) {
-                this.setState({ leaderboard: res.data.Leaderboard, loading: false });
-                this.getLeaderboardAroundPlayer();
+                this.setState({
+                    leaderboard: res.data.Leaderboard,
+                });
             } else {
-                this.setState({ loading: false });
                 console.error("error fetching leaderboard");
             }
+            this.setState({
+                leaderboardLoading: false,
+                loading: false || this.state.currentUserScoreLoading
+            })
         });
     };
 
     getLeaderboardAroundPlayer = () => {
         const { PlayFabClientSDK } = window;
-        // geoguessr_playfabid_cookie
-        // retrieve from cookie and use to find the current user
+        const currentUserPlayFabId = getPlayFabIdCookie();
         PlayFabClientSDK.GetLeaderboardAroundPlayer({
-            PlayFabId: '', // todo(kfcampbell): get from cookie
+            PlayFabId: currentUserPlayFabId,
             StatisticName: Constants.PLAYFAB_STATISTIC_NAME
         }, (res, err) => {
             if(res) {
-                console.log(`it worked: ${JSON.stringify(res)}`);
-
+                const currentUserScore = res.data.Leaderboard.find(p => p.PlayFabId === currentUserPlayFabId);
+                if(currentUserScore.Position > 10) {
+                    this.setState({
+                        currentUserScore
+                    });
+                } else {
+                    // we're in the top 10, render scoreboard like normal
+                }
             } else if (err) {
                 console.error(`error fetching player's position: ${err}`);
             } else {
                 console.error(`unknown error happened fetching leaderboard around player`);
             }
+            this.setState({
+                currentUserScoreLoading: false,
+                loading: false || this.state.leaderboardLoading
+            })
         })
     }
 
@@ -101,7 +122,7 @@ class Leaderboard extends React.Component {
                     <Navbar />
                     <div className="leaderboard-container">
                         <h1 className="title">Leaderboard</h1>
-                        <HighScoreTable scores={this.state.leaderboard} />
+                        <HighScoreTable scores={this.state.leaderboard} currentUserScore={this.state.currentUserScore} />
                         <Link to="/game">Play again?</Link>
                     </div>
                 </>
