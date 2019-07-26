@@ -2,12 +2,8 @@ import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import HighScoreTable from "./HighScoreTable";
 import Navbar from "./Navbar";
-import { playFabLogin } from "../utils/helpers";
+import { playFabLogin, getUsernameCookie } from "../utils/helpers";
 import "../style/leaderboard.scss";
-
-function getUsernameCookie() {
-  return document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_initials\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-}
 
 class Leaderboard extends React.Component {
   fetchInterval = null;

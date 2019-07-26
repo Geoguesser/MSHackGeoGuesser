@@ -76,4 +76,8 @@ function playFabLogin(username, cb = () => {}) {
   });
 }
 
-export { getDistance, getScore, getLat, getLng, pickCity, playFabLogin };
+function getUsernameCookie() {
+  return document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_initials\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+}
+
+export { getDistance, getScore, getLat, getLng, pickCity, playFabLogin, getUsernameCookie };
