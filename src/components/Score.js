@@ -14,18 +14,11 @@ const Marker = ({ icon }) => {
     </div>
   );
 };
-const Score = ({ history, location, totalScore, setTotalScore }) => {
+const Score = ({ location, totalScore }) => {
   const [guessedLatLng, setGuessedLatLng] = React.useState(0);
   const [actualLatLng, setActualLatLng] = React.useState(0);
 
   const { coordinates, score } = location.state;
-
-  // const viewLeaderboard = () => {
-  //   history.push({
-  //     pathname: "/leaderboard",
-  //     score
-  //   });
-  // };
 
   const center = [
     (coordinates.guessed[0] + coordinates.actual[0]) / 2,
@@ -38,11 +31,6 @@ const Score = ({ history, location, totalScore, setTotalScore }) => {
         <div className="navbar-item">
           <div className="user-score">Score: {score}</div>
         </div>
-        {/* <div className="navbar-item">
-          <button className="submit-button" onClick={viewLeaderboard}>
-            View Leaderboard
-          </button>
-        </div> */}
         <div className="navbar-item">
           {totalScore.length === 5 ? (
             <Link to="/leaderboard">View Leaderboard</Link>
