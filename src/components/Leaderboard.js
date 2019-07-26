@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import HighScoreTable from "./HighScoreTable";
 import Navbar from "./Navbar";
 import { playFabLogin, getUsernameCookie, getPlayFabIdCookie } from "../utils/helpers";
@@ -18,20 +18,10 @@ class Leaderboard extends React.Component {
         loading: true
     };
 
-    componentDidMount() {
-        // session cookie is always undefined see the TODO
-        // const session = getSessionCookie();
-
-        try {
-            playFabLogin(this.getUsername(), this.fetchLeaderboards);
-            this.startContinousFetching();
-            this.addUserScore();
-        } catch (e) {
-            // if we cannot login the user, send them to main page and delete
-            // history stack
-            this.props.history.replace("/");
-        }
-    }
+  componentDidMount() {
+    this.startContinousFetching();
+    this.addUserScore();
+  }
 
     componentWillUnmount() {
         clearInterval(this.fetchInterval);
@@ -133,4 +123,4 @@ class Leaderboard extends React.Component {
     }
 }
 
-export default withRouter(Leaderboard);
+export default Leaderboard;

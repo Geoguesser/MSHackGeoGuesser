@@ -1,31 +1,43 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Game from "./components/Game";
-import Landing from "./components/Landing";
-import Score from "./components/Score";
-import Leaderboard from "./components/Leaderboard";
+// import { BrowserRouter as Router, Route } from "react-router-dom";
+import GeoGuesserRouter from "./Router";
+import { getUsernameCookie, playFabLogin } from "./utils/helpers";
 
-const App = () => {
-  const [totalScore, setTotalScore] = React.useState([]);
-  const [setDistance] = React.useState(0);
-  return (
-    <Router>
-      <Route
-        exact
-        path="/game"
-        component={() => (
-          <Game setTotalScore={setTotalScore} setDistance={setDistance} totalScore={totalScore} />
-        )}
+class App extends React.Component {
+  state = {
+    totalScore: [],
+    isAuthenticated: false
+  };
+
+  componentDidMount() {
+    this.checkLoggedInUser();
+  }
+
+  checkLoggedInUser = () => {
+    const username = getUsernameCookie();
+    try {
+      playFabLogin(username, () => {
+        this.setState({ isAuthenticated: true });
+      });
+    } catch (e) {
+      this.setState({ isAuthenticated: false });
+    }
+  };
+
+  setTotalScore = totalScore => {
+    this.setState({ totalScore });
+  };
+
+  render() {
+    const { totalScore, isAuthenticated } = this.state;
+    return (
+      <GeoGuesserRouter
+        isAuthenticated={isAuthenticated}
+        totalScore={totalScore}
+        setTotalScore={this.setTotalScore}
       />
-      <Route exact path="/" component={Landing} />
-      <Route
-        exact
-        path="/score"
-        component={props => <Score {...props} totalScore={totalScore} />}
-      />
-      <Route exact path="/leaderboard" component={() => <Leaderboard totalScore={totalScore} />} />
-    </Router>
-  );
-};
+    );
+  }
+}
 
 export default App;

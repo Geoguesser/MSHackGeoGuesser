@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import { playFabLogin } from "../utils/helpers";
 import "../style/landing.scss";
 
@@ -75,4 +74,4 @@ class Landing extends React.Component {
   }
 }
 
-export default withRouter(Landing);
+export default Landing;
