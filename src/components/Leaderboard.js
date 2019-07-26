@@ -1,8 +1,7 @@
 import React from "react";
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import HighScoreTable from "./HighScoreTable";
 import Navbar from "./Navbar";
-import { playFabLogin, getUsernameCookie } from "../utils/helpers";
 import "../style/leaderboard.scss";
 
 class Leaderboard extends React.Component {
@@ -14,19 +13,8 @@ class Leaderboard extends React.Component {
   };
 
   componentDidMount() {
-    // session cookie is always undefined see the TODO
-    // const session = getSessionCookie();
-    const username = getUsernameCookie();
-
-    try {
-      playFabLogin(username, this.getLeaderboard);
-      this.startContinousFetching();
-      this.addUserScore();
-    } catch (e) {
-      // if we cannot login the user, send them to main page and delete
-      // history stack
-      this.props.history.replace("/");
-    }
+    this.startContinousFetching();
+    this.addUserScore();
   }
 
   componentWillUnmount() {
@@ -34,6 +22,7 @@ class Leaderboard extends React.Component {
   }
 
   startContinousFetching = () => {
+    this.getLeaderboard();
     this.fetchInterval = setInterval(this.getLeaderboard, 3000);
   };
 
@@ -44,7 +33,6 @@ class Leaderboard extends React.Component {
         this.setState({ leaderboard: res.data.Leaderboard, loading: false });
       } else {
         this.setState({ loading: false });
-        console.log("error fetching leaderboard");
       }
     });
   };
@@ -52,7 +40,6 @@ class Leaderboard extends React.Component {
   addUserScore = () => {
     const { PlayFabClientSDK } = window;
     const { totalScore } = this.props;
-    // const score = this.props.location.score > 0 ? this.props.location.score : 0;
     PlayFabClientSDK.UpdatePlayerStatistics({
       Statistics: [
         { StatisticName: "Headshots", Value: totalScore.reduce((sum, num) => sum + num) }
@@ -61,6 +48,7 @@ class Leaderboard extends React.Component {
   };
 
   render() {
+    console.log(this.state);
     const { loading, leaderboard } = this.state;
     if (loading) {
       return <p>loading...</p>;
@@ -81,4 +69,4 @@ class Leaderboard extends React.Component {
   }
 }
 
-export default withRouter(Leaderboard);
+export default Leaderboard;

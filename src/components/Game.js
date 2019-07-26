@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import Map from "./Map";
 import StreetView from "./Streetview";
 import Navbar from "./Navbar";
@@ -60,4 +59,4 @@ const Game = ({ history, setTotalScore, totalScore }) => {
   );
 };
 
-export default withRouter(Game);
+export default Game;
