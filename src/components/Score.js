@@ -35,7 +35,7 @@ const Score = ({ location, totalScore }) => {
           {totalScore.length === 5 ? (
             <Link to="/leaderboard">View Leaderboard</Link>
           ) : (
-            <Link to="/game">Next Round</Link>
+            <Link to="/game">Next Game</Link>
           )}
         </div>
       </Navbar>

@@ -58,13 +58,15 @@ function playFabLogin(username, cb = () => {}) {
   }
 
   PlayFab.settings.titleId = REACT_APP_PLAYFAB_GAME_ID;
+  // Currently, you need to look up the correct format for this object in the API-docs:
+  // https://api.playfab.com/Documentation/Client/method/LoginWithCustomID
   PlayFabClientSDK.LoginWithCustomID(loginSettings, (res, err) => {
     if (res !== null) {
-      document.cookie = `geoguessr_session=${res.data.SessionTicket}`;
-      document.cookie = `geoguessr_playfabid=${res.data.PlayFabId}`;
       PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: username }, (res, err) => {
         if (res) {
-          document.cookie = `geoguessr_username=${username}`;
+          // TODO: data doesn't return SessionTicket for me
+          document.cookie = `geoguessr_session_cookie=${res.data.SessionTicket}`;
+          document.cookie = `geoguessr_initials=${username}`;
           cb();
         } else {
           // log error here
@@ -80,22 +82,7 @@ function playFabLogin(username, cb = () => {}) {
 }
 
 function getUsernameCookie() {
-  // eslint-disable-next-line
-  return document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_username\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  return document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_initials\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 }
 
-
-function getPlayFabIdCookie() {
-  // eslint-disable-next-line
-  return document.cookie.replace(/(?:(?:^|.*;\s*)geoguessr_playfabid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-}
-
-export {
-  getDistance,
-  getScore,
-  getLat,
-  getLng,
-  pickCity,
-  playFabLogin,
-  getUsernameCookie,
-  getPlayFabIdCookie };
+export { getDistance, getScore, getLat, getLng, pickCity, playFabLogin, getUsernameCookie };
