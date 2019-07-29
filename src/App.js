@@ -15,12 +15,14 @@ class App extends React.Component {
 
   checkLoggedInUser = () => {
     const username = getUsernameCookie();
-    try {
-      playFabLogin(username, () => {
-        this.setState({ isAuthenticated: true });
-      });
-    } catch (e) {
-      this.setState({ isAuthenticated: false });
+    if (username) {
+      try {
+        playFabLogin(username, () => {
+          this.setState({ isAuthenticated: true });
+        });
+      } catch (e) {
+        this.setState({ isAuthenticated: false });
+      }
     }
   };
 
