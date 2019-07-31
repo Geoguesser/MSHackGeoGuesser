@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import { getScore } from "../utils/helpers";
 import "../style/game.scss";
 
-const Game = ({ history, setTotalScore, totalScore }) => {
+const Game = ({ history, setTotalScore, totalScore, currentRound }) => {
   const [googleMaps, setGoogleMaps] = React.useState(0);
   const [streetLat, setStreetLat] = React.useState(0);
   const [streetLng, setStreetLng] = React.useState(0);
@@ -35,9 +35,14 @@ const Game = ({ history, setTotalScore, totalScore }) => {
   return (
     <>
       <Navbar>
-        <button className="nav-button" disabled={false} onClick={submitGuess}>
-          Submit Guess
-        </button>
+        <div className="navbar-item">
+          <span>{currentRound} / 5</span>
+        </div>
+        <div className="navbar-item">
+          <button className="nav-button" disabled={false} onClick={submitGuess}>
+            Submit Guess
+          </button>
+        </div>
       </Navbar>
       <Map
         insetMapLat={insetMapLat}

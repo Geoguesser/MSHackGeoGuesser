@@ -48,7 +48,6 @@ class Leaderboard extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     const { loading, leaderboard } = this.state;
     if (loading) {
       return <p>loading...</p>;
