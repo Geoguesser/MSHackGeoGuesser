@@ -5,7 +5,13 @@ import Game from "./components/Game";
 import Score from "./components/Score";
 import Leaderboard from "./components/Leaderboard";
 
-function GeoGuesserRouter({ setTotalScore, totalScore, isAuthenticated }) {
+function GeoGuesserRouter({
+  setTotalScore,
+  totalScore,
+  isAuthenticated,
+  incrementRound,
+  currentRound
+}) {
   return (
     <Router>
       <Route exact path="/" component={Landing} />
@@ -14,7 +20,12 @@ function GeoGuesserRouter({ setTotalScore, totalScore, isAuthenticated }) {
         path="/game"
         render={routeProps =>
           isAuthenticated ? (
-            <Game {...routeProps} setTotalScore={setTotalScore} totalScore={totalScore} />
+            <Game
+              {...routeProps}
+              setTotalScore={setTotalScore}
+              totalScore={totalScore}
+              currentRound={currentRound}
+            />
           ) : (
             <Redirect to="/" />
           )
@@ -24,7 +35,16 @@ function GeoGuesserRouter({ setTotalScore, totalScore, isAuthenticated }) {
         exact
         path="/score"
         render={routeProps =>
-          isAuthenticated ? <Score {...routeProps} totalScore={totalScore} /> : <Redirect to="/" />
+          isAuthenticated ? (
+            <Score
+              {...routeProps}
+              totalScore={totalScore}
+              currentRound={currentRound}
+              incrementRound={incrementRound}
+            />
+          ) : (
+            <Redirect to="/" />
+          )
         }
       />
       <Route
