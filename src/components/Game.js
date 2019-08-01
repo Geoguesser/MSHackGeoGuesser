@@ -39,7 +39,11 @@ const Game = ({ history, setTotalScore, totalScore, currentRound }) => {
           <span>{currentRound} / 5</span>
         </div>
         <div className="navbar-item">
-          <button className="nav-button" disabled={false} onClick={submitGuess}>
+          <button
+            className="nav-button"
+            disabled={!insetMapLat || !insetMapLng}
+            onClick={submitGuess}
+          >
             Submit Guess
           </button>
         </div>
