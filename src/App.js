@@ -6,7 +6,8 @@ import { getUsernameCookie, playFabLogin } from "./utils/helpers";
 class App extends React.Component {
   state = {
     totalScore: [],
-    isAuthenticated: false
+    isAuthenticated: false,
+    currentRound: 1
   };
 
   componentDidMount() {
@@ -15,12 +16,14 @@ class App extends React.Component {
 
   checkLoggedInUser = () => {
     const username = getUsernameCookie();
-    try {
-      playFabLogin(username, () => {
-        this.setState({ isAuthenticated: true });
-      });
-    } catch (e) {
-      this.setState({ isAuthenticated: false });
+    if (username) {
+      try {
+        playFabLogin(username, () => {
+          this.setState({ isAuthenticated: true });
+        });
+      } catch (e) {
+        this.setState({ isAuthenticated: false });
+      }
     }
   };
 
@@ -28,12 +31,20 @@ class App extends React.Component {
     this.setState({ totalScore });
   };
 
+  incrementRound = () => {
+    this.setState(({ currentRound }) => ({
+      currentRound: currentRound + 1
+    }));
+  };
+
   render() {
-    const { totalScore, isAuthenticated } = this.state;
+    const { totalScore, isAuthenticated, currentRound } = this.state;
     return (
       <GeoGuesserRouter
+        currentRound={currentRound}
         isAuthenticated={isAuthenticated}
         totalScore={totalScore}
+        incrementRound={this.incrementRound}
         setTotalScore={this.setTotalScore}
       />
     );

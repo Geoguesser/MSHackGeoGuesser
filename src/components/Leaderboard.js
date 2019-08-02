@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import HighScoreTable from "./HighScoreTable";
 import Navbar from "./Navbar";
-import { playFabLogin, getUsernameCookie, getPlayFabIdCookie } from "../utils/helpers";
+import { getUsernameCookie, getPlayFabIdCookie } from "../utils/helpers";
 import { Constants } from "../utils/constants";
 import "../style/leaderboard.scss";
 
