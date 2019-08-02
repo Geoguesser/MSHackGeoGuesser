@@ -13,9 +13,8 @@ class Landing extends React.Component {
   };
 
   loginUser = async () => {
-    // disable button
     this.toggleButtonDisabled();
-    // login to playfab
+
     playFabLogin(this.state.name, res => {
       if (res && res.error === "NameNotAvailable") {
         alert("Name is not available, please enter again.");
