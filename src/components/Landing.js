@@ -1,5 +1,5 @@
 import React from "react";
-import { playFabLogin } from "../utils/helpers";
+import { login } from "../utils/auth";
 import "../style/landing.scss";
 
 class Landing extends React.Component {
@@ -15,11 +15,12 @@ class Landing extends React.Component {
   loginUser = async () => {
     this.toggleButtonDisabled();
 
-    playFabLogin(this.state.name, res => {
+    login(this.state.name, res => {
       if (res && res.error === "NameNotAvailable") {
         alert("Name is not available, please enter again.");
         this.setState({ name: "" });
       } else {
+        console.log("next page please?");
         this.props.history.push("/game");
       }
     });

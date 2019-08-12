@@ -1,54 +1,62 @@
 import React from "react";
-// import { BrowserRouter as Router, Route } from "react-router-dom";
-import GeoGuesserRouter from "./Router";
-import { getUsernameCookie, playFabLogin } from "./utils/helpers";
 
-class App extends React.Component {
-  state = {
-    totalScore: [],
-    isAuthenticated: false,
-    currentRound: 1
-  };
+const PrivateRouter = React.lazy(() => import("./ "));
 
-  componentDidMount() {
-    this.checkLoggedInUser();
-  }
+// import React from "react";
+// import GeoGuesserRouter from "./Router";
+// import { login } from "./utils/auth";
 
-  checkLoggedInUser = () => {
-    const username = getUsernameCookie();
-    if (username) {
-      try {
-        playFabLogin(username, () => {
-          this.setState({ isAuthenticated: true });
-        });
-      } catch (e) {
-        this.setState({ isAuthenticated: false });
-      }
-    }
-  };
+// class App extends React.Component {
+//   state = {
+//     totalScore: [],
+//     isAuthenticated: false,
+//     currentRound: 1
+//   };
 
-  setTotalScore = totalScore => {
-    this.setState({ totalScore });
-  };
+//   componentDidMount() {
+//     this.getUser();
+//   }
 
-  incrementRound = () => {
-    this.setState(({ currentRound }) => ({
-      currentRound: currentRound + 1
-    }));
-  };
+//   getUser = () => {
+//     const username = localStorage.getItem("gs_username");
+//     this.setState({ isAuthenticated: !!username });
+//   };
 
-  render() {
-    const { totalScore, isAuthenticated, currentRound } = this.state;
-    return (
-      <GeoGuesserRouter
-        currentRound={currentRound}
-        isAuthenticated={isAuthenticated}
-        totalScore={totalScore}
-        incrementRound={this.incrementRound}
-        setTotalScore={this.setTotalScore}
-      />
-    );
-  }
-}
+//   // checkLoggedInUser = () => {
+//   //   const username = localStorage.getItem(`gs_username`);
+//   //   if (username) {
+//   //     try {
+//   //       login(username, () => {
+//   //         this.setState({ isAuthenticated: true });
+//   //       });
+//   //     } catch (e) {
+//   //       this.setState({ isAuthenticated: false });
+//   //     }
+//   //   }
+//   // };
 
-export default App;
+//   setTotalScore = totalScore => {
+//     this.setState({ totalScore });
+//   };
+
+//   incrementRound = () => {
+//     this.setState(({ currentRound }) => ({
+//       currentRound: currentRound + 1
+//     }));
+//   };
+
+//   render() {
+//     const { totalScore, isAuthenticated, currentRound } = this.state;
+//     return (
+//       <GeoGuesserRouter
+//         currentRound={currentRound}
+//         isAuthenticated={isAuthenticated}
+//         totalScore={totalScore}
+//         incrementRound={this.incrementRound}
+//         setTotalScore={this.setTotalScore}
+//       />
+//     );
+//   }
+// }
+
+// export default App;
