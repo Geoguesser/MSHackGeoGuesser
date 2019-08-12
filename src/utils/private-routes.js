@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Score from "../components/Score";
 import Game from "../components/Game";
 import Leaderboard from "../components/Leaderboard";
@@ -13,7 +13,8 @@ import Home from "../components/Home";
 //   }
 // }
 
-function PrivateRouter({ setTotalScore, totalScore, incrementRound, currentRound }) {
+function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber }) {
+  console.log("inside!");
   return (
     <Router>
       <Route exact path="/" component={Home} />
@@ -25,7 +26,7 @@ function PrivateRouter({ setTotalScore, totalScore, incrementRound, currentRound
             {...routeProps}
             setTotalScore={setTotalScore}
             totalScore={totalScore}
-            currentRound={currentRound}
+            currentRound={roundNumber}
           />
         )}
       />
@@ -36,8 +37,8 @@ function PrivateRouter({ setTotalScore, totalScore, incrementRound, currentRound
           <Score
             {...routeProps}
             totalScore={totalScore}
-            currentRound={currentRound}
-            incrementRound={incrementRound}
+            currentRound={roundNumber}
+            incrementRound={setRoundNumber}
           />
         )}
       />

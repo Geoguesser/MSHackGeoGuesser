@@ -2,6 +2,9 @@
   "name": "ms-geoguesser",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "url": "https://github.com/DanceParty/MSHackGeoGuesser"
+  },
   "dependencies": {
     "dotenv": "^8.0.0",
     "google-map-react": "^1.1.4",

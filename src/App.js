@@ -1,62 +1,23 @@
 import React from "react";
+import { useAuth } from "./context/auth";
+import PrivateRouter from "./utils/private-routes";
+import PublicRouter from "./utils/public-routes";
 
-const PrivateRouter = React.lazy(() => import("./ "));
+function App(props) {
+  const [totalScore, setTotalScore] = React.useState([]);
+  const [roundNumber, setRoundNumber] = React.useState(1);
+  const gameProps = {
+    totalScore,
+    setTotalScore,
+    roundNumber,
+    setRoundNumber
+  };
+  const { user } = useAuth();
+  return (
+    <React.Suspense fallback={<p>Loading...</p>}>
+      {user ? <PrivateRouter {...gameProps} /> : <PublicRouter />}
+    </React.Suspense>
+  );
+}
 
-// import React from "react";
-// import GeoGuesserRouter from "./Router";
-// import { login } from "./utils/auth";
-
-// class App extends React.Component {
-//   state = {
-//     totalScore: [],
-//     isAuthenticated: false,
-//     currentRound: 1
-//   };
-
-//   componentDidMount() {
-//     this.getUser();
-//   }
-
-//   getUser = () => {
-//     const username = localStorage.getItem("gs_username");
-//     this.setState({ isAuthenticated: !!username });
-//   };
-
-//   // checkLoggedInUser = () => {
-//   //   const username = localStorage.getItem(`gs_username`);
-//   //   if (username) {
-//   //     try {
-//   //       login(username, () => {
-//   //         this.setState({ isAuthenticated: true });
-//   //       });
-//   //     } catch (e) {
-//   //       this.setState({ isAuthenticated: false });
-//   //     }
-//   //   }
-//   // };
-
-//   setTotalScore = totalScore => {
-//     this.setState({ totalScore });
-//   };
-
-//   incrementRound = () => {
-//     this.setState(({ currentRound }) => ({
-//       currentRound: currentRound + 1
-//     }));
-//   };
-
-//   render() {
-//     const { totalScore, isAuthenticated, currentRound } = this.state;
-//     return (
-//       <GeoGuesserRouter
-//         currentRound={currentRound}
-//         isAuthenticated={isAuthenticated}
-//         totalScore={totalScore}
-//         incrementRound={this.incrementRound}
-//         setTotalScore={this.setTotalScore}
-//       />
-//     );
-//   }
-// }
-
-// export default App;
+export default App;
