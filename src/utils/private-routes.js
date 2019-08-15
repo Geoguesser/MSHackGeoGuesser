@@ -7,7 +7,6 @@ import Welcome from "../components/Welcome";
 import Landing from "../components/Landing";
 
 function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber }) {
-  console.log("inside!");
   return (
     <Router>
       <Route
@@ -27,7 +26,7 @@ function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber 
             {...routeProps}
             setTotalScore={setTotalScore}
             totalScore={totalScore}
-            currentRound={roundNumber}
+            roundNumber={roundNumber}
           />
         )}
       />
@@ -38,8 +37,8 @@ function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber 
           <Score
             {...routeProps}
             totalScore={totalScore}
-            currentRound={roundNumber}
-            incrementRound={setRoundNumber}
+            roundNumber={roundNumber}
+            setRoundNumber={setRoundNumber}
           />
         )}
       />

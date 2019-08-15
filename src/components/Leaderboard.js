@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import HighScoreTable from "./HighScoreTable";
 import Navbar from "./Navbar";
-import { Constants } from "../utils/constants";
+import { leaderboardResolver } from "../utils/playfab";
 import "../style/leaderboard.scss";
 
 class Leaderboard extends React.Component {
@@ -27,6 +27,7 @@ class Leaderboard extends React.Component {
   }
 
   startContinousFetching = () => {
+    console.log("continuous fetch");
     this.fetchInterval = setInterval(this.fetchLeaderboards, 3000);
   };
 
@@ -41,9 +42,10 @@ class Leaderboard extends React.Component {
       {
         StartPosition: startPosition,
         MaxResultsCount: numberOfResults,
-        StatisticName: Constants.PLAYFAB_STATISTIC_NAME
+        StatisticName: leaderboardResolver()
       },
-      res => {
+      (res, err) => {
+        console.log(err);
         if (res) {
           this.setState({
             leaderboard: res.data.Leaderboard
@@ -65,7 +67,7 @@ class Leaderboard extends React.Component {
     PlayFabClientSDK.GetLeaderboardAroundPlayer(
       {
         PlayFabId: currentUserPlayFabId,
-        StatisticName: Constants.PLAYFAB_STATISTIC_NAME
+        StatisticName: leaderboardResolver()
       },
       (res, err) => {
         if (res) {
@@ -93,16 +95,23 @@ class Leaderboard extends React.Component {
   };
 
   addUserScore = () => {
+    console.log("user score");
     const { PlayFabClientSDK } = window;
     const { totalScore } = this.props;
-    PlayFabClientSDK.UpdatePlayerStatistics({
-      Statistics: [
-        {
-          StatisticName: Constants.PLAYFAB_STATISTIC_NAME,
-          Value: totalScore.reduce((sum, num) => sum + num)
-        }
-      ]
-    });
+    PlayFabClientSDK.UpdatePlayerStatistics(
+      {
+        Statistics: [
+          {
+            StatisticName: leaderboardResolver(),
+            Value: totalScore.reduce((sum, num) => sum + num)
+          }
+        ]
+      },
+      (res, err) => {
+        console.log(res);
+        console.log(err);
+      }
+    );
   };
 
   getUsername() {

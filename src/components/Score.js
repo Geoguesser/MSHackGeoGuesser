@@ -14,7 +14,7 @@ const Marker = ({ icon }) => {
     </div>
   );
 };
-const Score = ({ location, totalScore, currentRound, incrementRound }) => {
+const Score = ({ location, totalScore, roundNumber, setRoundNumber }) => {
   const [guessedLatLng, setGuessedLatLng] = React.useState(0);
   const [actualLatLng, setActualLatLng] = React.useState(0);
 
@@ -29,7 +29,7 @@ const Score = ({ location, totalScore, currentRound, incrementRound }) => {
     <>
       <Navbar>
         <div className="navbar-item">
-          <span>{currentRound} / 5</span>
+          <span>{roundNumber} / 5</span>
         </div>
         <div className="navbar-item">
           <div className="user-score">Score: {score}</div>
@@ -38,7 +38,7 @@ const Score = ({ location, totalScore, currentRound, incrementRound }) => {
           {totalScore.length === 5 ? (
             <Link to="/leaderboard">View Leaderboard</Link>
           ) : (
-            <Link to="/game" onClick={incrementRound}>
+            <Link to="/game" onClick={() => setRoundNumber(roundNumber + 1)}>
               Next Game
             </Link>
           )}

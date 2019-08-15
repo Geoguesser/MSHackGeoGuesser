@@ -30,6 +30,8 @@ function login(username, cb = () => {}) {
         localStorage.setItem(localStorageKeys.sessionTicket, res.data.SessionTicket);
         localStorage.setItem(localStorageKeys.playFabId, res.data.PlayFabId);
         resolve(res);
+      } else {
+        console.log("loginwithcustomid error", err);
       }
     });
   });
@@ -43,6 +45,8 @@ function updateUsername(username) {
       if (res) {
         localStorage.setItem(localStorageKeys.username, username);
         resolve(res);
+      } else {
+        console.log("updateusertitledisplayname error", err);
       }
     });
   });
