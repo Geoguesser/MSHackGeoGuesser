@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "./context/auth";
+import { useAuth } from "./hooks/auth";
 import PrivateRouter from "./utils/private-routes";
 import PublicRouter from "./utils/public-routes";
 

@@ -43,4 +43,8 @@ function getLng(lng) {
   return l;
 }
 
-export { getDistance, getScore, getLat, getLng, pickCity };
+function leaderboardResolver() {
+  return process.env.REACT_APP_PLAYFAB_LEADERBOARD;
+}
+
+export { getDistance, getScore, getLat, getLng, pickCity, leaderboardResolver };

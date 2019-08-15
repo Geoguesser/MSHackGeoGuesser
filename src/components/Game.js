@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import { getScore } from "../utils/helpers";
 import "../style/game.scss";
 
-const Game = ({ history, setTotalScore, totalScore, currentRound }) => {
+const Game = ({ history, setTotalScore, totalScore, roundNumber }) => {
   const [googleMaps, setGoogleMaps] = React.useState(0);
   const [streetLat, setStreetLat] = React.useState(0);
   const [streetLng, setStreetLng] = React.useState(0);
@@ -36,7 +36,7 @@ const Game = ({ history, setTotalScore, totalScore, currentRound }) => {
     <>
       <Navbar>
         <div className="navbar-item">
-          <span>{currentRound} / 5</span>
+          <span>{roundNumber} / 5</span>
         </div>
         <div className="navbar-item">
           <button

@@ -4,7 +4,7 @@ require("dotenv").config();
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { AuthProvider } from "./context/auth";
+import { AuthProvider } from "./contexts/auth";
 import * as serviceWorker from "./serviceWorker";
 import "./style/index.scss";
 
