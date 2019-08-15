@@ -6,14 +6,6 @@ import Leaderboard from "../components/Leaderboard";
 import Welcome from "../components/Welcome";
 import Landing from "../components/Landing";
 
-// function PrivateRoute({ component: Component, path, ...props }) {
-//   if (props) {
-//     return (
-//       <Route
-//     )
-//   }
-// }
-
 function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber }) {
   console.log("inside!");
   return (
