@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { useAuth } from "../hooks/auth";
 import Score from "../components/Score";
 import Game from "../components/Game";
 import Leaderboard from "../components/Leaderboard";

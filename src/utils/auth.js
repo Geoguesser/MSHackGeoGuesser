@@ -38,10 +38,8 @@ function login(username, cb = () => {}) {
 }
 
 function updateUsername(username) {
-  console.log(username);
   return new Promise(resolve => {
     PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: username }, (res, err) => {
-      console.log(res, err);
       if (res) {
         localStorage.setItem(localStorageKeys.username, username);
         resolve(res);

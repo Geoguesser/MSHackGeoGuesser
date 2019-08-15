@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../hooks/auth";
 
 import "../style/welcome.scss";
 
