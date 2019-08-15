@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Score from "../components/Score";
 import Game from "../components/Game";
 import Leaderboard from "../components/Leaderboard";
-import Home from "../components/Home";
+import Welcome from "../components/Welcome";
+import Landing from "../components/Landing";
 
 // function PrivateRoute({ component: Component, path, ...props }) {
 //   if (props) {
@@ -17,7 +18,15 @@ function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber 
   console.log("inside!");
   return (
     <Router>
-      <Route exact path="/" component={Home} />
+      <Route
+        exact
+        path="/"
+        render={routeProps => (
+          <Landing>
+            <Welcome {...routeProps} />
+          </Landing>
+        )}
+      />
       <Route
         exact
         path="/game"

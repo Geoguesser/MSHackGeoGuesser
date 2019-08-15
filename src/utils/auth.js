@@ -8,7 +8,6 @@ const { REACT_APP_PLAYFAB_GAME_ID } = process.env;
 const { PlayFab, PlayFabClientSDK } = window;
 
 function getUser() {
-  console.log("getUser");
   if (
     localStorage.getItem(localStorageKeys.sessionTicket) &&
     localStorage.getItem(localStorageKeys.playFabId)

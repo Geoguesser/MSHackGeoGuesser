@@ -4,8 +4,8 @@
   background-image: url("../assets/agustin-diaz-7F65HDP0-E0-unsplash.jpg");
   background-size: cover;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .page-title {
@@ -15,93 +15,19 @@
 }
 
 .center-container {
-  height: 15%;
+  flex: 1;
+  width: 100%;
   text-align: center;
 }
 
 .container-content {
-  height: 50%;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  justify-content: space-around;
-  margin-top: 5rem;
 }
 
 .gg_button {
   height: 100%;
-}
-
-.name-input-container {
-  margin-bottom: 20px;
-  box-sizing: border-box;
-}
-
-#name-input {
-  padding: 1rem;
-  width: 20rem;
-  background: transparent;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  font-size: 40px;
-  color: white;
-  box-sizing: border-box;
-  -webkit-transition: border-bottom 0.5s;
-  transition: border-bottom 0.5s;
-  text-align: center;
-
-  &:focus {
-    border-bottom: 2px solid rgba(255, 255, 255, 1);
-    outline: none;
-  }
-
-  &::placeholder {
-    color: white;
-    opacity: 0.5;
-  }
-}
-
-/*
-  hide accessible label:
-  https://www.w3.org/WAI/tutorials/forms/labels/#note-on-hiding-elements
-*/
-.visuallyhidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-.name-button {
-  background: transparent;
-  padding: 1rem;
-  min-width: 200px;
-  color: rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  border-color: rgba(255, 255, 255, 0.3);
-  border-width: 2px;
-  font-size: 24px;
-  -webkit-transition: color 0.5s, border-color 0.5s, background 0.5s;
-  transition: color 0.5s, border-color 0.5s, background 0.5s;
-  cursor: pointer;
-
-  &:focus {
-    background: rgba(255, 255, 255, 1);
-    border-color: rgba(255, 255, 255, 1);
-    color: rgba(1, 1, 1, 1);
-    outline: none;
-  }
-  &:hover {
-    background: rgba(255, 255, 255, 1);
-    border-color: rgba(255, 255, 255, 1);
-    color: rgba(1, 1, 1, 1);
-  }
 }
 
 img {
