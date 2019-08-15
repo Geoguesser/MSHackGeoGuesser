@@ -1,0 +1,50 @@
+.name-input-container {
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  margin-right: 1rem;
+}
+
+.login-button-container {
+  margin-left: 1rem;
+}
+
+/*
+  hide accessible label:
+  https://www.w3.org/WAI/tutorials/forms/labels/#note-on-hiding-elements
+*/
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#name-input {
+  padding: 1rem;
+  width: 20rem;
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  font-size: 40px;
+  color: white;
+  box-sizing: border-box;
+  -webkit-transition: border-bottom 0.5s;
+  transition: border-bottom 0.5s;
+  text-align: center;
+
+  &:focus {
+    border-bottom: 2px solid rgba(255, 255, 255, 1);
+    outline: none;
+  }
+
+  &::placeholder {
+    color: white;
+    opacity: 0.5;
+  }
+}

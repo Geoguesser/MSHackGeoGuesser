@@ -1,54 +1,23 @@
 import React from "react";
-// import { BrowserRouter as Router, Route } from "react-router-dom";
-import GeoGuesserRouter from "./Router";
-import { getUsernameCookie, playFabLogin } from "./utils/helpers";
+import { useAuth } from "./context/auth";
+import PrivateRouter from "./utils/private-routes";
+import PublicRouter from "./utils/public-routes";
 
-class App extends React.Component {
-  state = {
-    totalScore: [],
-    isAuthenticated: false,
-    currentRound: 1
+function App(props) {
+  const [totalScore, setTotalScore] = React.useState([]);
+  const [roundNumber, setRoundNumber] = React.useState(1);
+  const gameProps = {
+    totalScore,
+    setTotalScore,
+    roundNumber,
+    setRoundNumber
   };
-
-  componentDidMount() {
-    this.checkLoggedInUser();
-  }
-
-  checkLoggedInUser = () => {
-    const username = getUsernameCookie();
-    if (username) {
-      try {
-        playFabLogin(username, () => {
-          this.setState({ isAuthenticated: true });
-        });
-      } catch (e) {
-        this.setState({ isAuthenticated: false });
-      }
-    }
-  };
-
-  setTotalScore = totalScore => {
-    this.setState({ totalScore });
-  };
-
-  incrementRound = () => {
-    this.setState(({ currentRound }) => ({
-      currentRound: currentRound + 1
-    }));
-  };
-
-  render() {
-    const { totalScore, isAuthenticated, currentRound } = this.state;
-    return (
-      <GeoGuesserRouter
-        currentRound={currentRound}
-        isAuthenticated={isAuthenticated}
-        totalScore={totalScore}
-        incrementRound={this.incrementRound}
-        setTotalScore={this.setTotalScore}
-      />
-    );
-  }
+  const { user } = useAuth();
+  return (
+    <React.Suspense fallback={<p>Loading...</p>}>
+      {user ? <PrivateRouter {...gameProps} /> : <PublicRouter />}
+    </React.Suspense>
+  );
 }
 
 export default App;
