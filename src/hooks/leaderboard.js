@@ -11,7 +11,7 @@ function useLeaderboard(newScore) {
   const [playerRank, setPlayerRank] = React.useState(null);
 
   // basic leaderboard fetching
-  function fetchLeaderbaord() {
+  function fetchLeaderboard() {
     const settings = {
       StartPosition: 0,
       MaxResultsCount: 10,
@@ -67,7 +67,7 @@ function useLeaderboard(newScore) {
           addUserScoreToLeaderboard(newScore);
           fetchPlayerRank();
         }
-        fetchLeaderbaord();
+        fetchLeaderboard();
         setLoading(false);
       });
     }, 3000);

@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import "../style/leaderboard.scss";
 import { useLeaderboard } from "../hooks/leaderboard";
 
-function Leaderboard({ totalScore }) {
+function Leaderboard({ totalScore, setTotalScore, setRoundNumber }) {
   const { loading, leaderboard, playerRank } = useLeaderboard(totalScore);
   if (loading) {
     return <p>Loading...</p>;
@@ -17,7 +17,15 @@ function Leaderboard({ totalScore }) {
         <div className="leaderboard-container">
           <h1 className="title">Leaderboard</h1>
           <HighScoreTable scores={fullLeaderboard} />
-          <Link to="/game">Play again?</Link>
+          <Link
+            to="/game"
+            onClick={() => {
+              setRoundNumber(1);
+              setTotalScore([]);
+            }}
+          >
+            Play again?
+          </Link>
         </div>
       </>
     );

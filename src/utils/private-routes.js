@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { useAuth } from "../hooks/auth";
 import Score from "../components/Score";
 import Game from "../components/Game";
 import Leaderboard from "../components/Leaderboard";
@@ -46,7 +45,14 @@ function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber 
       <Route
         exact
         path="/leaderboard"
-        render={routeProps => <Leaderboard {...routeProps} totalScore={totalScore} />}
+        render={routeProps => (
+          <Leaderboard
+            {...routeProps}
+            totalScore={totalScore}
+            setTotalScore={setTotalScore}
+            setRoundNumber={setRoundNumber}
+          />
+        )}
       />
     </Router>
   );
