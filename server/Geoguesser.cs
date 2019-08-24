@@ -7,6 +7,8 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using PlayFab;
+using PlayFab.ClientModels;
 
 namespace Hack.Geoguesser
 {
@@ -17,7 +19,16 @@ namespace Hack.Geoguesser
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
+            PlayFabSettings.TitleId = Environment.GetEnvironmentVariable("PlayFabTitleId");
             log.LogInformation("C# HTTP trigger function processed a request.");
+
+            var request = new LoginWithCustomIDRequest
+            {
+                CustomId = "Getting Started"
+            };
+
+            var login = await PlayFabClientAPI.LoginWithCustomIDAsync(request);
+            Console.WriteLine($"Login: {JsonConvert.SerializeObject(login)}");
 
             string name = req.Query["name"];
 
