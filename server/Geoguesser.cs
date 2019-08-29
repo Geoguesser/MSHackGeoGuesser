@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PlayFab;
 using PlayFab.ClientModels;
+using System.Collections.Generic;
 
 namespace Hack.Geoguesser
 {
@@ -19,16 +20,28 @@ namespace Hack.Geoguesser
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            PlayFabSettings.TitleId = Environment.GetEnvironmentVariable("PlayFabTitleId");
+            PlayFabSettings.staticSettings.TitleId = Environment.GetEnvironmentVariable("PlayFabTitleId");
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var request = new LoginWithCustomIDRequest
             {
-                CustomId = "Getting Started"
+                CustomId = req.Query["name"]
             };
 
             var login = await PlayFabClientAPI.LoginWithCustomIDAsync(request);
-            Console.WriteLine($"Login: {JsonConvert.SerializeObject(login)}");
+            var updateStatisticsResponse = await PlayFabClientAPI.UpdatePlayerStatisticsAsync(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate>
+                {
+                    new StatisticUpdate
+                    {
+                        StatisticName = "Headshots",
+                        Value = Convert.ToInt32(req.Query["score"])
+                    }
+                }
+            });
+
+            Console.WriteLine($"statistics response: {JsonConvert.SerializeObject(updateStatisticsResponse)}");
 
             string name = req.Query["name"];
 
