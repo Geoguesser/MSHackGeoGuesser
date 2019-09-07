@@ -4,14 +4,15 @@ require("dotenv").config();
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { AuthProvider } from "./contexts/auth";
+import { AzureAD } from "react-aad-msal";
 import * as serviceWorker from "./serviceWorker";
 import "./style/index.scss";
+import { authProvider } from "./utils/msalAuthProvider";
 
 ReactDOM.render(
-  <AuthProvider>
+  <AzureAD provider={authProvider} forceLogin={true}>
     <App />
-  </AuthProvider>,
+  </AzureAD>,
   document.getElementById("root")
 );
 

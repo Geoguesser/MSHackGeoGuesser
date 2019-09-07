@@ -5,7 +5,8 @@ import { leaderboardResolver } from "../utils/helpers";
 // custom hook to provide all leaderboard functionality
 
 function useLeaderboard(newScore) {
-  const { user, login } = useAuth();
+  //const { user, login } = useAuth();
+  // todo: figure out how to "login" to submit score to playfab
   const [loading, setLoading] = React.useState(true);
   const [leaderboard, setLeaderboard] = React.useState(null);
   const [playerRank, setPlayerRank] = React.useState(null);
@@ -62,14 +63,15 @@ function useLeaderboard(newScore) {
   React.useEffect(() => {
     setLoading(true);
     let interval = setInterval(() => {
-      login(user, () => {
+      /*login(user, () => {
         if (newScore.length > 0) {
           addUserScoreToLeaderboard(newScore);
           fetchPlayerRank();
         }
         fetchLeaderboard();
         setLoading(false);
-      });
+      });*/
+      console.log(`todo: implement logging in....`);
     }, 3000);
     return () => {
       clearInterval(interval);

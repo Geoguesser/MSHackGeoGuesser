@@ -1,20 +1,25 @@
 const localStorageKeys = {
   sessionTicket: `gs_sessionTicket`,
   playFabId: `gs_playfabId`,
-  username: `gs_username`
+  username: `gs_username`,
+  jwtAccessToken: `gs_jwtAccessToken`,
+  jwtIdToken: `gs_jwtIdToken`
 };
 
 const { REACT_APP_PLAYFAB_GAME_ID } = process.env;
 const { PlayFab, PlayFabClientSDK } = window;
 
 function getUser() {
-  if (
-    localStorage.getItem(localStorageKeys.sessionTicket) &&
-    localStorage.getItem(localStorageKeys.playFabId)
-  ) {
+  if (localStorage.getItem(localStorageKeys.username)) {
     return localStorage.getItem(localStorageKeys.username);
   }
   return null;
+}
+
+function setUser(user) {
+  localStorage.setItem(localStorageKeys.username, user.account.name);
+  localStorage.setItem(localStorageKeys.jwtAccessToken, user.jwtAccessToken);
+  localStorage.setItem(localStorageKeys.jwtIdToken, user.jwtIdToken);
 }
 
 function login(username, cb = () => {}) {
@@ -50,4 +55,4 @@ function updateUsername(username) {
   });
 }
 
-export { login, localStorageKeys, getUser, updateUsername };
+export { login, localStorageKeys, getUser, updateUsername, setUser };

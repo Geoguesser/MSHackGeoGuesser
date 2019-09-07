@@ -1,7 +1,8 @@
 import React from "react";
-import { useAuth } from "./hooks/auth";
 import PrivateRouter from "./utils/private-routes";
-import PublicRouter from "./utils/public-routes";
+import { withAuthentication } from "react-aad-msal";
+import { authProvider } from "./utils/msalAuthProvider";
+import { setUser } from "./utils/auth";
 
 function App(props) {
   const [totalScore, setTotalScore] = React.useState([]);
@@ -12,12 +13,14 @@ function App(props) {
     roundNumber,
     setRoundNumber
   };
-  const { user } = useAuth();
   return (
     <React.Suspense fallback={<p>Loading...</p>}>
-      {user ? <PrivateRouter {...gameProps} /> : <PublicRouter />}
+      <PrivateRouter {...gameProps} />
     </React.Suspense>
   );
 }
 
-export default App;
+export default withAuthentication(App, {
+  provider: authProvider,
+  accountInfoCallback: setUser
+});
