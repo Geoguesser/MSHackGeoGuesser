@@ -1,5 +1,4 @@
 import React from "react";
-import { useAuth } from "./auth";
 import { leaderboardResolver } from "../utils/helpers";
 
 // custom hook to provide all leaderboard functionality
