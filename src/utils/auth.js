@@ -23,7 +23,6 @@ function setUser(user) {
 }
 
 function login(username, cb = () => {}) {
-  console.log("inside login");
   const settings = {
     TitleId: REACT_APP_PLAYFAB_GAME_ID,
     CustomId: username,
@@ -45,11 +44,9 @@ function login(username, cb = () => {}) {
 }
 
 function updateUsername(username) {
-  console.log(`updateUsername called with name ${username}`);
   return new Promise(resolve => {
     PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: username }, (res, err) => {
       if (res) {
-        console.log(`updating username...${res}`);
         localStorage.setItem(localStorageKeys.username, username);
         resolve(res);
       } else {

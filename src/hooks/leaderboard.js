@@ -18,10 +18,8 @@ function useLeaderboard(newScore) {
     };
     window.PlayFabClientSDK.GetLeaderboard(settings, (res, err) => {
       if (res) {
-        console.log("setting leaderboard");
         setLeaderboard(res.data.Leaderboard);
       } else {
-        console.log("error fetching leaderboard");
       }
       setLoading(false);
     });
@@ -47,15 +45,11 @@ function useLeaderboard(newScore) {
     };
     window.PlayFabClientSDK.GetLeaderboardAroundPlayer(settings, res => {
       if (res) {
-        console.log(`playfab ID: ${localStorage.getItem(`gs_playfabId`)} -- player`);
         const user = res.data.Leaderboard.find(
           player => player.PlayFabId === localStorage.getItem(`gs_playfabId`)
         );
-        console.log(`user....${JSON.stringify(user)}`);
         if (user.Position > 10) {
-          console.log(`setting player rank`);
           setPlayerRank(user);
-          console.log(`player rank: ${playerRank}`);
         }
       } else {
         console.log("error fetching player leaderboard");
@@ -66,24 +60,16 @@ function useLeaderboard(newScore) {
   React.useEffect(() => {
     setLoading(true);
     let interval = setInterval(() => {
-      console.log(`start of interval run. about to log in`);
-      // figure out when to login to playfab and whether username local storage should be userfriendly name or playfab username
       login(getUser(), () => {
-        console.log(`logged in. newScore: ${JSON.stringify(newScore)}`);
         if (newScore.length > 0) {
-          console.log(`adding to scoreboard and fetching player rank`);
           addUserScoreToLeaderboard(newScore);
           fetchPlayerRank();
         }
-        console.log(`fetching leaderboard and setting loading`);
         fetchLeaderboard();
         setLoading(false);
-        console.log("end of login");
       });
-      console.log(`end of interval run`);
     }, 3000);
     return () => {
-      console.log("clearing interval");
       clearInterval(interval);
     };
   }, []);
