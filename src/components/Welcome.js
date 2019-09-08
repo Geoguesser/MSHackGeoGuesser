@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import { getUser as getUsernameFromLocalStorage } from "../utils/auth";
+import { getUser as getUsernameFromLocalStorage, updateUsername, login } from "../utils/auth";
 
 import "../style/welcome.scss";
 
@@ -13,10 +13,13 @@ const Welcome = props => {
   retryInterval = setInterval(() => {
     if (username === null) {
       setUsername(getUsernameFromLocalStorage());
+      login(getUsernameFromLocalStorage(), () => {
+        updateUsername(getUsernameFromLocalStorage());
+      });
     } else {
       clearInterval(retryInterval);
     }
-  }, 10);
+  }, 100);
 
   return (
     <>
