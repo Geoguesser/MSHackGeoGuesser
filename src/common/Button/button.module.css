@@ -1,0 +1,60 @@
+/* @import "../styles/variables.css"; */
+
+.btn {
+  display: inline-block;
+  margin: 0;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0 var(--btn-padding);
+  min-width: var(--btn-min-width);
+  border-radius: var(--btn-border-radius);
+  cursor: pointer;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none; /* reset anchor tag */
+  text-overflow: ellipsis;
+  line-height: var(--btn-line-height);
+  white-space: nowrap;
+  font-family: inherit; /* override for input & button */
+  font-size: var(--font-size-md);
+  -webkit-font-smoothing: subpixel-antialiased;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* FF <input type="submit" ... /> fix */
+.btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.btn--small {
+  padding: 0 var(--btn-sm-padding);
+  line-height: var(--btn-sm-line-height);
+  min-width: var(--btn-sm-min-width);
+  font-size: var(--font-size-sm);
+}
+
+.btn--large {
+  padding: 0 var(--btn-lg-padding);
+  min-width: var(--btn-lg-min-width);
+  line-height: var(--btn-lg-line-height);
+  font-size: var(--font-size-lg);
+}
+
+.btn--full {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn--disabled {
+  border-color: transparent;
+  box-shadow: none;
+  background-color: var(--gray);
+  color: var(--dark-gray);
+  cursor: default;
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import { Button } from "../common";
 import { useAuth } from "../hooks/auth";
 
 import "../style/login-form.scss";
@@ -39,8 +39,8 @@ function LoginForm(props) {
       </div>
 
       <div className="login-button-container">
-        <Button icon="🛫" iconName="airplane" onClick={loginUser} disabled={disabled}>
-          Let's go
+        <Button onClick={loginUser} disabled={!name || disabled}>
+          Let's go!
         </Button>
       </div>
     </>

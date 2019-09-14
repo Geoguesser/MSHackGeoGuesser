@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import { Button } from "../common";
 import { useAuth } from "../hooks/auth";
 
 import "../style/welcome.scss";
@@ -12,9 +12,7 @@ function Welcome(props) {
         <h1 className="heading1">Hello, {user}!</h1>
       </div>
       <div className="welcome-button-container">
-        <Button icon="🗺️" iconName="Map" onClick={() => props.history.push("/game")}>
-          Play game
-        </Button>
+        <Button onClick={() => props.history.push("/game")}>Play game</Button>
       </div>
     </>
   );
