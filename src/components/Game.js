@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "../common";
 import Map from "./Map";
 import StreetView from "./Streetview";
 import Navbar from "./Navbar";
@@ -39,13 +40,9 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }) => {
           <span>{roundNumber} / 5</span>
         </div>
         <div className="navbar-item">
-          <button
-            className="nav-button"
-            disabled={!insetMapLat || !insetMapLng}
-            onClick={submitGuess}
-          >
-            Submit Guess
-          </button>
+          <Button disabled={!insetMapLat || !insetMapLng} onClick={submitGuess}>
+            Submit guess
+          </Button>
         </div>
       </Navbar>
       <Map

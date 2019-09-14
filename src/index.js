@@ -6,8 +6,9 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { AuthProvider } from "./contexts/auth";
 import * as serviceWorker from "./serviceWorker";
-// import "./style/index.scss";
-import "./common/styles/base.css";
+import "./common/styles/global.css";
+import "./style/index.scss";
+// import "./common/styles/base.css";
 
 ReactDOM.render(
   <AuthProvider>

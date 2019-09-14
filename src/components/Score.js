@@ -1,6 +1,7 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 import { Link } from "react-router-dom";
+import { Button } from "../common";
 import Navbar from "./Navbar";
 import flagMarker from "../assets/red-flag.png";
 import circleMarker from "../assets/red-circle.png";
@@ -14,7 +15,7 @@ const Marker = ({ icon }) => {
     </div>
   );
 };
-const Score = ({ location, totalScore, roundNumber, setRoundNumber }) => {
+const Score = ({ history, location, totalScore, roundNumber, setRoundNumber }) => {
   const [guessedLatLng, setGuessedLatLng] = React.useState(0);
   const [actualLatLng, setActualLatLng] = React.useState(0);
 
@@ -24,6 +25,15 @@ const Score = ({ location, totalScore, roundNumber, setRoundNumber }) => {
     (coordinates.guessed[0] + coordinates.actual[0]) / 2,
     (coordinates.guessed[1] + coordinates.actual[1]) / 2
   ];
+
+  function onClickNextGame() {
+    setRoundNumber(roundNumber + 1);
+    history.push("/game");
+  }
+
+  function onClickViewLeaderboard() {
+    history.push("/leaderboard");
+  }
 
   return (
     <>
@@ -36,11 +46,11 @@ const Score = ({ location, totalScore, roundNumber, setRoundNumber }) => {
         </div>
         <div className="navbar-item">
           {totalScore.length === 5 ? (
-            <Link to="/leaderboard">View Leaderboard</Link>
+            <Button onClick={onClickViewLeaderboard}>View leaderboard</Button>
           ) : (
-            <Link to="/game" onClick={() => setRoundNumber(roundNumber + 1)}>
-              Next Game
-            </Link>
+            <Button to="/game" onClick={onClickNextGame}>
+              Next game
+            </Button>
           )}
         </div>
       </Navbar>

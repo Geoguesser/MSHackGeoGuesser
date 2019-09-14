@@ -15,12 +15,15 @@ function ButtonStory() {
         <Button size="large">Large Button</Button>
       </div>
       <div style={{ padding: 10 }}>
-        <Button isFullWidth>Full Width Button</Button>
+        <Button fullWidth>Full Width Button</Button>
       </div>
       <div style={{ padding: 10 }}>
-        <Button size="large" isFullWidth>
+        <Button size="large" fullWidth>
           Full Width & Large Button
         </Button>
+      </div>
+      <div style={{ padding: 10 }}>
+        <Button disabled>Disabled Button</Button>
       </div>
     </div>
   );

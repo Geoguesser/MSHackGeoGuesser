@@ -1,3 +1,4 @@
+@import "../../../node_modules/normalize.css/normalize.css";
 @import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
 
 :root {
@@ -7,6 +8,7 @@
   */
   --primary-color: #420000;
   --black: #170a19;
+  --dark-gray: #817a81;
   --gray: #eae9e9;
   --off-white: #d4d7dd;
   --white: #f6f6f6;
