@@ -1,0 +1,25 @@
+.header {
+  font-family: inherit;
+  color: var(--text-dark);
+}
+
+h1.header {
+  font-size: var(--font-size-h1);
+}
+
+h2.header {
+  font-size: var(--font-size-h2);
+}
+
+h3.header {
+  font-size: var(--font-size-h3);
+  color: var(--text-light);
+}
+
+h4.header {
+  font-size: var(--font-size-h4);
+}
+
+h5.header {
+  font-size: var(--font-size-h5);
+}

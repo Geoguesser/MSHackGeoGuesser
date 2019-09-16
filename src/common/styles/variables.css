@@ -1,0 +1,63 @@
+:root {
+  /*
+  * colors
+  *
+  */
+  --primary-color: #1089ff;
+  --primary-color-light: hsla(210, 100%, 53%, 0.75);
+  --text-dark: #32325d;
+  --text-light: #525f7f;
+  --black: #170a19;
+  --dark-gray: #817a81;
+  --gray: #e5e5e5;
+  --off-white: #eeeeee;
+  --white: #f6f6f6;
+
+  /*
+  * font
+  */
+  --font-size-sm: 10px;
+  --font-size-md: 14px;
+  --font-size-lg: 18px;
+  --font-size-h1: 52px;
+  --font-size-h2: 40px;
+  --font-size-h3: 28px;
+  --font-size-h4: 20px;
+  --font-size-h5: 16px;
+
+  /*
+  * button
+  */
+  --btn-padding: calc(22 / 14 * 1em);
+  --btn-min-width: calc(calc(62 / 14 * 1em) + calc(var(--btn-padding) * 2));
+  --btn-border-radius: 4px;
+  --btn-border-width: 1px;
+  --btn-border-color: var(--black);
+  --btn-line-height: 46px;
+
+  --btn-sm-padding: calc(22 / 12 * 1em);
+  --btn-sm-min-width: calc(calc(42 / 12 * 1em) + calc(var(--btn-sm-padding) * 2));
+  --btn-sm-line-height: 30px;
+
+  --btn-lg-padding: calc(22 / 16 * 1em);
+  --btn-lg-min-width: calc(calc(82 / 16 * 1em) + calc(var(--btn-lg-padding) * 2));
+  --btn-lg-line-height: 62px;
+
+  /*
+  * Layout
+  */
+  --column-gap: 0.75rem;
+
+  /*
+  * Input
+  */
+  --input-height: 56px;
+  --input-border-radius: 4px;
+  --input-padding: 24px 16px 8px 16px;
+  --input-max-width: 500px;
+  --input-margin: 5px;
+  --input-margin-bottom: 25px;
+  --input-background-animation: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
+  --input-active-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  --input-active-padding: 24px 16px 8px 16px;
+}

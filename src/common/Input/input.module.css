@@ -1,0 +1,106 @@
+* {
+  box-sizing: border-box;
+}
+
+.input-container {
+  width: 100%;
+  height: var(--input-height);
+  border-radius: var(--input-border-radius);
+  position: relative;
+  background-color: var(--gray);
+  margin: var(--input-margin);
+  transition: var(--input-background-animation);
+  margin-bottom: var(--input-margin-bottom);
+  max-width: var(--input-max-width);
+}
+
+.input-container--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-container--active {
+  background-color: var(--white);
+  box-shadow: var(--input-active-box-shadow);
+}
+
+.input-container--active .input {
+  padding: var(--input-active-padding);
+}
+
+.input-container--active .input + .label {
+  top: var(--input-active-placeholder-top-spacing) !important;
+  opacity: 1 !important;
+  color: var(--primary-color) !important;
+}
+
+.input-container .input + .label {
+  position: absolute;
+  top: 24px;
+  left: 16px;
+  font-size: 12px;
+  line-height: 24px;
+  opacity: 0;
+  pointer-events: none;
+  color: red;
+  transition: 0.1s all ease-in-out;
+}
+
+.input {
+  width: 100%;
+  height: var(--input-height);
+  position: relative;
+  padding: 0px 16px;
+  border: none;
+  border-radius: var(--input-border-radius);
+  font-size: var(--font-size-md);
+  background-color: transparent;
+  color: var(--text-dark);
+  outline: none;
+  box-shadow: 0px 4px 20px 0px transparent;
+  -webkit-appearance: none;
+  transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
+    0.1s padding ease-in-out;
+}
+
+.input-container--active input {
+  padding: var(--input-padding);
+}
+
+.input-container input::-webkit-input-placeholder {
+  color: var(--text-dark);
+}
+.input-container input::-moz-placeholder {
+  color: var(--text-dark);
+}
+.input-container input:-ms-input-placeholder {
+  color: var(--text-dark);
+}
+.input-container input:-moz-placeholder {
+  color: var(--text-dark);
+}
+.input-container--active input::-webkit-input-placeholder {
+  color: transparent;
+}
+.input-container--active input::-moz-placeholder {
+  color: transparent;
+}
+.input-container--active input:-ms-input-placeholder {
+  color: transparent;
+}
+.input-container--active input:-moz-placeholder {
+  color: transparent;
+}
+
+/* .input-container {
+  display: inline-block;
+  position: relative;
+}
+
+.input {
+  position: relative;
+  display: inline-flex;
+}
+
+.label {
+} */

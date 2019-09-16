@@ -1,0 +1,78 @@
+/*
+* All layout related styles
+*/
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--column-gap);
+}
+
+.container--full-height {
+  height: 100%;
+}
+
+.container--vertical-center {
+  /* to make the content just above center */
+  height: 90%;
+  justify-content: center;
+}
+
+/* 540px */
+@media only screen and (min-width: 33.75em) {
+  .container {
+    width: 90%;
+  }
+}
+
+/* 960px */
+@media only screen and (min-width: 60em) {
+  .container {
+    width: 85%;
+  }
+}
+
+.row {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.row--centered {
+  justify-content: center;
+}
+
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: var(--column-gap);
+}
+
+.column--one-third {
+  display: block;
+  flex: none;
+  width: 33.3333%;
+}
+
+.column--one-half {
+  display: block;
+  flex: none;
+  width: 50%;
+}
+
+.column--one-quarter {
+  display: block;
+  flex: none;
+  width: 25%;
+}

@@ -1,9 +1,13 @@
 import { configure } from "@storybook/react";
 // global variables & styles
 import "../src/common/styles/global.css";
+import "../src/common/styles/variables.css";
 
 function loadStories() {
-  require("../stories/index.js");
+  require("../stories/button.js");
+  require("../stories/layout.js");
+  require("../stories/typography.js");
+  require("../stories/input.js");
   // You can require as many stories as you need.
 }
 
