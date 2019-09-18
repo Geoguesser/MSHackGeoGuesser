@@ -1,9 +1,28 @@
 import React from "react";
 import { Container, Row, Column, Header, Button, Input } from "../common";
+import { useAuth } from "../hooks/auth";
 
 import "../style/landing.scss";
 
 function Landing() {
+  const [name, setName] = React.useState("");
+  const [disabled, setDisabled] = React.useState(false);
+  const { login } = useAuth();
+
+  function onChange(e) {
+    setName(e.currentTarget.value);
+  }
+
+  function loginUser() {
+    setDisabled(true);
+    login(name, res => {
+      if (res && res.error === "NameNotAvailable") {
+        alert("Name is not available, please enter again.");
+        this.setState({ name: "" });
+      }
+    });
+  }
+
   return (
     <Container fullHeight verticalAlign="center">
       <Row>
@@ -19,8 +38,10 @@ function Landing() {
       </Row>
       <Row>
         <Column textAlign="center">
-          <Input label="Username" center />
-          <Button>Let's go!</Button>
+          <Input label="Username" center onChange={onChange} />
+          <Button onClick={loginUser} disabled={!name || disabled}>
+            Let's go!
+          </Button>
         </Column>
       </Row>
     </Container>

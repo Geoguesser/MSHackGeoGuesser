@@ -9,15 +9,7 @@ import Landing from "../components/Landing";
 function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber }) {
   return (
     <Router>
-      <Route
-        exact
-        path="/"
-        render={routeProps => (
-          <Landing>
-            <Welcome {...routeProps} />
-          </Landing>
-        )}
-      />
+      <Route exact path="/" render={routeProps => <Welcome {...routeProps} />} />
       <Route
         exact
         path="/game"
