@@ -2,21 +2,15 @@ import React from "react";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 
-const Map = ({
-  setGoogleMaps,
-  insetMapLat,
-  insetMapLng,
-  setInsetMapLat,
-  setInsetMapLng
-}) => {
+const Map = ({ setGoogleMaps, insetMapLat, insetMapLng, setInsetMapLat, setInsetMapLng }) => {
   return (
     <div
       style={{
         height: "400px",
         width: "400px",
         position: "absolute",
-        bottom: 0,
-        right: 0,
+        bottom: 20,
+        right: 5,
         zIndex: 2
       }}
     >
@@ -39,9 +33,7 @@ const Map = ({
         }}
         yesIWantToUseGoogleMapApiInternals
       >
-        {insetMapLat && insetMapLng ? (
-          <Marker lat={insetMapLat} lng={insetMapLng} />
-        ) : null}
+        {insetMapLat && insetMapLng ? <Marker lat={insetMapLat} lng={insetMapLng} /> : null}
       </GoogleMapReact>
     </div>
   );

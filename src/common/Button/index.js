@@ -17,7 +17,7 @@ export function Button({ children, onClick, size, fullWidth = false, disabled = 
   // sizes
 
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

@@ -1,8 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button } from "../common";
+import { Button, Navbar } from "../common";
 import HighScoreTable from "./HighScoreTable";
-import Navbar from "./Navbar";
 import "../style/leaderboard.scss";
 import { useLeaderboard } from "../hooks/leaderboard";
 
@@ -19,7 +17,7 @@ function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
     const fullLeaderboard = playerRank ? [...leaderboard, playerRank] : leaderboard;
     return (
       <>
-        <Navbar />
+        <Navbar brandText="Geoguesser" brandLink="/" />
         <div className="leaderboard-container">
           <h1 className="title">Leaderboard</h1>
           <HighScoreTable scores={fullLeaderboard} />

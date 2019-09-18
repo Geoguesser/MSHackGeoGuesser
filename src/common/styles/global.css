@@ -1,41 +1,22 @@
 @import "../../../node_modules/normalize.css/normalize.css";
-@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,600&display=swap");
+
+.has-text-centered {
+  text-align: center !important;
+}
+
+.has-text-right {
+  text-align: right !important;
+}
+
+.has-text-left {
+  text-align: left !important;
+}
 
 :root {
   /*
-  * colors
-  *
-  */
-  --primary-color: #420000;
-  --black: #170a19;
-  --dark-gray: #817a81;
-  --gray: #eae9e9;
-  --off-white: #d4d7dd;
-  --white: #f6f6f6;
-
-  /*
-  * font
+  * Global Styles
   */
   font-family: "Raleway", sans-serif;
-  --font-size-sm: 10px;
-  --font-size-md: 14px;
-  --font-size-lg: 18px;
-
-  /*
-  * button
-  */
-  --btn-padding: calc(22 / 14 * 1em);
-  --btn-min-width: calc(calc(62 / 14 * 1em) + calc(var(--btn-padding) * 2));
-  --btn-border-radius: 4px;
-  --btn-border-width: 1px;
-  --btn-border-color: var(--black);
-  --btn-line-height: 46px;
-
-  --btn-sm-padding: calc(22 / 12 * 1em);
-  --btn-sm-min-width: calc(calc(42 / 12 * 1em) + calc(var(--btn-sm-padding) * 2));
-  --btn-sm-line-height: 30px;
-
-  --btn-lg-padding: calc(22 / 16 * 1em);
-  --btn-lg-min-width: calc(calc(82 / 16 * 1em) + calc(var(--btn-lg-padding) * 2));
-  --btn-lg-line-height: 62px;
+  background-color: var(--white);
 }

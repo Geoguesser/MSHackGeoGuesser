@@ -1,0 +1,74 @@
+.navbar {
+  min-height: var(--navbar-height);
+  max-height: var(--navbar-height);
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  z-index: var(--navbar-z-index);
+}
+
+.navbar-brand {
+  align-items: stretch;
+  display: flex;
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  min-height: var(--navbar-height);
+}
+
+.navbar-brand > a.navbar-item:focus {
+  background-color: transparent;
+}
+.navbar-brand > a.navbar-item:hover {
+  background-color: transparent;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: stretch;
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.navbar-item {
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.navbar-brand:hover {
+  background-color: var(--off-white);
+}
+
+a.navbar-item {
+  cursor: pointer;
+}
+
+a.navbar-item:focus {
+  background-color: var(--off-white);
+}
+a.navbar-item:active {
+  background-color: var(--off-white);
+}
+a.navbar-item:hover {
+  background-color: var(--off-white);
+}
+
+.navbar-start {
+  justify-content: flex-start;
+  margin-right: auto;
+  align-items: stretch;
+  display: flex;
+}
+
+.navbar-end {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  align-items: stretch;
+}

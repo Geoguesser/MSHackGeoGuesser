@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Pacifico&display=swap");
 .landing-page {
-  height: 100%;
-  background-image: url("../assets/agustin-diaz-7F65HDP0-E0-unsplash.jpg");
+  height: 100vh - 10;
+  // background-image: url("../assets/background.jpg");
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
 .page-title {
   font-family: "Pacifico", cursive;
   font-size: 128px;
-  color: white;
+  // color: white;
 }
 
 .center-container {
