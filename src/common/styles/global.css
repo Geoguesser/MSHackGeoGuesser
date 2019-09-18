@@ -1,5 +1,5 @@
 @import "../../../node_modules/normalize.css/normalize.css";
-@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,600&display=swap");
 
 .has-text-centered {
   text-align: center !important;

@@ -9,7 +9,7 @@
   position: relative;
   background-color: var(--gray);
   margin: var(--input-margin);
-  transition: var(--input-background-animation);
+  transition: var(--input-background-animation-div);
   margin-bottom: var(--input-margin-bottom);
   max-width: var(--input-max-width);
 }
@@ -34,6 +34,7 @@
   color: var(--primary-color) !important;
 }
 
+/* hides the label */
 .input-container .input + .label {
   position: absolute;
   top: 24px;
@@ -50,17 +51,17 @@
   width: 100%;
   height: var(--input-height);
   position: relative;
-  padding: 0px 16px;
-  border: none;
+  padding: var(--input-text-padding);
+  border: var(--input-border);
   border-radius: var(--input-border-radius);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-bold);
   background-color: transparent;
   color: var(--text-dark);
   outline: none;
-  box-shadow: 0px 4px 20px 0px transparent;
+  box-shadow: var(--input-box-shadow);
   -webkit-appearance: none;
-  transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
-    0.1s padding ease-in-out;
+  transition: var(--input-background-animation);
 }
 
 .input-container--active input {
@@ -91,16 +92,3 @@
 .input-container--active input:-moz-placeholder {
   color: transparent;
 }
-
-/* .input-container {
-  display: inline-block;
-  position: relative;
-}
-
-.input {
-  position: relative;
-  display: inline-flex;
-}
-
-.label {
-} */
