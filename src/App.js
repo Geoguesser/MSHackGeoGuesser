@@ -13,7 +13,6 @@ function App(props) {
     setRoundNumber
   };
   const { user } = useAuth();
-  console.log(user);
   return (
     <React.Suspense fallback={<p>Loading...</p>}>
       {user ? <PrivateRouter {...gameProps} /> : <PublicRouter />}
