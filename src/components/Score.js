@@ -1,11 +1,31 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-import { Link } from "react-router-dom";
-import { Button } from "../common";
-import Navbar from "./Navbar";
+import { Button, Navbar, NavbarEnd, NavbarItem, NavbarStart } from "../common";
 import flagMarker from "../assets/red-flag.png";
 import circleMarker from "../assets/red-circle.png";
 import "../style/score.scss";
+
+function Nav({ roundNumber, score, totalScore, onClickViewLeaderboard, onClickNextGame }) {
+  return (
+    <Navbar brandText="Geoguesser" brandLink="/">
+      <NavbarStart>
+        <NavbarItem>Score: {score}</NavbarItem>
+      </NavbarStart>
+      <NavbarEnd>
+        <NavbarItem>Round: {roundNumber} / 5</NavbarItem>
+        <NavbarItem>
+          {totalScore.length === 5 ? (
+            <Button onClick={onClickViewLeaderboard}>View leaderboard</Button>
+          ) : (
+            <Button to="/game" onClick={onClickNextGame}>
+              Next game
+            </Button>
+          )}
+        </NavbarItem>
+      </NavbarEnd>
+    </Navbar>
+  );
+}
 
 const Marker = ({ icon }) => {
   const classname = icon.split(".")[0].split("/static/media/")[1];
@@ -37,23 +57,13 @@ const Score = ({ history, location, totalScore, roundNumber, setRoundNumber }) =
 
   return (
     <>
-      <Navbar>
-        <div className="navbar-item">
-          <span>{roundNumber} / 5</span>
-        </div>
-        <div className="navbar-item">
-          <div className="user-score">Score: {score}</div>
-        </div>
-        <div className="navbar-item">
-          {totalScore.length === 5 ? (
-            <Button onClick={onClickViewLeaderboard}>View leaderboard</Button>
-          ) : (
-            <Button to="/game" onClick={onClickNextGame}>
-              Next game
-            </Button>
-          )}
-        </div>
-      </Navbar>
+      <Nav
+        roundNumber={roundNumber}
+        score={score}
+        onClickViewLeaderboard={onClickViewLeaderboard}
+        onClickNextGame={onClickNextGame}
+        totalScore={totalScore}
+      />
 
       <div className="score-container">
         <GoogleMapReact

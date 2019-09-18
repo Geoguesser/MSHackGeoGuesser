@@ -43,7 +43,7 @@
   line-height: 24px;
   opacity: 0;
   pointer-events: none;
-  color: red;
+  /* color: red; */
   transition: 0.1s all ease-in-out;
 }
 

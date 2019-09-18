@@ -1,10 +1,24 @@
 import React from "react";
-import { Button } from "../common";
+import { Button, Navbar, NavbarEnd, NavbarItem } from "../common";
 import Map from "./Map";
 import StreetView from "./Streetview";
-import Navbar from "./Navbar";
 import { getScore } from "../utils/helpers";
 import "../style/game.scss";
+
+function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }) {
+  return (
+    <Navbar brandText="Geoguesser" brandLink="/">
+      <NavbarEnd>
+        <NavbarItem>Round: {roundNumber} / 5</NavbarItem>
+        <NavbarItem>
+          <Button disabled={!insetMapLat || !insetMapLng} onClick={submitGuess}>
+            Submit guess
+          </Button>
+        </NavbarItem>
+      </NavbarEnd>
+    </Navbar>
+  );
+}
 
 const Game = ({ history, setTotalScore, totalScore, roundNumber }) => {
   const [googleMaps, setGoogleMaps] = React.useState(0);
@@ -35,16 +49,21 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }) => {
 
   return (
     <>
-      <Navbar>
-        <div className="navbar-item">
+      <Nav
+        roundNumber={roundNumber}
+        insetMapLat={insetMapLat}
+        insetMapLng={insetMapLng}
+        submitGuess={submitGuess}
+      >
+        {/* <div className="navbar-item">
           <span>{roundNumber} / 5</span>
         </div>
         <div className="navbar-item">
           <Button disabled={!insetMapLat || !insetMapLng} onClick={submitGuess}>
             Submit guess
           </Button>
-        </div>
-      </Navbar>
+        </div> */}
+      </Nav>
       <Map
         insetMapLat={insetMapLat}
         setInsetMapLat={setInsetMapLat}

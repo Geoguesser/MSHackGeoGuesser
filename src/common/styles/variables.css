@@ -69,4 +69,10 @@
   --input-active-placeholder-top-spacing: 4px;
   --input-placeholder-top-spacing: 24px;
   --input-border: none;
+
+  /*
+  * Navbar
+  */
+  --navbar-height: 3.25rem;
+  --navbar-z-index: 30;
 }
