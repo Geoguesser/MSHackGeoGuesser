@@ -7,7 +7,7 @@ import "../style/game.scss";
 
 function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }) {
   return (
-    <Navbar brandText="Geoguesser" brandLink="/">
+    <Navbar brandText="Geoguesser">
       <NavbarEnd>
         <NavbarItem>Round: {roundNumber} / 5</NavbarItem>
         <NavbarItem>

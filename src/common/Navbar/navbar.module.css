@@ -15,6 +15,19 @@
   min-height: var(--navbar-height);
 }
 
+.navbar-item-nonlink {
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-decoration: none;
+  cursor: default;
+}
+
 .navbar-brand > a.navbar-item:focus {
   background-color: transparent;
 }
@@ -39,10 +52,6 @@
   flex-grow: 0;
   flex-shrink: 0;
   text-decoration: none;
-}
-
-.navbar-brand:hover {
-  background-color: var(--off-white);
 }
 
 a.navbar-item {
