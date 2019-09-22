@@ -6,9 +6,13 @@ function Navbar({ brandText = "Geoguesser", brandLink, children }) {
   return (
     <nav className={styles["navbar"]} role="navigation" aria-label="main navigation">
       <div className={styles["navbar-brand"]}>
-        <Link className={styles["navbar-item"]} to={brandLink}>
-          <h3>{brandText}</h3>
-        </Link>
+        {brandLink ? (
+          <Link className={styles["navbar-item"]} to={brandLink}>
+            <h3>{brandText}</h3>
+          </Link>
+        ) : (
+          <h3 className={styles["navbar-item-nonlink"]}>{brandText}</h3>
+        )}
       </div>
 
       <div id="navbarBasicExample" className={styles["navbar-menu"]}>
