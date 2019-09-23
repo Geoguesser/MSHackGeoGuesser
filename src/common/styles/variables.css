@@ -11,7 +11,8 @@
   --dark-gray: #817a81;
   --gray: #e5e5e5;
   --off-white: #eeeeee;
-  --white: #f6f6f6;
+  --background-white: #f6f6f6;
+  --white: white;
 
   /*
   * font
@@ -75,4 +76,25 @@
   */
   --navbar-height: 3.25rem;
   --navbar-z-index: 30;
+
+  /*
+  * Card
+  */
+  --card-background: var(--white);
+  --card-border-width: 1px;
+  --card-border-color: var(--off-white);
+  --card-border-radius: 10px;
+  --card-padding: 24px;
+  --card-vertical-spacing: 10px;
+  --card-top-padding: 25px 15px 0 15px;
+  --card-top-padding-large: 30px 25px 0 25px;
+  --card-title-font-size-large: var(--font-size-h2);
+  --card-title-font-size-medium: var(--font-size-h3);
+  --card-title-font-size-small: var(--font-size-h4);
+  --card-subtitle-font-size-large: var(--font-size-h3);
+  --card-subtitle-font-size-medium: var(--font-size-h4);
+  --card-subtitle-font-size-small: var(--font-size-h5);
+  --card-body-font-size-large: var(--font-size-lg);
+  --card-body-font-size-medium: var(--font-size-md);
+  --card-body-font-size-small: var(--font-size-sm);
 }

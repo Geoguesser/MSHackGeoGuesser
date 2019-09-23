@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import { getTextAlign } from "../utils/text";
+import { getTextAlign, getContentAlign, getVerticalAlign } from "../utils/text";
 import styles from "./layout.module.css";
 
 const SIZES = {
@@ -30,12 +30,14 @@ function Row({ children, centered = false }) {
   return <div className={className}>{children}</div>;
 }
 
-function Column({ children, width, textAlign }) {
+function Column({ children, width, textAlign, align }) {
   const className = classnames(styles["column"], {
     [styles["column--one-third"]]: width === SIZES.ONE_THIRD,
     [styles["column--one-half"]]: width === SIZES.ONE_HALF,
     [styles["column--one-quarter"]]: width === SIZES.ONE_QUARTER,
-    ...getTextAlign(textAlign)
+    ...getTextAlign(textAlign),
+    ...getContentAlign(align),
+    ...getVerticalAlign(align)
   });
   return <div className={className}>{children}</div>;
 }
