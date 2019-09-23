@@ -5,6 +5,7 @@
   align-items: stretch;
   position: relative;
   z-index: var(--navbar-z-index);
+  background-color: var(--white);
 }
 
 .navbar-brand {

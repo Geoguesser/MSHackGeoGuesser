@@ -7,7 +7,7 @@ import { leaderboardResolver } from "../utils/helpers";
 function useLeaderboard(newScore) {
   const { user, login } = useAuth();
   const [loading, setLoading] = React.useState(true);
-  const [leaderboard, setLeaderboard] = React.useState(null);
+  const [leaderboard, setLeaderboard] = React.useState([]);
   const [playerRank, setPlayerRank] = React.useState(null);
 
   // basic leaderboard fetching
