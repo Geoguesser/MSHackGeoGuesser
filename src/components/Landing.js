@@ -2,8 +2,6 @@ import React from "react";
 import { Container, Row, Column, Header, Button, Input } from "../common";
 import { useAuth } from "../hooks/auth";
 
-import "../style/landing.scss";
-
 function Landing() {
   const [name, setName] = React.useState("");
   const [disabled, setDisabled] = React.useState(false);
@@ -45,24 +43,6 @@ function Landing() {
         </Column>
       </Row>
     </Container>
-    // <>
-    //   <div className="landing-page">
-    //     <div className="center-container">
-    //       <h1 className="page-title">Geoguesser</h1>
-    //     </div>
-    //     <div className="center-container">
-    //       <div className="container-content">{props.children}</div>
-    //     </div>
-    //   </div>
-    //   <div className="">
-    //     <div className="center-container">
-    //       <h1 className="page-title">Geoguesser</h1>
-    //     </div>
-    //     <div className="center-container">
-    //       <div className="container-content">{props.children}</div>
-    //     </div>
-    //   </div>
-    // </>
   );
 }
 

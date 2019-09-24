@@ -3,7 +3,6 @@ import { Button, Navbar, NavbarEnd, NavbarItem } from "../common";
 import Map from "./Map";
 import StreetView from "./Streetview";
 import { getScore } from "../utils/helpers";
-import "../style/game.scss";
 
 function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }) {
   return (

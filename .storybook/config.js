@@ -10,6 +10,7 @@ function loadStories() {
   require("../stories/input.js");
   require("../stories/navbar.js");
   require("../stories//card.js");
+  require("../stories//table.js");
   // You can require as many stories as you need.
 }
 
