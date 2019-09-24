@@ -97,4 +97,10 @@
   --card-body-font-size-large: var(--font-size-lg);
   --card-body-font-size-medium: var(--font-size-md);
   --card-body-font-size-small: var(--font-size-sm);
+
+  /*
+  * Table
+  */
+  --table-margin-bottom: 20px;
+  --table-text-color: var(--text-dark);
 }

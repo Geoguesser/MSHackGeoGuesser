@@ -1,0 +1,30 @@
+.table {
+  width: 100%;
+  margin-bottom: var(--table-margin-bottom);
+  color: var(--table-text-color);
+  border-collapse: collapse;
+}
+
+.header-cell {
+  vertical-align: bottom;
+  padding: 8px 5px;
+  border-bottom: 1px black solid;
+}
+
+.standard-cell {
+  padding: 8px 5px;
+  border-bottom: 1px black solid;
+}
+
+.table-body {
+  vertical-align: inherit;
+}
+
+.table-head {
+  vertical-align: bottom;
+  border-bottom-color: black;
+}
+
+.table-body + .table-body {
+  border-top: 2px solid black;
+}

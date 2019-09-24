@@ -1,11 +1,24 @@
 import React from "react";
-import { Button, Navbar, Card, Header, Row, Col, Container, Column } from "../common";
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableHeadCell,
+  TableBody,
+  TableStandardCell,
+  Navbar,
+  Card,
+  Header,
+  Row,
+  Container,
+  Column,
+  NavbarEnd,
+  NavbarItem,
+  Button
+} from "../common";
 import bronzeTrophy from "../assets/bronze-trophy.svg";
 import goldTrophy from "../assets/gold-trophy.svg";
 import silverTrophy from "../assets/silver-trophy.svg";
-import HighScoreTable from "./HighScoreTable";
-// import "../style/leaderboard.scss";
-import styles from "../style/leaderboard.module.css";
 import { useLeaderboard } from "../hooks/leaderboard";
 
 function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
@@ -27,10 +40,19 @@ function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
     const thirdPlace = scoresList && scoresList.length > 0 ? scoresList.shift() : undefined;
     return (
       <>
-        <Navbar brandText="Geoguesser" brandLink="/" />
+        <Navbar brandText="Geoguesser" brandLink="/">
+          <NavbarEnd>
+            <NavbarItem>
+              <Button onClick={onClickPlayAgain}>Play again?</Button>
+            </NavbarItem>
+          </NavbarEnd>
+        </Navbar>
         <Container>
           <Row>
             <Header as="h1">Leaderboard</Header>
+          </Row>
+          <Row centered>
+            <Header as="h3">Top 3</Header>
           </Row>
           <Row>
             {secondPlace && (
@@ -67,10 +89,36 @@ function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
               </Column>
             )}
           </Row>
-          <Row>
-            <HighScoreTable scores={scoresList} />
-          </Row>
         </Container>
+        {scoresList && scoresList.length > 0 && (
+          <Container>
+            <Row centered>
+              <Header as="h3">Ranks</Header>
+            </Row>
+            <Row centered>
+              <Column width="one-half">
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableHeadCell alignment="center">Rank</TableHeadCell>
+                      <TableHeadCell alignment="left">Username</TableHeadCell>
+                      <TableHeadCell alignment="center">Score</TableHeadCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {scoresList.map((score, index) => (
+                      <TableRow>
+                        <TableHeadCell alignment="center">{index + 4}</TableHeadCell>
+                        <TableStandardCell alignment="left">{score.DisplayName}</TableStandardCell>
+                        <TableStandardCell alignment="center">{score.StatValue}</TableStandardCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Column>
+            </Row>
+          </Container>
+        )}
       </>
     );
   }
