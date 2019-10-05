@@ -5,3 +5,4 @@ export { Input } from "./Input";
 export { Navbar, NavbarItem, NavbarStart, NavbarEnd } from "./Navbar";
 export { Card } from "./Card";
 export { Table, TableHead, TableRow, TableHeadCell, TableBody, TableStandardCell } from "./Table";
+export { Spinner } from "./Spinner";

@@ -14,7 +14,8 @@ import {
   Column,
   NavbarEnd,
   NavbarItem,
-  Button
+  Button,
+  Spinner
 } from "../common";
 import bronzeTrophy from "../assets/bronze-trophy.svg";
 import goldTrophy from "../assets/gold-trophy.svg";
@@ -30,7 +31,7 @@ function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
 
   const { loading, leaderboard, playerRank } = useLeaderboard(totalScore);
   if (loading) {
-    return <p>Loading...</p>;
+    return <Spinner fullpage />;
   } else {
     const scoresList = playerRank ? [...leaderboard, playerRank] : leaderboard;
 
