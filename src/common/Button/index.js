@@ -7,17 +7,20 @@ const SIZE = {
   LARGE: "large"
 };
 
-export function Button({ children, onClick, size, fullWidth = false, disabled = false }) {
-  const className = classNames(styles["btn"], {
-    [styles["btn--small"]]: size === SIZE.SMALL,
-    [styles["btn--large"]]: size === SIZE.LARGE,
-    [styles["btn--full"]]: fullWidth,
-    [styles["btn--disabled"]]: disabled
-  });
-  // sizes
-
+export function Button({ children, onClick, size, fullWidth = false, disabled = false, unstyled }) {
+  let classes;
+  if (unstyled) {
+    classes = classNames(styles["btn"], styles["btn-unstyled"]);
+  } else {
+    classes = classNames(styles["btn"], {
+      [styles["btn--small"]]: size === SIZE.SMALL,
+      [styles["btn--large"]]: size === SIZE.LARGE,
+      [styles["btn--full"]]: fullWidth,
+      [styles["btn--disabled"]]: disabled
+    });
+  }
   return (
-    <button className={className} onClick={onClick} disabled={disabled}>
+    <button className={classes} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

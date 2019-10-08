@@ -37,6 +37,12 @@ function login(username, cb = () => {}) {
   });
 }
 
+function logout() {
+  localStorage.removeItem(localStorageKeys.sessionTicket);
+  localStorage.removeItem(localStorageKeys.playFabId);
+  localStorage.removeItem(localStorageKeys.username);
+}
+
 function updateUsername(username) {
   return new Promise(resolve => {
     PlayFabClientSDK.UpdateUserTitleDisplayName({ DisplayName: username }, (res, err) => {
@@ -50,4 +56,4 @@ function updateUsername(username) {
   });
 }
 
-export { login, localStorageKeys, getUser, updateUsername };
+export { login, localStorageKeys, getUser, updateUsername, logout };

@@ -74,7 +74,7 @@ function useLeaderboard(newScore) {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [login, newScore, user]);
 
   // return leaderboard, playerrank, and loading for each
   return { loading, leaderboard, playerRank };

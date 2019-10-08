@@ -20,12 +20,18 @@ import bronzeTrophy from "../assets/bronze-trophy.svg";
 import goldTrophy from "../assets/gold-trophy.svg";
 import silverTrophy from "../assets/silver-trophy.svg";
 import { useLeaderboard } from "../hooks/leaderboard";
+import { logout } from "../utils/auth";
 
 function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
   function onClickPlayAgain() {
     setRoundNumber(1);
     setTotalScore([]);
     history.push("/game");
+  }
+
+  function logoutAndRedirect() {
+    logout();
+    history.replace("/");
   }
 
   const { loading, leaderboard, playerRank } = useLeaderboard(totalScore);
@@ -42,6 +48,11 @@ function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
       <>
         <Navbar brandText="Geoguesser" brandLink="/">
           <NavbarEnd>
+            <NavbarItem>
+              <Button unstyled onClick={logoutAndRedirect}>
+                Logout
+              </Button>
+            </NavbarItem>
             <NavbarItem>
               <Button onClick={onClickPlayAgain}>Play again?</Button>
             </NavbarItem>

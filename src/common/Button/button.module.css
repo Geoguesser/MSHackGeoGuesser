@@ -25,6 +25,11 @@
   -webkit-touch-callout: none;
 }
 
+.btn-unstyled {
+  background-color: transparent;
+  color: var(--text-dark);
+}
+
 /* FF <input type="submit" ... /> fix */
 .btn::-moz-focus-inner {
   border: 0;
