@@ -4,18 +4,27 @@
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
     "client": "cd client && npm start",
-    "server": "nodemon server.js"
+    "server": "nodemon server.ts"
   },
   "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/passport": "^1.0.1",
+    "@types/passport-google-oauth": "^1.0.41",
     "concurrently": "^4.1.2",
-    "nodemon": "^1.19.3",
     "husky": "^3.0.1",
     "lint-staged": "^9.2.1",
-    "prettier": "^1.18.2"
+    "nodemon": "^1.19.3",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth20": "^2.0.0"
   },
   "husky": {
     "hooks": {
