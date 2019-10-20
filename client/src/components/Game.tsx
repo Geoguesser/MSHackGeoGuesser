@@ -1,10 +1,24 @@
 import React from "react";
+import { RouteComponentProps } from "react-router-dom";
 import { Button, Navbar, NavbarEnd, NavbarItem } from "../common";
 import Map from "./Map";
 import StreetView from "./Streetview";
 import { getScore } from "../utils/helpers";
 
-function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }) {
+interface NavProps {
+  roundNumber: number;
+  insetMapLat: number | null;
+  insetMapLng: number | null;
+  submitGuess: () => void;
+}
+
+interface GameProps extends RouteComponentProps {
+  setTotalScore: React.Dispatch<React.SetStateAction<number[]>>;
+  totalScore: number[];
+  roundNumber: number;
+}
+
+function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }: NavProps): JSX.Element {
   return (
     <Navbar brandText="Geoguesser">
       <NavbarEnd>
@@ -19,20 +33,23 @@ function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }) {
   );
 }
 
-const Game = ({ history, setTotalScore, totalScore, roundNumber }) => {
-  const [googleMaps, setGoogleMaps] = React.useState(0);
-  const [streetLat, setStreetLat] = React.useState(0);
-  const [streetLng, setStreetLng] = React.useState(0);
+const Game = ({ history, setTotalScore, totalScore, roundNumber }: GameProps): JSX.Element => {
+  const [googleMaps, setGoogleMaps] = React.useState<any>(null);
+  const [streetLat, setStreetLat] = React.useState<number>(0);
+  const [streetLng, setStreetLng] = React.useState<number>(0);
 
-  const [insetMapLat, setInsetMapLat] = React.useState(null);
-  const [insetMapLng, setInsetMapLng] = React.useState(null);
+  const [insetMapLat, setInsetMapLat] = React.useState<number | null>(null);
+  const [insetMapLng, setInsetMapLng] = React.useState<number | null>(null);
 
-  const submitGuess = () => {
-    const coordinates = {
+  const submitGuess = (): void => {
+    const coordinates: {
+      guessed: (number | null)[];
+      actual: number[];
+    } = {
       guessed: [insetMapLat, insetMapLng],
       actual: [streetLat, streetLng]
     };
-    const score = getScore(
+    const score: number = getScore(
       { lat: insetMapLat, lng: insetMapLng },
       { lat: streetLat, lng: streetLng }
     );
@@ -53,16 +70,7 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }) => {
         insetMapLat={insetMapLat}
         insetMapLng={insetMapLng}
         submitGuess={submitGuess}
-      >
-        {/* <div className="navbar-item">
-          <span>{roundNumber} / 5</span>
-        </div>
-        <div className="navbar-item">
-          <Button disabled={!insetMapLat || !insetMapLng} onClick={submitGuess}>
-            Submit guess
-          </Button>
-        </div> */}
-      </Nav>
+      />
       <Map
         insetMapLat={insetMapLat}
         setInsetMapLat={setInsetMapLat}
@@ -72,9 +80,7 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }) => {
       />
       {googleMaps ? (
         <StreetView
-          streetLat={streetLat}
           setStreetLat={setStreetLat}
-          streetLng={streetLng}
           setStreetLng={setStreetLng}
           googleMaps={googleMaps}
         />

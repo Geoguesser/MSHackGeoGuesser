@@ -3,14 +3,28 @@ import ReactDOM from "react-dom";
 import { getLat, getLng, pickCity } from "../utils/helpers";
 import "../style/streetview.scss";
 
-class Streetview extends React.Component {
+interface StreetViewProps {
+  googleMaps: any;
+  setStreetLat: React.Dispatch<React.SetStateAction<number>>;
+  setStreetLng: React.Dispatch<React.SetStateAction<number>>;
+}
+
+interface StreetViewState {
+  lat?: number;
+  lng?: number;
+  radius: number;
+  count: number;
+  googleMaps: any;
+}
+class Streetview extends React.Component<StreetViewProps, StreetViewState> {
   state = {
-    lat: null,
-    lng: null,
+    lat: undefined,
+    lng: undefined,
     radius: 50,
     count: 0,
     googleMaps: this.props.googleMaps
   };
+
   componentDidMount() {
     const { lat, lng } = pickCity();
     this.setState({ lat: lat, lng: lng }, () => {
@@ -18,7 +32,7 @@ class Streetview extends React.Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: StreetViewProps, prevState: StreetViewState) {
     if (prevState.radius < this.state.radius) {
       const lat = getLat(this.state.lat);
       const lng = getLng(this.state.lng);
@@ -39,12 +53,13 @@ class Streetview extends React.Component {
           location: { lat: this.state.lat, lng: this.state.lng },
           radius: this.state.radius
         },
-        (data, status) => {
+        (data: { location: { pano: any } }, status: string) => {
           if (status === "OK") {
             const panorama = new this.state.googleMaps.StreetViewPanorama(
               ReactDOM.findDOMNode(this),
               {
-                ...this.props.streetViewPanoramaOptions,
+                pov: { heading: 0, pitch: 0 },
+                zoom: 1,
                 addressControl: false,
                 fullscreenControl: false,
                 closeControl: false,
@@ -57,8 +72,8 @@ class Streetview extends React.Component {
               pitch: 0
             });
             panorama.setVisible(true);
-            this.props.setStreetLat(this.state.lat);
-            this.props.setStreetLng(this.state.lng);
+            this.props.setStreetLat(this.state.lat || 0);
+            this.props.setStreetLng(this.state.lng || 0);
           } else {
             if (this.state.radius < 5000000) {
               this.setState({ radius: this.state.radius * 10 });
@@ -73,12 +88,5 @@ class Streetview extends React.Component {
     return <div className="streetview" />;
   }
 }
-
-Streetview.defaultProps = {
-  streetViewPanoramaOptions: {
-    pov: { heading: 0, pitch: 0 },
-    zoom: 1
-  }
-};
 
 export default Streetview;

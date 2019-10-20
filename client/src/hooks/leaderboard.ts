@@ -1,23 +1,38 @@
 import React from "react";
 import { useAuth } from "./auth";
+import { PlayerProfile } from "../utils/types";
 import { leaderboardResolver } from "../utils/helpers";
 
 // custom hook to provide all leaderboard functionality
 
-function useLeaderboard(newScore) {
+interface PlayerLeaderboardEntry {
+  DisplayName: string;
+  PlayFabId: string;
+  Position: number;
+  Profile: PlayerProfile;
+  StatValue: number;
+}
+
+function useLeaderboard(
+  newScore: number[]
+): {
+  loading: boolean;
+  leaderboard: PlayerLeaderboardEntry[];
+  playerRank: PlayerLeaderboardEntry | null;
+} {
   const { user, login } = useAuth();
-  const [loading, setLoading] = React.useState(true);
-  const [leaderboard, setLeaderboard] = React.useState([]);
-  const [playerRank, setPlayerRank] = React.useState(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [leaderboard, setLeaderboard] = React.useState<PlayerLeaderboardEntry[]>([]);
+  const [playerRank, setPlayerRank] = React.useState<PlayerLeaderboardEntry | null>(null);
 
   // basic leaderboard fetching
-  function fetchLeaderboard() {
+  const fetchLeaderboard = (): void => {
     const settings = {
       StartPosition: 0,
       MaxResultsCount: 10,
       StatisticName: leaderboardResolver()
     };
-    window.PlayFabClientSDK.GetLeaderboard(settings, (res, err) => {
+    window.PlayFabClientSDK.GetLeaderboard(settings, (res: any, err: any) => {
       if (res) {
         setLeaderboard(res.data.Leaderboard);
       } else {
@@ -25,10 +40,10 @@ function useLeaderboard(newScore) {
       }
       setLoading(false);
     });
-  }
+  };
 
   // update leaderboard with user score
-  function addUserScoreToLeaderboard(totalScore) {
+  const addUserScoreToLeaderboard = (totalScore: number[]) => {
     window.PlayFabClientSDK.UpdatePlayerStatistics({
       Statistics: [
         {
@@ -37,18 +52,19 @@ function useLeaderboard(newScore) {
         }
       ]
     });
-  }
+  };
 
   // fetch the player's rank if not in top 10
-  function fetchPlayerRank() {
+  const fetchPlayerRank = (): void => {
     const settings = {
       PlayFabId: localStorage.getItem(`gs_playfabId`),
       StatisticName: leaderboardResolver()
     };
-    window.PlayFabClientSDK.GetLeaderboardAroundPlayer(settings, res => {
+    window.PlayFabClientSDK.GetLeaderboardAroundPlayer(settings, (res: any) => {
       if (res) {
         const user = res.data.Leaderboard.find(
-          player => player.PlayFabId === localStorage.getItem(`gs_playfabId`)
+          (player: PlayerLeaderboardEntry) =>
+            player.PlayFabId === localStorage.getItem(`gs_playfabId`)
         );
         if (user.Position > 10) {
           setPlayerRank(user);
@@ -57,7 +73,7 @@ function useLeaderboard(newScore) {
         console.log("error fetching player leaderboard");
       }
     });
-  }
+  };
 
   React.useEffect(() => {
     setLoading(true);

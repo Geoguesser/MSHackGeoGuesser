@@ -4,7 +4,19 @@ import Score from "../components/Score";
 import Game from "../components/Game";
 import Leaderboard from "../components/Leaderboard";
 
-function PrivateRouter({ setTotalScore, totalScore, setRoundNumber, roundNumber }) {
+interface PrivateRouterProps {
+  setTotalScore: React.Dispatch<React.SetStateAction<number[]>>;
+  setRoundNumber: React.Dispatch<React.SetStateAction<number>>;
+  totalScore: number[];
+  roundNumber: number;
+}
+
+function PrivateRouter({
+  setTotalScore,
+  totalScore,
+  setRoundNumber,
+  roundNumber
+}: PrivateRouterProps): JSX.Element {
   return (
     <Router>
       <Route exact path="/" render={() => <Redirect to="/game" />} />

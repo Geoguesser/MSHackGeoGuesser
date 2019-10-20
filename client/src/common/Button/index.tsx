@@ -2,12 +2,26 @@ import React from "react";
 import classNames from "classnames";
 import styles from "./button.module.css";
 
-const SIZE = {
-  SMALL: "small",
-  LARGE: "large"
-};
+interface ButtonProps {
+  children: React.ReactNode;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  size?: SIZE;
+  fullWidth?: boolean;
+  disabled?: boolean;
+}
 
-export function Button({ children, onClick, size, fullWidth = false, disabled = false }) {
+enum SIZE {
+  SMALL = "small",
+  LARGE = "large"
+}
+
+export function Button({
+  children,
+  onClick,
+  size,
+  fullWidth = false,
+  disabled = false
+}: ButtonProps): JSX.Element {
   const className = classNames(styles["btn"], {
     [styles["btn--small"]]: size === SIZE.SMALL,
     [styles["btn--large"]]: size === SIZE.LARGE,

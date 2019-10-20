@@ -2,7 +2,22 @@ import React from "react";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 
-const Map = ({ setGoogleMaps, insetMapLat, insetMapLng, setInsetMapLat, setInsetMapLng }) => {
+interface MapProps {
+  setGoogleMaps: React.Dispatch<React.SetStateAction<any>>;
+  insetMapLat: number | null;
+  insetMapLng: number | null;
+  setInsetMapLat: React.Dispatch<React.SetStateAction<number | null>>;
+  setInsetMapLng: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+const Map = ({
+  setGoogleMaps,
+  insetMapLat,
+  insetMapLng,
+  setInsetMapLat,
+  setInsetMapLng
+}: MapProps) => {
+  const mapKey = process.env.REACT_APP_GOOGLE_MAP_KEY || "";
   return (
     <div
       style={{
@@ -15,7 +30,7 @@ const Map = ({ setGoogleMaps, insetMapLat, insetMapLng, setInsetMapLat, setInset
       }}
     >
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
+        bootstrapURLKeys={{ key: mapKey }}
         defaultCenter={{
           lat: 47.658427,
           lng: -122.141433
@@ -33,7 +48,7 @@ const Map = ({ setGoogleMaps, insetMapLat, insetMapLng, setInsetMapLat, setInset
         }}
         yesIWantToUseGoogleMapApiInternals
       >
-        {insetMapLat && insetMapLng ? <Marker lat={insetMapLat} lng={insetMapLng} /> : null}
+        {insetMapLat && insetMapLng ? <Marker /> : null}
       </GoogleMapReact>
     </div>
   );

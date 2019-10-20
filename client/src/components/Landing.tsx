@@ -1,30 +1,26 @@
 import React from "react";
 import { Container, Row, Column, Header, Button, Input } from "../common";
+import { VERTICAL_ALIGNMENT, HORIZONTAL_ALIGNMENT } from "../utils/types";
 import { useAuth } from "../hooks/auth";
 
-function Landing() {
-  const [name, setName] = React.useState("");
-  const [disabled, setDisabled] = React.useState(false);
+function Landing(): JSX.Element {
+  const [name, setName] = React.useState<string>("");
+  const [disabled, setDisabled] = React.useState<boolean>(false);
   const { login } = useAuth();
 
-  function onChange(e) {
+  function onChange(e: React.FormEvent<HTMLInputElement>): void {
     setName(e.currentTarget.value);
   }
 
-  function loginUser() {
+  function loginUser(): void {
     setDisabled(true);
-    login(name, res => {
-      if (res && res.error === "NameNotAvailable") {
-        alert("Name is not available, please enter again.");
-        this.setState({ name: "" });
-      }
-    });
+    login(name);
   }
 
   return (
-    <Container fullHeight verticalAlign="center">
+    <Container fullHeight verticalAlign={VERTICAL_ALIGNMENT.CENTER}>
       <Row>
-        <Column textAlign="center">
+        <Column textAlign={HORIZONTAL_ALIGNMENT.CENTER}>
           <Header as="h1">Geoguesser</Header>
           <Header as="h3">
             The game that takes you across the planet.{" "}
@@ -35,8 +31,8 @@ function Landing() {
         </Column>
       </Row>
       <Row>
-        <Column textAlign="center">
-          <Input label="Username" center onChange={onChange} />
+        <Column textAlign={HORIZONTAL_ALIGNMENT.LEFT}>
+          <Input id="username" value={name} label="Username" center onChange={onChange} />
           <Button onClick={loginUser} disabled={!name || disabled}>
             Let's go!
           </Button>

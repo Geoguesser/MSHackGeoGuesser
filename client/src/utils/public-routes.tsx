@@ -5,7 +5,7 @@ import Landing from "../components/Landing";
 function PublicRouter() {
   return (
     <Router>
-      <Route exact path="/" render={routeProps => <Landing />} />
+      <Route exact path="/" component={Landing} />
     </Router>
   );
 }

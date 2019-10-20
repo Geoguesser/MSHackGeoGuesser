@@ -1,11 +1,26 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
+import { RouteComponentProps } from "react-router-dom";
 import { Button, Navbar, NavbarEnd, NavbarItem, NavbarStart } from "../common";
 import flagMarker from "../assets/red-flag.png";
 import circleMarker from "../assets/red-circle.png";
 import "../style/score.scss";
 
-function Nav({ roundNumber, score, totalScore, onClickViewLeaderboard, onClickNextGame }) {
+interface NavProps {
+  roundNumber: number;
+  score: number;
+  totalScore: number[];
+  onClickViewLeaderboard: () => void;
+  onClickNextGame: () => void;
+}
+
+function Nav({
+  roundNumber,
+  score,
+  totalScore,
+  onClickViewLeaderboard,
+  onClickNextGame
+}: NavProps) {
   return (
     <Navbar brandText="Geoguesser" brandLink="/">
       <NavbarStart>
@@ -17,9 +32,7 @@ function Nav({ roundNumber, score, totalScore, onClickViewLeaderboard, onClickNe
           {totalScore.length === 5 ? (
             <Button onClick={onClickViewLeaderboard}>View leaderboard</Button>
           ) : (
-            <Button to="/game" onClick={onClickNextGame}>
-              Next game
-            </Button>
+            <Button onClick={onClickNextGame}>Next game</Button>
           )}
         </NavbarItem>
       </NavbarEnd>
@@ -27,7 +40,11 @@ function Nav({ roundNumber, score, totalScore, onClickViewLeaderboard, onClickNe
   );
 }
 
-const Marker = ({ icon }) => {
+interface MarkerProps {
+  icon: string;
+}
+
+const Marker = ({ icon }: MarkerProps) => {
   const classname = icon.split(".")[0].split("/static/media/")[1];
   return (
     <div>
@@ -35,16 +52,32 @@ const Marker = ({ icon }) => {
     </div>
   );
 };
-const Score = ({ history, location, totalScore, roundNumber, setRoundNumber }) => {
-  const [guessedLatLng, setGuessedLatLng] = React.useState(0);
-  const [actualLatLng, setActualLatLng] = React.useState(0);
 
-  const { coordinates, score } = location.state;
+interface ScoreProps extends RouteComponentProps {
+  totalScore: number[];
+  roundNumber: number;
+  setRoundNumber: React.Dispatch<React.SetStateAction<number>>;
+}
 
-  const center = [
-    (coordinates.guessed[0] + coordinates.actual[0]) / 2,
-    (coordinates.guessed[1] + coordinates.actual[1]) / 2
-  ];
+const Score = ({ history, location, totalScore, roundNumber, setRoundNumber }: ScoreProps) => {
+  const [guessedLatLng, setGuessedLatLng] = React.useState<number>(0);
+  const [actualLatLng, setActualLatLng] = React.useState<number>(0);
+
+  const {
+    coordinates,
+    score
+  }: {
+    coordinates: {
+      guessed: (number | null)[];
+      actual: number[];
+    };
+    score: number;
+  } = location.state;
+
+  const center = {
+    lat: (coordinates.guessed[0] || 0 + coordinates.actual[0]) / 2,
+    lng: (coordinates.guessed[1] || 0 + coordinates.actual[1]) / 2
+  };
 
   function onClickNextGame() {
     setRoundNumber(roundNumber + 1);
@@ -67,33 +100,29 @@ const Score = ({ history, location, totalScore, roundNumber, setRoundNumber }) =
 
       <div className="score-container">
         <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY || "" }}
           center={center}
           defaultZoom={2}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={google => {
             if (coordinates) {
-              // using the setstate and creating variable names of the same name
-              // is definitely bug-prone
-              setGuessedLatLng({ lat: coordinates.guessed[0], lng: coordinates.guessed[1] });
-              setActualLatLng({ lat: coordinates.actual[0], lng: coordinates.actual[1] });
               let neBounds = {
                 lat:
-                  coordinates.guessed[0] > coordinates.actual[0]
+                  (coordinates.guessed[0] || 0) > coordinates.actual[0]
                     ? coordinates.guessed[0]
                     : coordinates.actual[0],
                 lng:
-                  coordinates.guessed[1] > coordinates.actual[1]
+                  (coordinates.guessed[1] || 0) > coordinates.actual[1]
                     ? coordinates.guessed[1]
                     : coordinates.actual[1]
               };
               let swBounds = {
                 lat:
-                  coordinates.guessed[0] < coordinates.actual[0]
+                  (coordinates.guessed[0] || 0) < coordinates.actual[0]
                     ? coordinates.guessed[0]
                     : coordinates.actual[0],
                 lng:
-                  coordinates.guessed[1] < coordinates.actual[1]
+                  (coordinates.guessed[1] || 0) < coordinates.actual[1]
                     ? coordinates.guessed[1]
                     : coordinates.actual[1]
               };
@@ -114,16 +143,12 @@ const Score = ({ history, location, totalScore, roundNumber, setRoundNumber }) =
             }
           }}
         >
-          {displayMarker(guessedLatLng, circleMarker)}
-          {displayMarker(actualLatLng, flagMarker)}
+          <Marker icon={circleMarker} />
+          <Marker icon={flagMarker} />
         </GoogleMapReact>
       </div>
     </>
   );
 };
-
-const displayMarker = (coords, icon) => (
-  <Marker key={coords.lat} lat={coords.lat} lng={coords.lng} icon={icon} />
-);
 
 export default Score;

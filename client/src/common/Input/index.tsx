@@ -2,18 +2,24 @@ import React from "react";
 import classnames from "classnames";
 import styles from "./input.module.css";
 
-function Input({ label, type = "text", id, value, onChange, center }) {
-  const [active, setActive] = React.useState(false);
+interface InputProps {
+  label: string;
+  type?: string;
+  id: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  center: boolean;
+}
 
-  const labelClasses = classnames(styles["label"]);
-  const inputClasses = classnames(styles["input"]);
-  const containerClasses = classnames(styles["input-container"], {
+function Input({ label, type = "text", id, value, onChange, center }: InputProps): JSX.Element {
+  const [active, setActive] = React.useState<boolean>(false);
+
+  const labelClasses: string = classnames(styles["label"]);
+  const inputClasses: string = classnames(styles["input"]);
+  const containerClasses: string = classnames(styles["input-container"], {
     [styles["input-container--active"]]: active,
     [styles["input-container--center"]]: center
   });
-  if (!id) {
-    console.warn("You must provide input component with an id prop");
-  }
   return (
     <div className={containerClasses}>
       <input
