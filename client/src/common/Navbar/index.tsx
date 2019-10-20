@@ -2,7 +2,24 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
 
-function Navbar({ brandText = "Geoguesser", brandLink, children }) {
+interface CommonProps {
+  children: React.ReactNode;
+}
+
+interface NavbarProps extends CommonProps {
+  brandText: string;
+  brandLink?: string;
+}
+
+interface NavbarItemProps extends CommonProps {
+  link?: string;
+}
+
+interface NavbarStartProps extends CommonProps {}
+
+interface NavbarEndProps extends CommonProps {}
+
+function Navbar({ brandText = "Geoguesser", brandLink, children }: NavbarProps): JSX.Element {
   return (
     <nav className={styles["navbar"]} role="navigation" aria-label="main navigation">
       <div className={styles["navbar-brand"]}>
@@ -22,19 +39,21 @@ function Navbar({ brandText = "Geoguesser", brandLink, children }) {
   );
 }
 
-function NavbarItem({ children, link }) {
+function NavbarItem({ children, link }: NavbarItemProps): JSX.Element {
   return link ? (
-    <Link className={styles["navbar-item"]}>{children}</Link>
+    <Link to={link} className={styles["navbar-item"]}>
+      {children}
+    </Link>
   ) : (
     <span className={styles["navbar-item"]}>{children}</span>
   );
 }
 
-function NavbarStart({ children }) {
+function NavbarStart({ children }: NavbarStartProps): JSX.Element {
   return <div className={styles["navbar-start"]}>{children}</div>;
 }
 
-function NavbarEnd({ children }) {
+function NavbarEnd({ children }: NavbarEndProps): JSX.Element {
   return <div className={styles["navbar-end"]}>{children}</div>;
 }
 

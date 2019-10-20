@@ -1,4 +1,5 @@
 import React from "react";
+import { RouteComponentProps } from "react-router-dom";
 import {
   Table,
   TableHead,
@@ -20,16 +21,28 @@ import {
 import bronzeTrophy from "../assets/bronze-trophy.svg";
 import goldTrophy from "../assets/gold-trophy.svg";
 import silverTrophy from "../assets/silver-trophy.svg";
+import { HORIZONTAL_ALIGNMENT, VERTICAL_ALIGNMENT, COLUMN_SIZE, SIZE } from "../utils/types";
 import { useLeaderboard } from "../hooks/leaderboard";
 
-function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
-  function onClickPlayAgain() {
+interface LeaderboardProps extends RouteComponentProps {
+  totalScore: number[];
+  setTotalScore: React.Dispatch<React.SetStateAction<number[]>>;
+  setRoundNumber: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function Leaderboard({
+  history,
+  totalScore,
+  setTotalScore,
+  setRoundNumber
+}: LeaderboardProps): JSX.Element {
+  const { loading, leaderboard, playerRank } = useLeaderboard(totalScore);
+  const onClickPlayAgain = (): void => {
     setRoundNumber(1);
     setTotalScore([]);
     history.push("/game");
-  }
+  };
 
-  const { loading, leaderboard, playerRank } = useLeaderboard(totalScore);
   if (loading) {
     return <Spinner fullpage />;
   } else {
@@ -57,35 +70,44 @@ function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
           </Row>
           <Row>
             {secondPlace && (
-              <Column align="center" vertical="center">
+              <Column
+                alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}
+                alignVertically={VERTICAL_ALIGNMENT.CENTER}
+              >
                 <Card
                   imgSize="medium"
                   cardTitle={secondPlace.DisplayName}
                   cardTopImg={silverTrophy}
                   altText="First Place Trophy"
-                  subtitle={secondPlace.StatValue}
+                  subtitle={secondPlace.StatValue.toString()}
                 />
               </Column>
             )}
             {firstPlace && (
-              <Column align="center" vertical="center">
+              <Column
+                alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}
+                alignVertically={VERTICAL_ALIGNMENT.CENTER}
+              >
                 <Card
                   imgSize="large"
                   cardTitle={firstPlace.DisplayName}
                   cardTopImg={goldTrophy}
                   altText="First Place Trophy"
-                  subtitle={firstPlace.StatValue}
+                  subtitle={firstPlace.StatValue.toString()}
                 />
               </Column>
             )}
             {thirdPlace && (
-              <Column align="center" vertical="center">
+              <Column
+                alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}
+                alignVertically={VERTICAL_ALIGNMENT.CENTER}
+              >
                 <Card
                   imgSize="medium"
                   cardTitle={thirdPlace.DisplayName}
                   cardTopImg={bronzeTrophy}
                   altText="First Place Trophy"
-                  subtitle={thirdPlace.StatValue}
+                  subtitle={thirdPlace.StatValue.toString()}
                 />
               </Column>
             )}
@@ -97,21 +119,27 @@ function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }) {
               <Header as="h3">Ranks</Header>
             </Row>
             <Row centered>
-              <Column width="one-half">
+              <Column width={COLUMN_SIZE.ONE_HALF}>
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableHeadCell alignment="center">Rank</TableHeadCell>
-                      <TableHeadCell alignment="left">Username</TableHeadCell>
-                      <TableHeadCell alignment="center">Score</TableHeadCell>
+                      <TableHeadCell alignment={HORIZONTAL_ALIGNMENT.CENTER}>Rank</TableHeadCell>
+                      <TableHeadCell alignment={HORIZONTAL_ALIGNMENT.LEFT}>Username</TableHeadCell>
+                      <TableHeadCell alignment={HORIZONTAL_ALIGNMENT.CENTER}>Score</TableHeadCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {scoresList.map((score, index) => (
                       <TableRow>
-                        <TableHeadCell alignment="center">{index + 4}</TableHeadCell>
-                        <TableStandardCell alignment="left">{score.DisplayName}</TableStandardCell>
-                        <TableStandardCell alignment="center">{score.StatValue}</TableStandardCell>
+                        <TableHeadCell alignment={HORIZONTAL_ALIGNMENT.CENTER}>
+                          {index + 4}
+                        </TableHeadCell>
+                        <TableStandardCell alignment={HORIZONTAL_ALIGNMENT.LEFT}>
+                          {score.DisplayName}
+                        </TableStandardCell>
+                        <TableStandardCell alignment={HORIZONTAL_ALIGNMENT.CENTER}>
+                          {score.StatValue}
+                        </TableStandardCell>
                       </TableRow>
                     ))}
                   </TableBody>
