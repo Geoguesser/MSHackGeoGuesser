@@ -24,7 +24,8 @@
     "express": "^4.17.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "react-google-button": "^0.5.3"
   },
   "husky": {
     "hooks": {
