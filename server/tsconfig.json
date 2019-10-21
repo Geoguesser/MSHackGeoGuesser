@@ -9,6 +9,5 @@
     "esModuleInterop": true,
     "lib": ["esnext"],
     "strict": true
-  },
-  "include": "./**/*.ts"
+  }
 }

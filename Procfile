@@ -1,1 +1,1 @@
-web: ts-node --project server/tsconfig.json server.ts
+web: node server.js
