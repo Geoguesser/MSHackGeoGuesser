@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
-    "build-ts": "tsc --project server/tsconfig.json",
+    "build-ts": "tsc --project tsconfig.json",
     "postinstall": "npm run build-ts",
     "client": "cd client && npm start",
     "server": "nodemon server.ts"
