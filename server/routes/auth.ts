@@ -24,4 +24,9 @@ router.get("/auth/login/failed", (request: Request, response: Response) => {
 
 router.get("/auth/google/redirect", passport.authenticate("google", googleRedirectOptions));
 
+router.get("/auth/logout", (req: Request, res: Response) => {
+  req.logout();
+  res.redirect(env.clientURL);
+});
+
 export default router;

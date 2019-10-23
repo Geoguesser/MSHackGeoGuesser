@@ -18,6 +18,10 @@ function Landing(): JSX.Element {
     fetch("/api");
   };
 
+  const logout = () => {
+    fetch("/auth/logout");
+  };
+
   const randomIndex = Math.floor(Math.random() * continents.length);
 
   return (
@@ -44,7 +48,6 @@ function Landing(): JSX.Element {
         <Column alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}>
           <GoogleButton onClick={loginUser} />
         </Column>
-        <button onClick={getApi}>FETCH</button>
       </Row>
     </Container>
   );
