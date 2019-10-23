@@ -1,5 +1,6 @@
 import passport from "passport";
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+import User from "../data/models/user";
 
 const CLIENT_ID = process.env.GOOGLE_SIGN_IN_CLIENTID || "";
 const CLIENT_SECRET = process.env.GOOGLE_SIGN_IN_SECRET || "";
@@ -13,7 +14,26 @@ passport.use(
     },
     function(accessToken: any, refreshToken: any, profile: any, done: any) {
       // here is where we can create a new user or find an existing user
-      done(null, profile);
+
+      // check if user exists by their id on their google profile
+      // if not then add them to the database
+      User.findOne({ where: { googleId: profile.id } })
+        .then((user: any) => {
+          if (user) {
+            return done(null, user);
+          } else {
+            User.create({
+              username: profile.displayName,
+              googleId: profile.id,
+              googleDisplayName: profile.displayName,
+              googleFamilyName: profile.name && profile.name.familyName,
+              googleGivenName: profile.name && profile.name.givenName,
+              googlePhotoUrl: profile.photos && profile.photos[0].value
+            });
+            return done(null, profile);
+          }
+        })
+        .catch((error: any) => done(error));
     }
   )
 );

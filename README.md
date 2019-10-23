@@ -14,11 +14,14 @@ We are big fans of the original Geoguessr game and that is what inspired this ve
 
 Please feel free to open an issue or submit a pull request
 
-
 # Development
 
 ## To run locally, add a `.env.local` to your root directory with the following enviornment variables set:
 
-* `REACT_APP_MAPS_API_KEY`
-* `REACT_APP_GOOGLE_MAP_KEY`
-* `REACT_APP_PLAYFAB_GAME_ID`
+- `REACT_APP_GOOGLE_MAP_KEY`
+- `REACT_APP_MAPS_API_KEY`
+- `REACT_APP_PLAYFAB_GAME_ID`
+- `REACT_APP_WATER_IO`
+- `REACT_APP_PLAYFAB_LEADERBOARD`
+- `GOOGLE_SIGN_IN_CLIENTID`
+- `GOOGLE_SIGN_IN_SECRET`
