@@ -1,5 +1,6 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import passport from "passport";
+import { env } from "../enviornment";
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const googleOptions = {
 
 const googleRedirectOptions = {
   failureRedirect: "/auth/login/failed",
-  successRedirect: "http://localhost:3000"
+  successRedirect: env.clientURL
 };
 
 router.get("/auth/google", passport.authenticate("google", googleOptions));

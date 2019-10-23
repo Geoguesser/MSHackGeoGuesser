@@ -1,13 +1,29 @@
 import express from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
+import session from "express-session";
 import authRoutes from "./routes/auth";
-import "./config/setup-passport";
 import { sequelize } from "./config/setup-database";
+import { env } from "./enviornment";
+import { isAuthenticated } from "./middleware/isAuthenticated";
+import "./config/setup-passport";
 
 export function initialize() {
   const app = express();
-  const port = process.env.PORT || 5000;
+
+  // setup auth session
+  const sessionConfig = {
+    secret: env.expressSessionSecret,
+    cookie: {
+      secure: false
+    }
+  };
+
+  if (env.enviornment === "production") {
+    sessionConfig.cookie.secure = true;
+  }
+
+  app.use(session(sessionConfig));
 
   // setup database
   sequelize
@@ -15,16 +31,18 @@ export function initialize() {
     .then(() => console.log("heroku/postgres connection setup successfully."))
     .catch((err: any) => console.log("heroku/postgres connection failed.", err));
 
+  // initialize passport for authentication
   app.use(passport.initialize());
   app.use(passport.session());
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
+  // setup routes
   app.use("/", authRoutes);
-  app.get("/api", (req, res) => {
+  app.get("/api", isAuthenticated, (req, res) => {
     res.send({ express: "Hello from express" });
   });
 
-  app.listen(port, () => console.log("listening on port " + port));
+  app.listen(env.serverPort, () => console.log("listening on port " + env.serverPort));
 }

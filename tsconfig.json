@@ -9,7 +9,8 @@
     "outDir": "lib",
     "esModuleInterop": true,
     "lib": ["esnext"],
-    "strict": true
+    "strict": true,
+    "alwaysStrict": true
   },
   "exclude": ["client", "node_modules"]
 }

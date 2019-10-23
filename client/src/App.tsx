@@ -18,10 +18,6 @@ function App(): JSX.Element {
   const [totalScore, setTotalScore] = React.useState<IAppState["totalScore"]>([]);
   const [roundNumber, setRoundNumber] = React.useState<IAppState["roundNumber"]>(1);
 
-  React.useEffect(() => {
-    fetch("/auth/google");
-  });
-
   const gameProps: IGameProps = {
     totalScore,
     setTotalScore,
