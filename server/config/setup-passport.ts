@@ -11,7 +11,6 @@ function handleUser(
 ) {
   // check if user exists by their id on their google profile
   // if not then add them to the database
-  console.log("HANDLING THE USER");
   User.findOne({ where: { googleId: profile.id } })
     .then((user: any) => {
       if (user) {
@@ -45,12 +44,10 @@ passport.use(
 
 passport.serializeUser(function(user: any, done) {
   // this is called after the above
-  console.log("SERIALIZING THE USER", user);
   done(null, user.googleId);
 });
 
 passport.deserializeUser(function(googleId: string, done) {
-  console.log("DESERIALIZING THE USER");
   User.findOne({ where: { googleId: googleId } })
     .then((user: any) => {
       done(undefined, user.dataValues);
