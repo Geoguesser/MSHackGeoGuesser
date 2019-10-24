@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import session from "express-session";
 import authRoutes from "./routes/auth";
+import userRoutes from "./routes/user";
 import { sequelize } from "./config/setup-database";
 import { env } from "./enviornment";
 import { isAuthenticated } from "./middleware/isAuthenticated";
@@ -40,6 +41,7 @@ export function initialize() {
 
   // setup routes
   app.use("/", authRoutes);
+  app.use("/api", userRoutes);
   app.get("/api", isAuthenticated, (req, res) => {
     res.send({ express: "Hello from express" });
   });

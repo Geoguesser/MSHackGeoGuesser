@@ -10,6 +10,8 @@ import oceania from "../assets/places/oceania_continent.svg";
 const continents = [africa, asia, america, europe, oceania];
 
 function Landing(): JSX.Element {
+  const [username, setUsername] = React.useState<string>("");
+
   function loginUser(): void {
     window.open("http://localhost:5000/auth/google", "_self");
   }
