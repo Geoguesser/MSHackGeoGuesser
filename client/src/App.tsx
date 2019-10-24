@@ -1,8 +1,5 @@
 import React from "react";
-import { useAuth } from "./hooks/auth";
 import RouterComponent from "./router";
-import PrivateRouter from "./utils/private-routes";
-import PublicRouter from "./utils/public-routes";
 import { Spinner } from "./common";
 
 interface IAppState {
@@ -25,21 +22,11 @@ function App(): JSX.Element {
     roundNumber,
     setRoundNumber
   };
-  const { user } = useAuth();
   return (
     <React.Suspense fallback={<Spinner fullpage />}>
       <RouterComponent {...gameProps} />
     </React.Suspense>
   );
 }
-
-// class App extends React.Component<{}, {}> {
-//   onClick = () => {
-//     window.open("http://localhost:5000/auth/google", "_self");
-//   };
-//   render() {
-//     return <button onClick={this.onClick}>login</button>;
-//   }
-// }
 
 export default App;
