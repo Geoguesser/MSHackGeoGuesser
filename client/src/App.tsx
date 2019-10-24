@@ -1,7 +1,5 @@
 import React from "react";
-import { useAuth } from "./hooks/auth";
-import PrivateRouter from "./utils/private-routes";
-import PublicRouter from "./utils/public-routes";
+import RouterComponent from "./router";
 import { Spinner } from "./common";
 
 interface IAppState {
@@ -17,16 +15,16 @@ interface IGameProps extends IAppState {
 function App(): JSX.Element {
   const [totalScore, setTotalScore] = React.useState<IAppState["totalScore"]>([]);
   const [roundNumber, setRoundNumber] = React.useState<IAppState["roundNumber"]>(1);
+
   const gameProps: IGameProps = {
     totalScore,
     setTotalScore,
     roundNumber,
     setRoundNumber
   };
-  const { user } = useAuth();
   return (
     <React.Suspense fallback={<Spinner fullpage />}>
-      {user ? <PrivateRouter {...gameProps} /> : <PublicRouter />}
+      <RouterComponent {...gameProps} />
     </React.Suspense>
   );
 }

@@ -3,19 +3,38 @@
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
+    "build-ts": "tsc --project tsconfig.json",
+    "postinstall": "npm run build-ts",
     "client": "cd client && npm start",
-    "server": "nodemon server.js"
+    "server": "nodemon server.ts"
   },
   "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/express-session": "^1.15.15",
+    "@types/passport": "^1.0.1",
+    "@types/passport-google-oauth": "^1.0.41",
+    "@types/passport-google-oauth20": "^2.0.3",
+    "@types/pg": "^7.11.2",
     "concurrently": "^4.1.2",
-    "nodemon": "^1.19.3",
     "husky": "^3.0.1",
     "lint-staged": "^9.2.1",
-    "prettier": "^1.18.2"
+    "nodemon": "^1.19.3",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth20": "^2.0.0",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "react-google-button": "^0.5.3",
+    "sequelize": "^5.21.1"
   },
   "husky": {
     "hooks": {

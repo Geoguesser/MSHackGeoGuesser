@@ -13,6 +13,7 @@ declare global {
   interface Window {
     PlayFabClientSDK: any;
     PlayFab: any;
+    gapi: any;
   }
 }
 
