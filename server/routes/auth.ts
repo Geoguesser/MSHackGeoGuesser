@@ -31,7 +31,7 @@ router.get(
   "/auth/google/redirect",
   passport.authenticate("google", googleRedirectOptions),
   function(req: Request, res: Response) {
-    res.redirect(`${env.clientURL}/?username=test`);
+    res.redirect(`${env.clientURL}`);
   }
 );
 

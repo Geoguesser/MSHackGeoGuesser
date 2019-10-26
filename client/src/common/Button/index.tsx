@@ -4,7 +4,7 @@ import styles from "./button.module.css";
 
 interface ButtonProps {
   children: React.ReactNode;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   size?: SIZE;
   fullWidth?: boolean;
   disabled?: boolean;

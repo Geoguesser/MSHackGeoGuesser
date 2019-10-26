@@ -3,7 +3,7 @@ const rad = function(x: number): number {
 };
 
 const getDistance = function(
-  p1: { lat: number | null; lng: number | null },
+  p1: { lat: number | undefined; lng: number | undefined },
   p2: { lat: number; lng: number }
 ): number {
   const R: number = 6378137; // Earth’s mean radius in meter
@@ -18,7 +18,7 @@ const getDistance = function(
 };
 
 const getScore = (
-  pt1: { lat: number | null; lng: number | null },
+  pt1: { lat: number | undefined; lng: number | undefined },
   pt2: { lat: number; lng: number }
 ): number => {
   const distance = getDistance(pt1, pt2) / 1000;
@@ -32,11 +32,10 @@ function random(min: number, max: number): number {
 function pickCity(): {
   lat: number;
   lng: number;
-  population: number;
 } {
   const json = require("../assets/cities.json");
   const item = json[Math.floor(Math.random() * json.length)];
-  return item;
+  return { lat: item.lat, lng: item.lng };
 }
 
 function getLat(lat: number | undefined): number {
