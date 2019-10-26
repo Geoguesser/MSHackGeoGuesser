@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
 
 interface CommonProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface NavbarProps extends CommonProps {
-  brandText: string;
+  brandText?: string;
   brandLink?: string;
 }
 
@@ -19,7 +19,7 @@ interface NavbarStartProps extends CommonProps {}
 
 interface NavbarEndProps extends CommonProps {}
 
-function Navbar({ brandText = "Geoguesser", brandLink, children }: NavbarProps): JSX.Element {
+function Navbar({ brandText = "Ryokō (旅行)", brandLink, children }: NavbarProps): JSX.Element {
   return (
     <nav className={styles["navbar"]} role="navigation" aria-label="main navigation">
       <div className={styles["navbar-brand"]}>

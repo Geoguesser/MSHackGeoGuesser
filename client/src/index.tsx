@@ -4,7 +4,7 @@ require("dotenv").config();
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { AuthProvider } from "./contexts/auth";
+import { AuthenticationProvider } from "./components/AuthProvider";
 import "./common/styles/variables.css";
 import "./common/styles/global.css";
 import "./style/index.scss";
@@ -18,8 +18,8 @@ declare global {
 }
 
 ReactDOM.render(
-  <AuthProvider>
+  <AuthenticationProvider>
     <App />
-  </AuthProvider>,
+  </AuthenticationProvider>,
   document.getElementById("root")
 );

@@ -1,0 +1,8 @@
+.wrapper {
+  height: 400px;
+  width: 400px;
+  position: absolute;
+  bottom: 20px;
+  right: 5px;
+  z-index: 2;
+}

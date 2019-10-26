@@ -10,19 +10,9 @@ import oceania from "../assets/places/oceania_continent.svg";
 const continents = [africa, asia, america, europe, oceania];
 
 function Landing(): JSX.Element {
-  const [username, setUsername] = React.useState<string>("");
-
   function loginUser(): void {
     window.open("http://localhost:5000/auth/google", "_self");
   }
-
-  const getApi = () => {
-    fetch("/api");
-  };
-
-  const logout = () => {
-    fetch("/auth/logout");
-  };
 
   const randomIndex = Math.floor(Math.random() * continents.length);
 
@@ -43,7 +33,7 @@ function Landing(): JSX.Element {
       </Row>
       <Row>
         <Column textAlign={HORIZONTAL_ALIGNMENT.CENTER}>
-          <img src={continents[randomIndex]} alt="Seatle Picture" height={500} />
+          <img src={continents[randomIndex]} alt="Continent Picture" height={500} />
         </Column>
       </Row>
       <Row>

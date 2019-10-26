@@ -89,3 +89,28 @@ export interface PlayerProfile {
 }
 
 // PLAYFAB TYPES END
+
+export interface User {
+  id: string;
+  username: string;
+  googleId: string;
+  googleDisplayName: string;
+  googleFamilyName: string | null;
+  googleGivenName: string | null;
+  googlePhotoUrl: string | null;
+}
+
+export interface UserData {
+  user?: User;
+  error?: any;
+}
+
+export type GuessedLocation = {
+  lat: number | undefined;
+  lng: number | undefined;
+};
+
+export type ActualLocation = {
+  lat: number;
+  lng: number;
+};

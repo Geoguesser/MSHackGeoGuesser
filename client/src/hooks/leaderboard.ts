@@ -20,7 +20,7 @@ function useLeaderboard(
   leaderboard: PlayerLeaderboardEntry[];
   playerRank: PlayerLeaderboardEntry | null;
 } {
-  const { user, login } = useAuth();
+  // const { user, login } = useAuth();
   const [loading, setLoading] = React.useState<boolean>(true);
   const [leaderboard, setLeaderboard] = React.useState<PlayerLeaderboardEntry[]>([]);
   const [playerRank, setPlayerRank] = React.useState<PlayerLeaderboardEntry | null>(null);
@@ -77,18 +77,18 @@ function useLeaderboard(
 
   React.useEffect(() => {
     setLoading(true);
-    let interval = setInterval(() => {
-      login(user, () => {
-        if (newScore.length > 0) {
-          addUserScoreToLeaderboard(newScore);
-          fetchPlayerRank();
-        }
-        fetchLeaderboard();
-        setLoading(false);
-      });
-    }, 3000);
+    // let interval = setInterval(() => {
+    //   login(user, () => {
+    //     if (newScore.length > 0) {
+    //       addUserScoreToLeaderboard(newScore);
+    //       fetchPlayerRank();
+    //     }
+    //     fetchLeaderboard();
+    //     setLoading(false);
+    //   });
+    // }, 3000);
     return () => {
-      clearInterval(interval);
+      // clearInterval(interval);
     };
   }, []);
 

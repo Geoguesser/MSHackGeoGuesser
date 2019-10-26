@@ -1,9 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Landing from "./components/Landing";
+import Home from "./components/Home";
 import Score from "./components/Score";
 import Game from "./components/Game";
 import Leaderboard from "./components/Leaderboard";
+import { AuthenticationContext } from "./components/AuthProvider";
 
 interface RouterComponentProps {
   setTotalScore: React.Dispatch<React.SetStateAction<number[]>>;
@@ -18,34 +20,12 @@ function RouterComponent({
   totalScore,
   roundNumber
 }: RouterComponentProps): JSX.Element | null {
-  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | undefined>(undefined);
-
-  React.useEffect(() => {
-    getUser();
-  }, [isAuthenticated]);
-
-  const getUser = async () => {
-    try {
-      const response = await (await fetch("/api/user")).json();
-      if (response.error) {
-        setIsAuthenticated(false);
-      } else if (response.user) {
-        setIsAuthenticated(true);
-      }
-    } catch (e) {
-      console.log("error fetching user", e);
-    }
-  };
-
-  // this will prevent screens from flashing before the fetch call runs
-  if (isAuthenticated === undefined) {
-    return null;
-  }
+  const { isAuthenticated } = React.useContext(AuthenticationContext);
   return (
     <Router>
       {isAuthenticated ? (
         <>
-          <Route exact path="/" render={() => <Redirect to="/game" />} />
+          <Route exact path="/" component={Home} />
           <Route
             exact
             path="/game"
