@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../../config/setup-database";
-class User extends Model {
+class Player extends Model {
   public id!: number;
   public username!: string | null;
   public googleId!: string | null;
@@ -13,7 +13,7 @@ class User extends Model {
   public readonly updatedAt!: Date;
 }
 
-User.init(
+Player.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -59,8 +59,8 @@ User.init(
   },
   {
     sequelize,
-    tableName: "r_user"
+    tableName: "player"
   }
 );
 
-export default User;
+export default Player;
