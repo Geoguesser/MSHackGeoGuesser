@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy, Profile, VerifyCallback } from "passport-google-oauth20";
-import User from "../data/models/user";
+import Player from "../data/models/player";
 import { env } from "../enviornment";
 
 function handleUser(
@@ -11,7 +11,7 @@ function handleUser(
 ) {
   // check if user exists by their id on their google profile
   // if not then add them to the database
-  User.findOne({ where: { googleId: profile.id } })
+  Player.findOne({ where: { googleId: profile.id } })
     .then((user: any) => {
       if (user) {
         return done(undefined, user.dataValues);
@@ -24,7 +24,7 @@ function handleUser(
           googleGivenName: profile.name && profile.name.givenName,
           googlePhotoUrl: profile.photos && profile.photos[0].value
         };
-        User.create(user);
+        Player.create(user);
         return done(undefined, user);
       }
     })
@@ -48,7 +48,7 @@ passport.serializeUser(function(user: any, done) {
 });
 
 passport.deserializeUser(function(googleId: string, done) {
-  User.findOne({ where: { googleId: googleId } })
+  Player.findOne({ where: { googleId: googleId } })
     .then((user: any) => {
       done(undefined, user.dataValues);
     })
