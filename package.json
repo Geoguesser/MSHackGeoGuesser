@@ -16,7 +16,7 @@
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/pg": "^7.11.2",
     "concurrently": "^4.1.2",
-    "husky": "^3.0.1",
+    "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "nodemon": "^1.19.3",
     "prettier": "^1.18.2",
@@ -34,7 +34,7 @@
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "react-google-button": "^0.5.3",
-    "sequelize": "^5.21.1"
+    "sequelize": "^5.21.2"
   },
   "husky": {
     "hooks": {
