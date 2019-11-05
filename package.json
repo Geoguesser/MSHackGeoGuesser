@@ -9,7 +9,7 @@
     "server": "nodemon server.ts"
   },
   "devDependencies": {
-    "@types/express": "^4.17.1",
+    "@types/express": "^4.17.2",
     "@types/express-session": "^1.15.15",
     "@types/passport": "^1.0.1",
     "@types/passport-google-oauth": "^1.0.41",
