@@ -21,7 +21,7 @@
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "ts-node": "^8.4.1",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.2"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
