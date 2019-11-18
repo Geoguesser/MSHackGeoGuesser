@@ -16,7 +16,7 @@
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/pg": "^7.11.2",
     "concurrently": "^5.0.0",
-    "husky": "^3.0.9",
+    "husky": "^3.1.0",
     "nodemon": "^1.19.4",
     "lint-staged": "^9.4.3",
     "prettier": "^1.19.1",
