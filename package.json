@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
-    "@types/express-session": "^1.15.15",
+    "@types/express-session": "^1.15.16",
     "@types/passport": "^1.0.1",
     "@types/passport-google-oauth": "^1.0.41",
     "@types/passport-google-oauth20": "^2.0.3",
