@@ -28,6 +28,7 @@ function RouterComponent({
   const getUser = async () => {
     try {
       const response = await (await fetch(`${urlResolver()}/api/user`)).json();
+      console.log("response", response);
       if (response.error) {
         setIsAuthenticated(false);
       } else if (response.user) {
