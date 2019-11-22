@@ -42,7 +42,7 @@ export function initialize() {
   // setup routes
   app.use("/", authRoutes);
   app.use("/api", userRoutes);
-  app.get("/api", isAuthenticated, (req, res) => {
+  app.get("/api", (req, res) => {
     res.send({ express: "Hello from express" });
   });
 
