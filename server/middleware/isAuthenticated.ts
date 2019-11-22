@@ -4,6 +4,7 @@ function isAuthenticated(req: Request, res: Response, next: NextFunction) {
   if (req.user) {
     next();
   } else {
+    console.log("req.session", req.session);
     if (req.session) {
       req.session.destroy(err => {
         if (err) {

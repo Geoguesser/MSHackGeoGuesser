@@ -6,7 +6,6 @@ import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
 import { sequelize } from "./config/setup-database";
 import { env } from "./enviornment";
-import { isAuthenticated } from "./middleware/isAuthenticated";
 import "./config/setup-passport";
 
 export function initialize() {
