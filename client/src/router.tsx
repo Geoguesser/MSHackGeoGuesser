@@ -4,6 +4,7 @@ import Landing from "./components/Landing";
 import Score from "./components/Score";
 import Game from "./components/Game";
 import Leaderboard from "./components/Leaderboard";
+import { urlResolver } from "./utils/url-resolver";
 
 interface RouterComponentProps {
   setTotalScore: React.Dispatch<React.SetStateAction<number[]>>;
@@ -26,7 +27,7 @@ function RouterComponent({
 
   const getUser = async () => {
     try {
-      const response = await (await fetch("/api/user")).json();
+      const response = await (await fetch(`${urlResolver()}/api/user`)).json();
       if (response.error) {
         setIsAuthenticated(false);
       } else if (response.user) {
