@@ -9,6 +9,7 @@
     "server": "nodemon server.ts"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.29",
     "@types/express": "^4.17.2",
     "@types/express-session": "^1.15.16",
     "@types/passport": "^1.0.2",
@@ -17,8 +18,8 @@
     "@types/pg": "^7.11.2",
     "concurrently": "^5.0.0",
     "husky": "^3.1.0",
-    "nodemon": "^2.0.0",
     "lint-staged": "^9.4.3",
+    "nodemon": "^2.0.0",
     "prettier": "^1.19.1",
     "ts-node": "^8.5.2",
     "typescript": "^3.7.2"
