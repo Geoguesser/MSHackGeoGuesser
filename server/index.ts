@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
 import session from "express-session";
+import cors from "cors";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
 import { sequelize } from "./config/setup-database";
@@ -24,6 +25,7 @@ export function initialize() {
   }
 
   app.use(session(sessionConfig));
+  app.use(cors());
 
   // setup database
   sequelize
