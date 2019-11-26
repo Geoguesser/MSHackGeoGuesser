@@ -1,3 +1,5 @@
+import { getGoogleCallbackUrl, getClientUrl } from "./utils/url-resolver";
+
 const env = {
   enviornment: process.env.NODE_ENV || "development",
   database: {
@@ -12,10 +14,10 @@ const env = {
     google: {
       clientId: process.env.GOOGLE_SIGN_IN_CLIENTID || "",
       clientSecret: process.env.GOOGLE_SIGN_IN_SECRET || "",
-      redirectUrl: "http://localhost:5000/auth/google/redirect"
+      redirectUrl: getGoogleCallbackUrl()
     }
   },
-  clientURL: "http://localhost:3000",
+  clientURL: getClientUrl(),
   serverPort: process.env.PORT || 5000,
   expressSessionSecret: process.env.EXPRESS_SESSION_SECRET || ""
 };
