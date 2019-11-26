@@ -7,7 +7,7 @@ export function getClientUrl() {
 
 export function getGoogleCallbackUrl() {
   if (process.env.NODE_ENV === "production") {
-    return "";
+    return "https://ryoko.gg/auth/google/redirect";
   }
   return "http://localhost:5000/auth/google/redirect";
 }
