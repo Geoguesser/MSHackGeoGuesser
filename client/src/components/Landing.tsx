@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Column, Header, GoogleButton } from "../common";
 import { VERTICAL_ALIGNMENT, HORIZONTAL_ALIGNMENT } from "../utils/types";
+import { urlResolver } from "../utils/url-resolver";
 import africa from "../assets/places/africa_continent.svg";
 import asia from "../assets/places/asia_continent.svg";
 import america from "../assets/places/america_continent.svg";
@@ -13,7 +14,7 @@ function Landing(): JSX.Element {
   const [username, setUsername] = React.useState<string>("");
 
   function loginUser(): void {
-    window.open("http://localhost:5000/auth/google", "_self");
+    window.open(`${urlResolver()}/auth/google`, "_self");
   }
 
   const getApi = () => {
