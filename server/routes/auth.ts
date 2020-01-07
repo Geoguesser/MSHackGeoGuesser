@@ -4,13 +4,9 @@ import { env } from "../enviornment";
 
 const router = express.Router();
 
-// client sends user to this route
-// this sends user to google login
+// client sends user to this route this sends user to google login
 router.get(
   "/auth/google",
-  function(req: any, res: any, next: NextFunction) {
-    next();
-  },
   passport.authenticate("google", {
     scope: ["profile"]
   })
@@ -19,10 +15,10 @@ router.get(
 // this is where the user is sent after logging in with google
 router.get(
   "/auth/google/redirect",
-  passport.authenticate("google", { failureRedirect: "/auth/login/failed" }),
-  function(req: Request, res: Response) {
-    res.redirect(`${env.clientURL}`);
-  }
+  passport.authenticate("google", {
+    failureRedirect: "/auth/login/failed",
+    successRedirect: env.clientURL
+  })
 );
 
 // if the login was unsuccessful from our end, they are then sent here (as seen by `failureRedirect` above)
@@ -37,10 +33,6 @@ router.get("/auth/login/failed", (request: Request, response: Response) => {
 router.get("/auth/logout", (req: Request, res: Response) => {
   req.logout();
   res.redirect(env.clientURL);
-});
-
-router.get("/test", (req: Request, res: Response) => {
-  res.send(200);
 });
 
 export default router;

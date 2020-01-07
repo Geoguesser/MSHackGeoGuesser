@@ -38,14 +38,14 @@ function handleUser(accessToken: string, refreshToken: string, profile: Profile,
 
 passport.use(new GoogleStrategy(googleConfig, handleUser));
 
+// this is called after login, and stores the `user.googId` inside of `req.session`
 passport.serializeUser(function(user: any, done) {
-  console.log("serializing user...");
   // this is called after the above
   done(null, user.googleId);
 });
 
+// this uses the browser's cookie and then deserializes the user from that Id
 passport.deserializeUser(function(googleId: string, done) {
-  console.log("deserializing user...");
   Player.findOne({ where: { googleId: googleId } })
     .then((user: any) => {
       done(undefined, user.dataValues);

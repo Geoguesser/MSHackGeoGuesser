@@ -4,7 +4,7 @@ import { isAuthenticated } from "../middleware/isAuthenticated";
 const router = express.Router();
 
 router.get("/user", isAuthenticated, (req: Request, res: Response) => {
-  res.json({
+  res.status(200).send({
     user: req.user
   });
 });

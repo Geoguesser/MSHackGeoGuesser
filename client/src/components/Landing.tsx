@@ -11,27 +11,9 @@ import oceania from "../assets/places/oceania_continent.svg";
 const continents = [africa, asia, america, europe, oceania];
 
 function Landing(): JSX.Element {
-  const [username, setUsername] = React.useState<string>("");
-
   function loginUser(): void {
     window.open(`${urlResolver()}/auth/google`, "_self");
   }
-
-  const getApi = () => {
-    fetch("/api", { credentials: "include" });
-  };
-
-  const logout = () => {
-    fetch("/auth/logout", { credentials: "include" });
-  };
-
-  const testTwo = () => {
-    fetch(`${urlResolver()}/test`);
-  };
-
-  const test = () => {
-    fetch(`${urlResolver()}/api/user`, { credentials: "include" });
-  };
 
   const randomIndex = Math.floor(Math.random() * continents.length);
 
@@ -58,12 +40,6 @@ function Landing(): JSX.Element {
       <Row>
         <Column alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}>
           <GoogleButton onClick={loginUser} />
-        </Column>
-        <Column alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}>
-          <button onClick={test}>test 1</button>
-        </Column>
-        <Column alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}>
-          <button onClick={testTwo}>test 2</button>
         </Column>
       </Row>
     </Container>

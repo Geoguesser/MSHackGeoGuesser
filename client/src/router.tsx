@@ -4,7 +4,7 @@ import Landing from "./components/Landing";
 import Score from "./components/Score";
 import Game from "./components/Game";
 import Leaderboard from "./components/Leaderboard";
-import { urlResolver } from "./utils/url-resolver";
+import { ryokoApi } from "./utils/apiClient";
 
 interface RouterComponentProps {
   setTotalScore: React.Dispatch<React.SetStateAction<number[]>>;
@@ -26,13 +26,13 @@ function RouterComponent({
   }, [isAuthenticated]);
 
   const getUser = async () => {
-    fetch(`${urlResolver()}/api/user`, { credentials: "include" })
-      .then(response => response.json())
+    ryokoApi("/api/user")
       .then(data => {
-        if (data.error) {
-          setIsAuthenticated(false);
-        } else {
+        console.log(data);
+        if (data.user) {
           setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
         }
       })
       .catch(error => {

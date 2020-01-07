@@ -1,51 +1,20 @@
 import express from "express";
 import bodyParser from "body-parser";
-import passport from "passport";
-import session from "express-session";
-import connectPg from "connect-pg-simple";
-import cors from "cors";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
-import { sequelize } from "./config/setup-database";
 import { env } from "./enviornment";
+import { setupAppSession, setupCors, setupSequelize } from "./config/setup-express";
 import "./config/setup-passport";
 
 export function initialize() {
   const app = express();
-  const pgSession = connectPg(session);
-  // setup database
-  sequelize
-    .authenticate()
-    .then(() => console.log("heroku/postgres connection setup successfully."))
-    .catch((err: any) => console.log("heroku/postgres connection failed.", err));
 
-  // setup auth session
-  const sessionConfig = {
-    secret: env.expressSessionSecret,
-    store: new pgSession({
-      conObject: {
-        connectionString: env.database.uri,
-        ssl: true
-      }
-    }),
-    resave: false,
-    cookie: {
-      secure: env.enviornment === "production" ? true : false
-    },
-    saveUninitialized: true
-  };
+  setupAppSession(app);
+  setupCors(app);
+  setupSequelize(app);
 
-  app.use(session(sessionConfig));
-  app.use(
-    cors({
-      origin: env.clientURL,
-      credentials: true
-    })
-  );
-
-  // initialize passport for authentication
-  app.use(passport.initialize());
-  app.use(passport.session());
+  // disables cached 304. Not sure if best solution, but needed it for now
+  app.disable("etag");
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
