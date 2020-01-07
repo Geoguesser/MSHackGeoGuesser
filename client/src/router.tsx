@@ -4,7 +4,7 @@ import Landing from "./components/Landing";
 import Score from "./components/Score";
 import Game from "./components/Game";
 import Leaderboard from "./components/Leaderboard";
-import { urlResolver } from "./utils/url-resolver";
+import { ryokoApi } from "./utils/apiClient";
 
 interface RouterComponentProps {
   setTotalScore: React.Dispatch<React.SetStateAction<number[]>>;
@@ -26,16 +26,17 @@ function RouterComponent({
   }, [isAuthenticated]);
 
   const getUser = async () => {
-    try {
-      const response = await (await fetch(`${urlResolver()}/api/user`)).json();
-      if (response.error) {
+    ryokoApi("/api/user")
+      .then(data => {
+        if (data.user) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      })
+      .catch(error => {
         setIsAuthenticated(false);
-      } else if (response.user) {
-        setIsAuthenticated(true);
-      }
-    } catch (e) {
-      console.log("error fetching user", e);
-    }
+      });
   };
 
   // this will prevent screens from flashing before the fetch call runs
@@ -51,12 +52,7 @@ function RouterComponent({
             exact
             path="/game"
             render={routeProps => (
-              <Game
-                {...routeProps}
-                setTotalScore={setTotalScore}
-                totalScore={totalScore}
-                roundNumber={roundNumber}
-              />
+              <Game {...routeProps} setTotalScore={setTotalScore} totalScore={totalScore} roundNumber={roundNumber} />
             )}
           />
           <Route
