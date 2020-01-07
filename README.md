@@ -16,12 +16,26 @@ Please feel free to open an issue or submit a pull request
 
 # Development
 
-## To run locally, add a `.env.local` to your root directory with the following enviornment variables set:
+1. add a `.env` to your root directory with the following enviornment variables set:
 
-- `REACT_APP_GOOGLE_MAP_KEY`
-- `REACT_APP_MAPS_API_KEY`
-- `REACT_APP_PLAYFAB_GAME_ID`
-- `REACT_APP_WATER_IO`
-- `REACT_APP_PLAYFAB_LEADERBOARD`
-- `GOOGLE_SIGN_IN_CLIENTID`
-- `GOOGLE_SIGN_IN_SECRET`
+```
+GOOGLE_SIGN_IN_CLIENTID
+GOOGLE_SIGN_IN_SECRET
+HEROKU_POSTGRES_HOST
+HEROKU_POSTGRES_DATABASE
+HEROKU_POSTGRES_USER
+HEROKU_POSTGRES_PORT
+HEROKU_POSTGRES_PASSWORD
+HEROKU_POSTGRES_URI
+EXPRESS_SESSION_SECRET
+```
+
+2. add a `.env` file to your `client/` directory with the following enviornment variables set:
+
+```
+REACT_APP_GOOGLE_MAP_KEY
+REACT_APP_MAPS_API_KEY
+REACT_APP_PLAYFAB_GAME_ID
+REACT_APP_WATER_IO
+REACT_APP_PLAYFAB_LEADERBOARD
+```
