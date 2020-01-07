@@ -26,16 +26,18 @@ function RouterComponent({
   }, [isAuthenticated]);
 
   const getUser = async () => {
-    try {
-      const response = await (await fetch(`${urlResolver()}/api/user`)).json();
-      if (response.error) {
+    fetch(`${urlResolver()}/api/user`, { credentials: "include" })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          setIsAuthenticated(false);
+        } else {
+          setIsAuthenticated(true);
+        }
+      })
+      .catch(error => {
         setIsAuthenticated(false);
-      } else if (response.user) {
-        setIsAuthenticated(true);
-      }
-    } catch (e) {
-      console.log("error fetching user", e);
-    }
+      });
   };
 
   // this will prevent screens from flashing before the fetch call runs
@@ -51,12 +53,7 @@ function RouterComponent({
             exact
             path="/game"
             render={routeProps => (
-              <Game
-                {...routeProps}
-                setTotalScore={setTotalScore}
-                totalScore={totalScore}
-                roundNumber={roundNumber}
-              />
+              <Game {...routeProps} setTotalScore={setTotalScore} totalScore={totalScore} roundNumber={roundNumber} />
             )}
           />
           <Route

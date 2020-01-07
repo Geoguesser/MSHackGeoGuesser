@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
 import session from "express-session";
+import connectPg from "connect-pg-simple";
 import cors from "cors";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
@@ -11,27 +12,36 @@ import "./config/setup-passport";
 
 export function initialize() {
   const app = express();
-
-  // setup auth session
-  const sessionConfig = {
-    secret: env.expressSessionSecret,
-    cookie: {
-      secure: false
-    }
-  };
-
-  if (env.enviornment === "production") {
-    sessionConfig.cookie.secure = true;
-  }
-
-  app.use(session(sessionConfig));
-  app.use(cors());
-
+  const pgSession = connectPg(session);
   // setup database
   sequelize
     .authenticate()
     .then(() => console.log("heroku/postgres connection setup successfully."))
     .catch((err: any) => console.log("heroku/postgres connection failed.", err));
+
+  // setup auth session
+  const sessionConfig = {
+    secret: env.expressSessionSecret,
+    store: new pgSession({
+      conObject: {
+        connectionString: env.database.uri,
+        ssl: true
+      }
+    }),
+    resave: false,
+    cookie: {
+      secure: env.enviornment === "production" ? true : false
+    },
+    saveUninitialized: true
+  };
+
+  app.use(session(sessionConfig));
+  app.use(
+    cors({
+      origin: env.clientURL,
+      credentials: true
+    })
+  );
 
   // initialize passport for authentication
   app.use(passport.initialize());
