@@ -28,7 +28,6 @@ function RouterComponent({
   const getUser = async () => {
     ryokoApi("/api/user")
       .then(data => {
-        console.log(data);
         if (data.user) {
           setIsAuthenticated(true);
         } else {
