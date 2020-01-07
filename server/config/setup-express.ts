@@ -35,6 +35,7 @@ function setupAppSession(app: express.Application) {
 function setupCors(app: express.Application) {
   app.use(
     cors({
+      origin: env.clientURL,
       credentials: true
     })
   );

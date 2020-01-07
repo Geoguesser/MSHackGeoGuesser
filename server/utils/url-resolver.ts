@@ -1,6 +1,6 @@
 export function getClientUrl() {
   if (process.env.NODE_ENV === "production") {
-    return "https://ryoko.gg";
+    return "https://www.ryoko.gg";
   }
   return "http://localhost:3000";
 }
