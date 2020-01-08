@@ -7,6 +7,12 @@ import { sequelize } from "./setup-database";
 import { env } from "../enviornment";
 
 function setupAppSession(app: express.Application) {
+  const isProd = env.enviornment === "production";
+
+  if (isProd) {
+    app.set("trust proxy", 1);
+  }
+
   // connects the postgres table to our express-session
   const pgSession = connectPg(session);
 
@@ -20,7 +26,7 @@ function setupAppSession(app: express.Application) {
     }),
     resave: false,
     cookie: {
-      secure: env.enviornment === "production" ? true : false
+      secure: isProd
     },
     saveUninitialized: true
   };
