@@ -42,7 +42,7 @@ const Map = ({ setGoogleMaps, insetMapLat, insetMapLng, setInsetMapLat, setInset
         }}
         yesIWantToUseGoogleMapApiInternals
       >
-        {insetMapLat && insetMapLng ? <Marker /> : null}
+        {insetMapLat && insetMapLng ? <Marker lat={insetMapLat} lng={insetMapLng} /> : null}
       </GoogleMapReact>
     </div>
   );

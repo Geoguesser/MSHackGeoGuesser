@@ -55,17 +55,14 @@ class Streetview extends React.Component<StreetViewProps, StreetViewState> {
         },
         (data: { location: { pano: any } }, status: string) => {
           if (status === "OK") {
-            const panorama = new this.state.googleMaps.StreetViewPanorama(
-              ReactDOM.findDOMNode(this),
-              {
-                pov: { heading: 0, pitch: 0 },
-                zoom: 1,
-                addressControl: false,
-                fullscreenControl: false,
-                closeControl: false,
-                showRoadLabels: false
-              }
-            );
+            const panorama = new this.state.googleMaps.StreetViewPanorama(ReactDOM.findDOMNode(this), {
+              pov: { heading: 0, pitch: 0 },
+              zoom: 0,
+              addressControl: false,
+              fullscreenControl: false,
+              closeControl: false,
+              showRoadLabels: false
+            });
             panorama.setPano(data.location.pano);
             panorama.setPov({
               heading: 270,
