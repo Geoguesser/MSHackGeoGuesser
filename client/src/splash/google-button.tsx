@@ -40,7 +40,7 @@ function GoogleButton({ onClick, animationTime }: GoogleButtonProps) {
       <div className={styles["icon-wrapper"]}>
         <GoogleIconDarkNormal />
       </div>
-      <span>Sign in with Google</span>
+      <span>SIGN IN WITH GOOGLE</span>
     </div>
   );
 }

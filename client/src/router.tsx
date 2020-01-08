@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import Splash from "./splash/splash";
+
 import Landing from "./components/Landing";
 import Score from "./components/Score";
 import Game from "./components/Game";
@@ -81,7 +83,7 @@ function RouterComponent({
           />
         </>
       ) : (
-        <Route exact path="/" component={Landing} />
+        <Route exact path="/" component={Splash} />
       )}
     </Router>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Column, Header, GoogleButton } from "../common";
+import { Container, Row, Column, Header } from "../common";
 import { VERTICAL_ALIGNMENT, HORIZONTAL_ALIGNMENT } from "../utils/types";
 import { urlResolver } from "../utils/url-resolver";
 import africa from "../assets/places/africa_continent.svg";
@@ -35,11 +35,6 @@ function Landing(): JSX.Element {
       <Row>
         <Column textAlign={HORIZONTAL_ALIGNMENT.CENTER}>
           <img src={continents[randomIndex]} alt="Seatle Picture" height={500} />
-        </Column>
-      </Row>
-      <Row>
-        <Column alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}>
-          <GoogleButton onClick={loginUser} />
         </Column>
       </Row>
     </Container>

@@ -1,0 +1,27 @@
+.title {
+  font-size: 500px;
+  margin: 0;
+  text-align: center;
+  line-height: 1;
+  cursor: default;
+}
+
+.subtitle {
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  cursor: default;
+}
+
+.page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(243, 206, 200);
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.button-wrapper {
+  margin-top: 10px;
+}

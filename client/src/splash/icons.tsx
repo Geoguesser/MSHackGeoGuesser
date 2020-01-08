@@ -15,14 +15,7 @@ export function GoogleIconDarkNormal() {
       }}
     >
       <defs>
-        <filter
-          x="-50%"
-          y="-50%"
-          width="200%"
-          height="200%"
-          filterUnits="objectBoundingBox"
-          id="filter-1"
-        >
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
           <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1" />
           <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1" />
           <feColorMatrix
