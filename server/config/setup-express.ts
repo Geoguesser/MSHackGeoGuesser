@@ -10,6 +10,8 @@ function setupAppSession(app: express.Application) {
   const isProd = env.enviornment === "production";
 
   if (isProd) {
+    // needed because heroku runs on a proxy
+    // otherwise cookie won't be set
     app.set("trust proxy", 1);
   }
 
