@@ -10,14 +10,9 @@ interface MapProps {
   setInsetMapLng: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-const Map = ({
-  setGoogleMaps,
-  insetMapLat,
-  insetMapLng,
-  setInsetMapLat,
-  setInsetMapLng
-}: MapProps) => {
+const Map = ({ setGoogleMaps, insetMapLat, insetMapLng, setInsetMapLat, setInsetMapLng }: MapProps) => {
   const mapKey = process.env.REACT_APP_GOOGLE_MAP_KEY || "";
+  console.log("map key", mapKey);
   return (
     <div
       style={{
