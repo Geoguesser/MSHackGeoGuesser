@@ -16,7 +16,7 @@ We are big fans of the original Geoguessr game and that is what inspired this ve
 
 Please feel free to open an issue or submit a pull request
 
-# Development
+## Development
 
 1. Add a `.env` to your root directory with the following environment variables set:
 
