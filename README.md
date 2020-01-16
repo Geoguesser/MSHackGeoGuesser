@@ -4,7 +4,7 @@
 
 ## What is it?
 
-Ryoko is a browser game that drops you in a random location around the world and has you try and guess where you are located. After 5 rounds your score is totalled and added to a leaderboard. 
+Ryoko is a browser game that drops you in a random location around the world and has you try and guess where you are located. After 5 rounds your score is totalled and added to a leaderboard.
 
 Try playing the game here: https://www.ryoko.gg/
 
@@ -47,8 +47,8 @@ REACT_APP_PLAYFAB_LEADERBOARD
 npm install
 ```
 
-4. Now you should be able to run the program locally.  Start the program in both the root directory and the `server\` directory.
+4. Now you should be able to run the program locally. Start the program in both the root directory and the `server/` directory.
 
 ```
-npm start
+cd client/ && npm start
 ```
