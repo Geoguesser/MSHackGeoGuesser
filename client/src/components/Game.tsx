@@ -4,12 +4,14 @@ import { Button, Navbar, NavbarEnd, NavbarItem } from "../common";
 import Map from "./Map";
 import StreetView from "./Streetview";
 import { getScore } from "../utils/helpers";
+import { urlResolver } from "../utils/url-resolver";
 
 interface NavProps {
   roundNumber: number;
   insetMapLat: number | null;
   insetMapLng: number | null;
   submitGuess: () => void;
+  logout: () => void;
 }
 
 interface GameProps extends RouteComponentProps {
@@ -18,7 +20,7 @@ interface GameProps extends RouteComponentProps {
   roundNumber: number;
 }
 
-function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }: NavProps): JSX.Element {
+function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess, logout }: NavProps): JSX.Element {
   return (
     <Navbar brandText="Geoguesser">
       <NavbarEnd>
@@ -27,6 +29,7 @@ function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }: NavProps): 
           <Button disabled={!insetMapLat || !insetMapLng} onClick={submitGuess}>
             Submit guess
           </Button>
+          <Button onClick={logout}>Logout</Button>
         </NavbarItem>
       </NavbarEnd>
     </Navbar>
@@ -34,6 +37,10 @@ function Nav({ roundNumber, insetMapLat, insetMapLng, submitGuess }: NavProps): 
 }
 
 const Game = ({ history, setTotalScore, totalScore, roundNumber }: GameProps): JSX.Element => {
+  function logoutUser(): void {
+    window.open(`${urlResolver()}/auth/logout`, "_self");
+  }
+
   const [googleMaps, setGoogleMaps] = React.useState<any>(null);
   const [streetLat, setStreetLat] = React.useState<number>(0);
   const [streetLng, setStreetLng] = React.useState<number>(0);
@@ -49,10 +56,7 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }: GameProps): J
       guessed: [insetMapLat, insetMapLng],
       actual: [streetLat, streetLng]
     };
-    const score: number = getScore(
-      { lat: insetMapLat, lng: insetMapLng },
-      { lat: streetLat, lng: streetLng }
-    );
+    const score: number = getScore({ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng });
     setTotalScore([...totalScore, score]);
     history.push({
       pathname: "/score",
@@ -70,6 +74,7 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }: GameProps): J
         insetMapLat={insetMapLat}
         insetMapLng={insetMapLng}
         submitGuess={submitGuess}
+        logout={logoutUser}
       />
       <Map
         insetMapLat={insetMapLat}
@@ -79,11 +84,7 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }: GameProps): J
         setGoogleMaps={setGoogleMaps}
       />
       {googleMaps ? (
-        <StreetView
-          setStreetLat={setStreetLat}
-          setStreetLng={setStreetLng}
-          googleMaps={googleMaps}
-        />
+        <StreetView setStreetLat={setStreetLat} setStreetLng={setStreetLng} googleMaps={googleMaps} />
       ) : null}
     </>
   );
