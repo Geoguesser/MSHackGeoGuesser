@@ -44,11 +44,11 @@ REACT_APP_PLAYFAB_LEADERBOARD
 3. Install the npm packages within the root directory and the `client/` directory.
 
 ```
-npm install
+cd client/ && npm install
 ```
 
 4. Now you should be able to run the program locally. Start the program in both the root directory and the `server/` directory.
 
 ```
-cd client/ && npm start
+npm start
 ```
