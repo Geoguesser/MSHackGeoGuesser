@@ -22,7 +22,7 @@ import bronzeTrophy from "../assets/bronze-trophy.svg";
 import goldTrophy from "../assets/gold-trophy.svg";
 import silverTrophy from "../assets/silver-trophy.svg";
 import { HORIZONTAL_ALIGNMENT, VERTICAL_ALIGNMENT, COLUMN_SIZE, SIZE } from "../utils/types";
-import { useLeaderboard } from "../hooks/leaderboard";
+import { useLeaderboard } from "../hooks-old/leaderboard";
 
 interface LeaderboardProps extends RouteComponentProps {
   totalScore: number[];
@@ -30,12 +30,7 @@ interface LeaderboardProps extends RouteComponentProps {
   setRoundNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Leaderboard({
-  history,
-  totalScore,
-  setTotalScore,
-  setRoundNumber
-}: LeaderboardProps): JSX.Element {
+function Leaderboard({ history, totalScore, setTotalScore, setRoundNumber }: LeaderboardProps): JSX.Element {
   const { loading, leaderboard, playerRank } = useLeaderboard(totalScore);
   const onClickPlayAgain = (): void => {
     setRoundNumber(1);
@@ -70,10 +65,7 @@ function Leaderboard({
           </Row>
           <Row>
             {secondPlace && (
-              <Column
-                alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}
-                alignVertically={VERTICAL_ALIGNMENT.CENTER}
-              >
+              <Column alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER} alignVertically={VERTICAL_ALIGNMENT.CENTER}>
                 <Card
                   imgSize="medium"
                   cardTitle={secondPlace.DisplayName}
@@ -84,10 +76,7 @@ function Leaderboard({
               </Column>
             )}
             {firstPlace && (
-              <Column
-                alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}
-                alignVertically={VERTICAL_ALIGNMENT.CENTER}
-              >
+              <Column alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER} alignVertically={VERTICAL_ALIGNMENT.CENTER}>
                 <Card
                   imgSize="large"
                   cardTitle={firstPlace.DisplayName}
@@ -98,10 +87,7 @@ function Leaderboard({
               </Column>
             )}
             {thirdPlace && (
-              <Column
-                alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER}
-                alignVertically={VERTICAL_ALIGNMENT.CENTER}
-              >
+              <Column alignHorizontally={HORIZONTAL_ALIGNMENT.CENTER} alignVertically={VERTICAL_ALIGNMENT.CENTER}>
                 <Card
                   imgSize="medium"
                   cardTitle={thirdPlace.DisplayName}
@@ -131,15 +117,9 @@ function Leaderboard({
                   <TableBody>
                     {scoresList.map((score, index) => (
                       <TableRow>
-                        <TableHeadCell alignment={HORIZONTAL_ALIGNMENT.CENTER}>
-                          {index + 4}
-                        </TableHeadCell>
-                        <TableStandardCell alignment={HORIZONTAL_ALIGNMENT.LEFT}>
-                          {score.DisplayName}
-                        </TableStandardCell>
-                        <TableStandardCell alignment={HORIZONTAL_ALIGNMENT.CENTER}>
-                          {score.StatValue}
-                        </TableStandardCell>
+                        <TableHeadCell alignment={HORIZONTAL_ALIGNMENT.CENTER}>{index + 4}</TableHeadCell>
+                        <TableStandardCell alignment={HORIZONTAL_ALIGNMENT.LEFT}>{score.DisplayName}</TableStandardCell>
+                        <TableStandardCell alignment={HORIZONTAL_ALIGNMENT.CENTER}>{score.StatValue}</TableStandardCell>
                       </TableRow>
                     ))}
                   </TableBody>

@@ -1,6 +1,7 @@
 import React from "react";
 import RouterComponent from "./router";
 import { Spinner } from "./common";
+import { AuthProvider } from "./hooks/use-auth";
 
 interface IAppState {
   totalScore: number[];
@@ -24,7 +25,9 @@ function App(): JSX.Element {
   };
   return (
     <React.Suspense fallback={<Spinner fullpage />}>
-      <RouterComponent {...gameProps} />
+      <AuthProvider>
+        <RouterComponent {...gameProps} />
+      </AuthProvider>
     </React.Suspense>
   );
 }

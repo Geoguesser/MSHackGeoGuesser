@@ -1,0 +1,17 @@
+.header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-size: 72px;
+}
+
+.title > a {
+  text-decoration: none;
+  color: var(--black);
+}

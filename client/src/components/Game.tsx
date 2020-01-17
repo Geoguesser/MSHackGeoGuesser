@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Button, Navbar, NavbarEnd, NavbarItem } from "../common";
-import Map from "./Map";
+// import Map from "./Map";
 import StreetView from "./Streetview";
 import { getScore } from "../utils/helpers";
 
@@ -49,10 +49,7 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }: GameProps): J
       guessed: [insetMapLat, insetMapLng],
       actual: [streetLat, streetLng]
     };
-    const score: number = getScore(
-      { lat: insetMapLat, lng: insetMapLng },
-      { lat: streetLat, lng: streetLng }
-    );
+    const score: number = getScore({ lat: insetMapLat, lng: insetMapLng }, { lat: streetLat, lng: streetLng });
     setTotalScore([...totalScore, score]);
     history.push({
       pathname: "/score",
@@ -65,25 +62,16 @@ const Game = ({ history, setTotalScore, totalScore, roundNumber }: GameProps): J
 
   return (
     <>
-      <Nav
-        roundNumber={roundNumber}
-        insetMapLat={insetMapLat}
-        insetMapLng={insetMapLng}
-        submitGuess={submitGuess}
-      />
-      <Map
+      <Nav roundNumber={roundNumber} insetMapLat={insetMapLat} insetMapLng={insetMapLng} submitGuess={submitGuess} />
+      {/* <Map
         insetMapLat={insetMapLat}
         setInsetMapLat={setInsetMapLat}
         insetMapLng={insetMapLng}
         setInsetMapLng={setInsetMapLng}
         setGoogleMaps={setGoogleMaps}
-      />
+      /> */}
       {googleMaps ? (
-        <StreetView
-          setStreetLat={setStreetLat}
-          setStreetLng={setStreetLng}
-          googleMaps={googleMaps}
-        />
+        <StreetView setStreetLat={setStreetLat} setStreetLng={setStreetLng} googleMaps={googleMaps} />
       ) : null}
     </>
   );

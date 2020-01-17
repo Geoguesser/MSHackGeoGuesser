@@ -1,6 +1,6 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-import Marker from "./Marker";
+// import Marker from "./Marker";
 
 interface MapProps {
   setGoogleMaps: React.Dispatch<React.SetStateAction<any>>;
@@ -42,7 +42,7 @@ const Map = ({ setGoogleMaps, insetMapLat, insetMapLng, setInsetMapLat, setInset
         }}
         yesIWantToUseGoogleMapApiInternals
       >
-        {insetMapLat && insetMapLng ? <Marker lat={insetMapLat} lng={insetMapLng} /> : null}
+        {/* {insetMapLat && insetMapLng ? <Marker lat={insetMapLat} lng={insetMapLng} /> : null} */}
       </GoogleMapReact>
     </div>
   );

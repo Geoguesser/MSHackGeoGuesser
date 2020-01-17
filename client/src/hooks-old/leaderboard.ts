@@ -63,8 +63,7 @@ function useLeaderboard(
     window.PlayFabClientSDK.GetLeaderboardAroundPlayer(settings, (res: any) => {
       if (res) {
         const user = res.data.Leaderboard.find(
-          (player: PlayerLeaderboardEntry) =>
-            player.PlayFabId === localStorage.getItem(`gs_playfabId`)
+          (player: PlayerLeaderboardEntry) => player.PlayFabId === localStorage.getItem(`gs_playfabId`)
         );
         if (user.Position > 10) {
           setPlayerRank(user);

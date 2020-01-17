@@ -1,0 +1,15 @@
+.marker {
+  position: relative;
+  top: -36px;
+  left: -17px;
+  height: 35px;
+}
+
+.map {
+  height: 400px;
+  width: 400px;
+  position: absolute;
+  bottom: 20;
+  right: 5;
+  z-index: 2;
+}

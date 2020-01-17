@@ -4,7 +4,6 @@ import { RouteComponentProps } from "react-router-dom";
 import { Button, Navbar, NavbarEnd, NavbarItem, NavbarStart } from "../common";
 import flagMarker from "../assets/red-flag.png";
 import circleMarker from "../assets/red-circle.png";
-import "../style/score.scss";
 
 interface NavProps {
   roundNumber: number;
@@ -14,13 +13,7 @@ interface NavProps {
   onClickNextGame: () => void;
 }
 
-function Nav({
-  roundNumber,
-  score,
-  totalScore,
-  onClickViewLeaderboard,
-  onClickNextGame
-}: NavProps) {
+function Nav({ roundNumber, score, totalScore, onClickViewLeaderboard, onClickNextGame }: NavProps) {
   return (
     <Navbar brandText="Geoguesser" brandLink="/">
       <NavbarStart>
@@ -112,9 +105,7 @@ const Score = ({ history, location, totalScore, roundNumber, setRoundNumber }: S
                     ? coordinates.guessed[0]
                     : coordinates.actual[0],
                 lng:
-                  (coordinates.guessed[1] || 0) > coordinates.actual[1]
-                    ? coordinates.guessed[1]
-                    : coordinates.actual[1]
+                  (coordinates.guessed[1] || 0) > coordinates.actual[1] ? coordinates.guessed[1] : coordinates.actual[1]
               };
               let swBounds = {
                 lat:
@@ -122,18 +113,10 @@ const Score = ({ history, location, totalScore, roundNumber, setRoundNumber }: S
                     ? coordinates.guessed[0]
                     : coordinates.actual[0],
                 lng:
-                  (coordinates.guessed[1] || 0) < coordinates.actual[1]
-                    ? coordinates.guessed[1]
-                    : coordinates.actual[1]
+                  (coordinates.guessed[1] || 0) < coordinates.actual[1] ? coordinates.guessed[1] : coordinates.actual[1]
               };
-              const guessedLatLng = new google.maps.LatLng(
-                coordinates.guessed[0],
-                coordinates.guessed[1]
-              );
-              const actualLatLng = new google.maps.LatLng(
-                coordinates.actual[0],
-                coordinates.actual[1]
-              );
+              const guessedLatLng = new google.maps.LatLng(coordinates.guessed[0], coordinates.guessed[1]);
+              const actualLatLng = new google.maps.LatLng(coordinates.actual[0], coordinates.actual[1]);
               const bounds = new google.maps.LatLngBounds(swBounds, neBounds);
               google.map.fitBounds(bounds);
               const polyline = new google.maps.Polyline({

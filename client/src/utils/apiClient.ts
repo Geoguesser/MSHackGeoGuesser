@@ -1,6 +1,6 @@
 import { urlResolver } from "./url-resolver";
 
-function ryokoApi(endpoint: string): Promise<any> {
+function ryokoApi<T>(endpoint: string): Promise<T> {
   const options: RequestInit = {
     credentials: "include"
   };

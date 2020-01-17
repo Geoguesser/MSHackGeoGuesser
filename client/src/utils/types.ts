@@ -1,4 +1,12 @@
-import { AsyncResource } from "async_hooks";
+export interface User {
+  id: number;
+  username: string;
+  googleId: string;
+  googleDisplayName: string;
+  googleFamilyName: string;
+  googleGivenName: string;
+  googlePhotoUrl: string;
+}
 
 export enum HORIZONTAL_ALIGNMENT {
   LEFT = "left",

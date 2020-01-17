@@ -1,0 +1,11 @@
+.footer {
+  justify-content: flex-end;
+  padding: 0 20px 0 20px;
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 100px;
+  bottom: 0;
+}
