@@ -41,7 +41,7 @@
     "pg": "^7.17.0",
     "pg-hstore": "^2.3.3",
     "react-google-button": "^0.7.0",
-    "sequelize": "^5.21.3"
+    "sequelize": "^5.21.9"
   },
   "husky": {
     "hooks": {
