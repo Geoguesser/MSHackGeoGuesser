@@ -38,7 +38,7 @@
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth20": "^2.0.0",
-    "pg": "^7.17.0",
+    "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "react-google-button": "^0.7.0",
     "sequelize": "^5.21.3"
